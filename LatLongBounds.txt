@@ -1,0 +1,2 @@
+north-east(Krishnarajapura[13.0054049,77.6904627])
+south-west(ChristUniversityKengeri[12.863035,77.429122])
