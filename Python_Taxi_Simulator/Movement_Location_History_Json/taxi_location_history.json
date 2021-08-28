@@ -1,0 +1,62 @@
+{
+    "01": {
+        "taxiId": "01",
+        "timestamp": "2021-08-29T00:17:17",
+        "status": "Available",
+        "current_location": {
+            "type": "Point",
+            "coordinates": [
+                77.55183783444964,
+                13.029822482182022
+            ]
+        }
+    },
+    "02": {
+        "taxiId": "02",
+        "timestamp": "2021-08-29T00:17:18",
+        "status": "Available",
+        "current_location": {
+            "type": "Point",
+            "coordinates": [
+                77.67538881253907,
+                12.98566676951469
+            ]
+        }
+    },
+    "03": {
+        "taxiId": "03",
+        "timestamp": "2021-08-29T00:17:18",
+        "status": "Available",
+        "current_location": {
+            "type": "Point",
+            "coordinates": [
+                77.70495867621977,
+                13.008581889531008
+            ]
+        }
+    },
+    "04": {
+        "taxiId": "04",
+        "timestamp": "2021-08-29T00:17:19",
+        "status": "Available",
+        "current_location": {
+            "type": "Point",
+            "coordinates": [
+                77.64676646255795,
+                13.027648331952125
+            ]
+        }
+    },
+    "05": {
+        "taxiId": "05",
+        "timestamp": "2021-08-29T00:17:19",
+        "status": "Available",
+        "current_location": {
+            "type": "Point",
+            "coordinates": [
+                77.64676646255795,
+                13.027648331952125
+            ]
+        }
+    }
+}
