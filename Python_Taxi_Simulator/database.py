@@ -4,7 +4,7 @@ from pymongo import MongoClient
 class Database:
     HOST = '127.0.0.1'
     PORT = '27017'
-    CONNECTIONSTRING = 'mongodb+srv://sreenathk88:asterix1@glcapstone-taxi-cluster.agfup.mongodb.net/test'
+    CONNECTIONSTRING = 'ENTER CONNECTION STRING HERE'
     DB_NAME = 'glcapstone_taxi_db'
 
     def __init__(self):
