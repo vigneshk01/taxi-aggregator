@@ -1,11 +1,11 @@
 import datetime
-import pprint
-from datetime import timedelta
+from json import dumps
+import random
 
-from bson import SON
-from bson.json_util import dumps
+from bson.son import SON
 from flask import Flask, request
-from database import Database
+
+from server_side_lambda.app.database import Database
 
 app = Flask(__name__)
 db = Database()
@@ -28,7 +28,7 @@ def home():
 def get_taxi_list():  # will get called every minute
     timestamp = datetime.datetime.now()
     curr_time = timestamp.time().strftime("%H:%M")
-    end_time = (timestamp + timedelta(minutes=1)).strftime("%H:%M")
+    end_time = (timestamp + datetime.timedelta(minutes=1)).strftime("%H:%M")
     taxi_data = db.get_all_data(TAXI_COLLECTION, {'Shift_Start_Time': {'$gte': curr_time, '$lt': end_time}},
                                 {'_id': 0, 'TaxiID': 1})
     list_cur = list(taxi_data)
@@ -39,11 +39,11 @@ def get_taxi_list():  # will get called every minute
 @app.route("/taxi/specialEvent", methods=['GET'])
 def get_special_events():
     timestamp = datetime.datetime.now()
-    curr_date = str(timestamp.date() + timedelta(days=-1))
-    end_date = str(timestamp.date())
+    curr_date = str(timestamp.date())
+    end_date = str(timestamp.date() + datetime.timedelta(days=+1))
 
     curr_time = str(timestamp.time())
-    end_time = str((timestamp + timedelta(minutes=60)).time())
+    end_time = str((timestamp + datetime.timedelta(minutes=60)).time())
 
     events_data = db.get_all_data(SPECIAL_EVENTS_COLLECTION,
                                   {'date': {'$gte': curr_date, '$lt': end_date},
@@ -102,9 +102,48 @@ def book_taxi():
         return None
 
 
-@app.route("/bookTaxi/{ID}", methods=['GET'])
+@app.route("/bookTaxi/confirm", methods=['POST'])
 def confirm_taxi():
-    return
+    if request.method == 'POST':
+        data = request.json
+        print(data["source_location"])
+        confirmation_id = random.randint(1000, 9999)
+        param = {
+            "user_ID": data['user_ID'],
+            "Taxi_ID": data['taxi_ID'],
+            "booking_time": datetime.datetime.now(),
+            "booking_confirmation_ID": confirmation_id,
+            "source": data['source'],
+            "destination": data['destination'],
+            "source_location": data["source_location"],
+            "destination_location": data["dest_location"],
+            "request_status": "open"
+        }
+        db.insert_single_data(RIDE_DETAILS_COLLECTION, param)
+        return str(confirmation_id)
+
+    """ query = {
+        "user_ID": "user_02",
+        "Taxi_ID": "taxi_02",
+        "booking_time": "19:00:00",
+        "booking_confirmation_ID": "2356",
+        "trip_start_time": "19:00:00",
+        "trip_end_ime": "22:00:00",
+        "source": "Madiwala",
+        "Destination": "Sarjapur",
+        "source_location": {
+            "type": "Point",
+            "coordinates": [12.8747, 77.6582]
+        },
+        "dest_location": {
+            "type": "Point",
+            "coordinates": [12.8610, 77.7837]
+        },
+        "request_status": "fulfilled"
+    }
+"""
+
+    return None
 
 
 if __name__ == "__main__":
