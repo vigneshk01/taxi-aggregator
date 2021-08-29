@@ -1,10 +1,8 @@
 import datetime
-from json import dumps
 import random
-
+from json import dumps
 from bson.son import SON
 from flask import Flask, request
-
 from server_side_lambda.app.database import Database
 
 app = Flask(__name__)
@@ -24,16 +22,29 @@ def home():
     return "welcome home"
 
 
-@app.route("/taxi", methods=['GET'])
-def get_taxi_list():  # will get called every minute
-    timestamp = datetime.datetime.now()
-    curr_time = timestamp.time().strftime("%H:%M")
-    end_time = (timestamp + datetime.timedelta(minutes=1)).strftime("%H:%M")
-    taxi_data = db.get_all_data(TAXI_COLLECTION, {'Shift_Start_Time': {'$gte': curr_time, '$lt': end_time}},
-                                {'_id': 0, 'TaxiID': 1})
-    list_cur = list(taxi_data)
-    json_data = dumps(list_cur)
-    return json_data
+@app.route("/taxi/<shift_id>", methods=['GET'])
+def get_taxi_list(shift_id):  # will get called every minute
+
+    if int(shift_id) == 6:
+        print(shift_id)
+        curr_time = "06:00"
+        taxi_data = db.get_all_data(TAXI_COLLECTION, {'Shift_Start_Time': curr_time},
+                                    {'_id': 0, 'TaxiID': 1, 'taxi_type': 1})
+        list_cur = list(taxi_data)
+        json_data = dumps(list_cur)
+        return json_data
+
+
+# @app.route("/taxi/18", methods=['GET'])
+# def get_taxi_list():  # will get called every minute
+#     timestamp = datetime.datetime.now()
+#     curr_time = timestamp.time().strftime("%H:%M")
+#     end_time = (timestamp + datetime.timedelta(minutes=1)).strftime("%H:%M")
+#     taxi_data = db.get_all_data(TAXI_COLLECTION, {'Shift_Start_Time': {'$gte': curr_time, '$lt': end_time}},
+#                                 {'_id': 0, 'TaxiID': 1})
+#     list_cur = list(taxi_data)
+#     json_data = dumps(list_cur)
+#     return json_data
 
 
 @app.route("/taxi/specialEvent", methods=['GET'])
@@ -58,6 +69,14 @@ def get_special_events():
     return json_data
 
 
+@app.route("/boundary", methods=['GET'])
+def get_boundary():
+    location_data = db.get_all_data(LOCATION_COLLECTION, {'geometry.type': 'Polygon'}, {'_id': 0})
+    list_cur = list(location_data)
+    json_data = dumps(list_cur)
+    return json_data
+
+
 @app.route("/locations", methods=['GET'])
 def get_stationing_points():
     location_data = db.get_all_data(LOCATION_COLLECTION, {'geometry.type': 'Point'}, {'_id': 0})
@@ -75,6 +94,14 @@ def stream_locations():
 
 @app.route("/newRequests", methods=['GET'])
 def get_new_ride_requests():
+    data = request.json
+    lattitude = request.args.get('lat')
+    longitude = request.args.get('long')
+    coll_documents = db.get_single_data(STREAM_COLLECTION, data, {'_id': 0, 'current_location': 1, 'taxiID': 1,
+                                                                  'taxi_type': 1})
+    query = {"request_status": "open"}
+
+    db.get_single_data()
     return
 
 
