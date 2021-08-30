@@ -3,7 +3,7 @@ import random
 from json import dumps
 from bson.son import SON
 from flask import Flask, request
-from server_side_lambda.app.database import Database
+from app.database import Database
 
 app = Flask(__name__)
 db = Database()
@@ -101,7 +101,7 @@ def get_new_ride_requests():
                                                                   'taxi_type': 1})
     query = {"request_status": "open"}
 
-    db.get_single_data()
+    # db.get_single_data()
     return
 
 
@@ -173,5 +173,5 @@ def confirm_taxi():
     return None
 
 
-if __name__ == "__main__":
-    app.run(debug=True)
+# if __name__ == "__main__":
+#     app.run(debug=True)
