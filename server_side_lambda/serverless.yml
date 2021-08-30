@@ -36,6 +36,7 @@ functions:
    base: # The lambda Function name
     handler: wsgi_handler.handler
     runtime: python3.9
+    role: arn:aws:iam::428938486474:role/service-role/lambda-cloud-project-role # IAM role which will be used for this function
     events: # The Events that trigger this Function
       - http: GET /
       - http: GET /taxi/{shift_id}
