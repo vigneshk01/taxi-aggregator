@@ -1,20 +1,21 @@
+# Imports Database class from the project to provide basic functionality for database access
 import random
 import numpy as np
 import json
 import boto3
 import math
-from database import Database
+from api import Api
 from datetime import datetime
 from shapely.geometry import Point
 from shapely.geometry.polygon import Polygon
 
+
 class Taxi:
-    TAXI_COLLECTION = 'taxi'
 
     def __init__(self):
-        self._db = Database()
+        self._api = Api()
         self._latest_error = ''
-        self._Taxi_Ids = []
+        self._Taxi = []
 
     # Latest error is used to store the error string in case an issue.
     @property
@@ -22,21 +23,19 @@ class Taxi:
         return self._latest_error
 
     @property
-    def Taxi_Ids(self):
-        return self._Taxi_Ids
+    def taxis(self):
+        return self._Taxi
 
-    def get_taxi_ids(self):
-        query = {}
-        values_to_return = {'TaxiID': 1, '_id': 0}
-        get_all_taxi = self._db.get_multiple_data(self.TAXI_COLLECTION, query, values_to_return)
-        taxi_list = [val for taxi_dict in get_all_taxi for val in taxi_dict.values()]
-        self._Taxi_Ids = taxi_list
+    def get_taxis(self):
+        taxi_list = self._api.get_request('taxi/6')
+        self._Taxi = taxi_list
 
-    def taxi_template(self, taxi_id, coordinates, taxi_status='Available'):
+    def taxi_template(self, taxi_id, coordinates, taxi_type, taxi_status='Available'):
         template_dict = {
             "taxiId": taxi_id,
             "timestamp": datetime.now().strftime("%Y-%m-%dT%H:%M:%S"),
             "status": taxi_status,
+            "taxi_type": taxi_type,
             "current_location": {
                 "type": "Point",
                 "coordinates": coordinates
@@ -49,6 +48,7 @@ class KinesisPublishAndMovement(Taxi):
     LOCATION_FILE = 'Movement_Location_History_Json/taxi_location_history.json'
 
     def __init__(self):
+        Taxi.__init__(self)
         self._Data_Stream_Name = 'taxi-movement'
         self._Kinesis_Handle = boto3.client('kinesis', region_name="us-east-1")
         self._recent_locations = dict()
@@ -113,19 +113,22 @@ class KinesisPublishAndMovement(Taxi):
         polygon = Polygon(boundary_list)
         return polygon.contains(point)
 
-    def stream_template_data(self, taxi_id, long, lat):
+    def stream_template_data(self, taxi_id, long, lat, taxi_type):
         new_long_lat = [long, lat]
-        stream_template = Taxi.taxi_template(self, taxi_id, new_long_lat)
-        self.publish_kinesis_data(stream_template)
+        stream_template = Taxi.taxi_template(self, taxi_id, new_long_lat, taxi_type)
+        print(f'Pushed Data - {stream_template}')
+        # For Api stream insert
+        #self._api.post_stream('/stream', stream_template)
+        # For Direct kinesis insert
+        #self.publish_kinesis_data(stream_template)
         return stream_template
 
 
 class RandomTaxiGenerateModel(KinesisPublishAndMovement):
-    BOUNDARY_COLLECTION = 'boundary'
 
     def __init__(self):
         KinesisPublishAndMovement.__init__(self)
-        self._db = Database()
+        self._api = Api()
         self._latest_error = ''
         self._boundary = []
         self._location_list = []
@@ -141,17 +144,16 @@ class RandomTaxiGenerateModel(KinesisPublishAndMovement):
 
     def extract_location(self):
         if len(self._boundary) != 0:
-            return self._boundary[0]['location']['coordinates']
+            return self._boundary[0]['geometry']['coordinates']
         else:
             print('No location found')
             return []
 
-    def get_boundary(self, city='Bangalore'):
-        query = {'city': city}
-        boundary = self._db.get_boundary(self.BOUNDARY_COLLECTION, query)
+    def get_boundary(self):
+        boundary = self._api.get_request('boundary')
         if len(boundary) == 0:
-            print(f'Sorry no boundary for {city}')
-            self._latest_error = f'Sorry no boundary for {city}'
+            print('Sorry no boundary found')
+            self._latest_error = 'Sorry no boundary found'
         else:
             self._boundary = boundary
 
@@ -170,26 +172,27 @@ class RandomTaxiGenerateModel(KinesisPublishAndMovement):
         print(randomvalue)
 
     def get_data_random_location(self):
-        query = {'locality': {'$exists': 'true'}}
-        values_to_return = {'geometry.coordinates': 1, '_id': 0}
-        get_all_location = self._db.get_multiple_data(self.BOUNDARY_COLLECTION, query, values_to_return)
-        location_list = [val['coordinates'] for loc_dict in get_all_location for val in loc_dict.values()]
+        get_all_location = self._api.get_request('locations')
+        location_list = [all_loc['geometry']['coordinates'] for all_loc in get_all_location]
         self._location_list = location_list
 
     def generate_random_from_list(self):
         return random.choice(self._location_list)
 
-    def generate_random_location_for_taxi(self, taxi_ids):
+    def generate_random_location_for_taxi(self, taxis):
         list_of_taxi_dict = dict()
 
-        if len(taxi_ids) == 0:
+        if len(taxis) == 0:
             print('No Taxis is register in the system')
         else:
-            for taxi in taxi_ids:
+            for taxi in taxis:
                 random_location = self.generate_random_from_list()
-                taxi_dict = Taxi.taxi_template(self, taxi, random_location)
-                KinesisPublishAndMovement.publish_kinesis_data(self, taxi_dict)
-                list_of_taxi_dict[taxi] = taxi_dict
+                taxi_dict = Taxi.taxi_template(self, taxi['TaxiID'], random_location, taxi['taxi_type'])
+                # For Direct kinesis insert
+                #KinesisPublishAndMovement.publish_kinesis_data(self, taxi_dict)
+                # For Api stream insert
+                #self._api.post_stream('/stream', taxi_dict)
+                list_of_taxi_dict[taxi['TaxiID']] = taxi_dict
 
             filename = 'Movement_Location_History_Json/taxi_location_history.json'
             with open(filename, 'w') as file_object:  # open the file in write mode
