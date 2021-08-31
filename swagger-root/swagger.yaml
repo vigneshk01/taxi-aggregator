@@ -1,0 +1,72 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "version" : "1",
+    "title" : "taxi-api-gateway"
+  },
+  "host" : "123.execute-api.us-east-1.amazonaws.com",
+  "basePath" : "/dev",
+  "schemes" : [ "https" ],
+  "paths" : {
+    "/" : {
+      "get" : {
+        "parameters" : [ ],
+        "responses" : { }
+      }
+    },
+    "/bookTaxi" : {
+      "post" : {
+        "parameters" : [ ],
+        "responses" : { }
+      }
+    },
+    "/bookTaxi/confirm" : {
+      "post" : {
+        "parameters" : [ ],
+        "responses" : { }
+      }
+    },
+    "/boundary" : {
+      "get" : {
+        "parameters" : [ ],
+        "responses" : { }
+      }
+    },
+    "/locations" : {
+      "get" : {
+        "parameters" : [ ],
+        "responses" : { }
+      }
+    },
+    "/newRequests" : {
+      "get" : {
+        "parameters" : [ ],
+        "responses" : { }
+      }
+    },
+    "/stream" : {
+      "post" : {
+        "parameters" : [ ],
+        "responses" : { }
+      }
+    },
+    "/taxi/migrate" : {
+      "get" : {
+        "parameters" : [ ],
+        "responses" : { }
+      }
+    },
+    "/taxi/specialEvent" : {
+      "get" : {
+        "parameters" : [ ],
+        "responses" : { }
+      }
+    },
+    "/taxi/{shift_id}" : {
+      "get" : {
+        "parameters" : [ ],
+        "responses" : { }
+      }
+    }
+  }
+}
