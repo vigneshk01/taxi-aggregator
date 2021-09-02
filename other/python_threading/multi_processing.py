@@ -19,11 +19,11 @@ if __name__ == "__main__":
     duration = time.time() - start_time
     print(f"Duration {duration} seconds")
 
-
-#-------------------------------------------------------------------------
+# -------------------------------------------------------------------------
 
 # importing the multiprocessing module
 import multiprocessing
+
 
 def print_cube(num):
     print("Cube: {}".format(num * num * num))
@@ -50,4 +50,55 @@ if __name__ == "__main__":
 
     # both processes finished
     print("Done!")
-#-------------------------------------------------------------------------
+# -------------------------------------------------------------------------
+
+import concurrent
+import concurrent.futures
+
+
+class Calc:
+    def __init__(self, a):
+        self.a = a
+
+    def calc(self, n):
+        return self.a + n
+
+
+class Process:
+    def __init__(self):
+        self.process_list = []
+        self.executor = concurrent.futures.ProcessPoolExecutor(max_workers=4)
+        # self.executor = concurrent.futures.ThreadPoolExecutor(max_workers=4)
+        self.calc = Calc(10)  # Instance of the class to process
+        self.hoge = 3  # Instance variables
+
+    def _process_bad(self, n):
+        res = self.calc.calc(n) * self.hoge
+        return res
+
+    @staticmethod
+    def _process(calc, n, hoge):
+        res = calc.calc(n) * hoge
+        return res
+
+    def start_process(self, n):
+        # Execution department
+        # self.process_list.append(self.executor.submit(self._process_bad, n))  # NG
+        self.process_list.append(self.executor.submit(self._process, self.calc, n, self.hoge))  # OK
+
+    def get_result(self):
+        # Get results
+        self.executor.shutdown(wait=True)  # Shutdown before getting
+        res_list = [res.result() for res in self.process_list]
+        self.process_list = []
+        return res_list
+
+
+# abridgement
+
+if __name__ == "__main__":
+    process = Process()
+    for i in range(10):
+        process.start_process(i)
+    result = process.get_result()
+    print(result)
