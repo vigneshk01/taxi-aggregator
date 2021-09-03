@@ -1,10 +1,14 @@
 import logging
 import os
 import time
+from google_api import Gapi
 from concurrent.futures import ProcessPoolExecutor
 
 # list of taxi's to process
 arr = ['taxi_1', 'taxi_2']
+
+origin = '12.93805958514933, 77.74678327286918'
+destination = '12.969351148556541, 77.75000853390684'
 
 
 class MyProject:
@@ -12,6 +16,7 @@ class MyProject:
         self._result = ''
         self._start_time = time.time()
         self._tid = tid
+        self._gapi = Gapi()
         self.base_fun()
 
     def __repr__(self):
@@ -39,11 +44,11 @@ class MyProject:
 
     def base_fun(self):
         # --------------  placeholder for the functions -------------------------------
-        # while 1 == 1:
         self.fun_one()
-        # time.sleep(1)
+        time.sleep(1)
         self.fun_two()
-        # time.sleep(1)
+        time.sleep(1)
+        self._gapi.process_directions_and_movement(origin, destination)
         self.process_stat()
 
 
@@ -62,7 +67,6 @@ def worker(tid):
 
 
 if __name__ == "__main__":
-
     start = time.time()
 
     with ProcessPoolExecutor(2) as p:
