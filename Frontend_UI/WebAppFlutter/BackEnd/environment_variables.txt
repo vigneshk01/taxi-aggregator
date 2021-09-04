@@ -1,0 +1,8 @@
+		Key					Value
+	   -----				------
+	   COL_PSNG			   passengers
+	   COL_TAXI				taxis
+	   MONGODB_URI			<Mongo URL>
+	   MONGODB_DB			<db name>
+	   USER_TYPE_PSNG		Passenger
+	   USER_TYPE_TAXI		 Taxi
