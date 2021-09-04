@@ -1,72 +1,191 @@
-{
-  "swagger" : "2.0",
-  "info" : {
-    "version" : "1",
-    "title" : "taxi-api-gateway"
-  },
-  "host" : "123.execute-api.us-east-1.amazonaws.com",
-  "basePath" : "/dev",
-  "schemes" : [ "https" ],
-  "paths" : {
-    "/" : {
-      "get" : {
-        "parameters" : [ ],
-        "responses" : { }
-      }
-    },
-    "/bookTaxi" : {
-      "post" : {
-        "parameters" : [ ],
-        "responses" : { }
-      }
-    },
-    "/bookTaxi/confirm" : {
-      "post" : {
-        "parameters" : [ ],
-        "responses" : { }
-      }
-    },
-    "/boundary" : {
-      "get" : {
-        "parameters" : [ ],
-        "responses" : { }
-      }
-    },
-    "/locations" : {
-      "get" : {
-        "parameters" : [ ],
-        "responses" : { }
-      }
-    },
-    "/newRequests" : {
-      "get" : {
-        "parameters" : [ ],
-        "responses" : { }
-      }
-    },
-    "/stream" : {
-      "post" : {
-        "parameters" : [ ],
-        "responses" : { }
-      }
-    },
-    "/taxi/migrate" : {
-      "get" : {
-        "parameters" : [ ],
-        "responses" : { }
-      }
-    },
-    "/taxi/specialEvent" : {
-      "get" : {
-        "parameters" : [ ],
-        "responses" : { }
-      }
-    },
-    "/taxi/{shift_id}" : {
-      "get" : {
-        "parameters" : [ ],
-        "responses" : { }
-      }
-    }
-  }
-}
+---
+swagger: "2.0"
+info:
+  description: This is a Taxi server API configuration template.
+  version: "3"
+  title: taxi-api-gateway
+host: test.execute-api.us-east-1.amazonaws.com
+basePath: /dev
+tags:
+- name: taxi
+  description: for taxi and booking operations
+- name: user
+  description: for user operations
+- name: city
+  description: for fetching boundary and location details
+- name: requests
+  description: for fetching boundary and location details
+schemes:
+- https
+- http
+paths:
+  /:
+    get:
+      tags:
+      - taxi
+      summary: 'Base API Path '
+      description: returns welcome message
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        "200":
+          description: successful operation
+        "404":
+          description: request not found.
+        "500":
+          description: Unexpected error.
+  /boundary:
+    get:
+      tags:
+      - city
+      summary: lists the boundary details of a city
+      description: returns boundary details
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        "200":
+          description: successful operation
+        "404":
+          description: request not found.
+        "500":
+          description: Unexpected error.
+  /locations:
+    get:
+      tags:
+      - city
+      summary: Get the list of locations within a city
+      description: returns list of locations
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        "200":
+          description: successful operation
+        "404":
+          description: request not found.
+        "500":
+          description: Unexpected error.
+  /newRequests:
+    get:
+      tags:
+      - taxi
+      summary: Get a single request under request queue
+      description: returns new requests for ride
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        "200":
+          description: successful operation
+        "404":
+          description: request not found.
+        "500":
+          description: Unexpected error.
+  /taxi/migrate:
+    get:
+      tags:
+      - taxi
+      summary: Find the locations to move the taxi to
+      description: returns the lat long of location to move
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        "200":
+          description: successful operation
+        "404":
+          description: request not found.
+        "500":
+          description: Unexpected error.
+  /taxi/specialEvent:
+    get:
+      tags:
+      - taxi
+      summary: Find list of special events
+      description: returns special events
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        "200":
+          description: successful operation
+        "404":
+          description: request not found.
+        "500":
+          description: Unexpected error.
+  /taxi/{shift_id}:
+    get:
+      tags:
+      - taxi
+      summary: 'Base API Path '
+      description: returns welcome message
+      produces:
+      - application/json
+      parameters:
+      - name: shift_id
+        in: path
+        required: true
+        type: number
+      responses:
+        "200":
+          description: successful operation
+        "404":
+          description: request not found.
+        "500":
+          description: Unexpected error.
+  /stream:
+    post:
+      tags:
+      - requests
+      summary: Confirm the ride request
+      description: Confirm ride request
+      consumes:
+      - application/json
+      parameters:
+      - in: body
+        name: taxiId
+        description: ID of taxi that needs to be updated
+        required: true
+      responses:
+        "200":
+          description: successful operation
+        "405":
+          description: Invalid input
+  /bookTaxi/confirm:
+    post:
+      tags:
+      - requests
+      summary: Confirm the ride request
+      description: Confirm ride request
+      consumes:
+      - application/json
+      parameters:
+      - in: body
+        name: taxiId
+        description: ID of taxi that needs to be updated
+        required: true
+      responses:
+        "200":
+          description: successful operation
+        "405":
+          description: Invalid input
+  /bookTaxi:
+    post:
+      tags:
+      - requests
+      summary: Confirm the ride request
+      description: Confirm ride request
+      consumes:
+      - application/json
+      parameters:
+      - in: body
+        name: taxiId
+        description: ID of taxi that needs to be updated
+        required: true
+      responses:
+        "200":
+          description: successful operation
+        "405":
+          description: Invalid input
