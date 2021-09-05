@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_travel_taxi/Models/StageEnum.dart';
 import 'package:my_travel_taxi/Services/ComService.dart';
@@ -37,13 +38,23 @@ class _RouteViewState extends State<RouteView> {
         title: Text("Set Route"),
         centerTitle: true,
       ),
-      drawer: getDrawer(),
-      body: MapView(),
+      //drawer: getDrawer(),
+      //body: MapView(),
+      body: Flex(
+        direction: Axis.horizontal,
+        children: [
+          getDrawer(),
+          Expanded(
+            flex: 4,
+            child: MapView(),
+          ),
+        ],
+      ),
     );
   }
 
   Widget getDrawer() {
-    switch(_rideStage) {
+    switch (_rideStage) {
       case Stage.GetARide:
         return GetRide();
       case Stage.ConfirmRide:

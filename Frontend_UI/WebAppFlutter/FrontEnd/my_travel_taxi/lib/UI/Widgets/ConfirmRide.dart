@@ -32,145 +32,156 @@ class _ConfirmRideState extends State<ConfirmRide> {
   @override
   Widget build(BuildContext context) {
     return Stack(children: [
-      SingleChildScrollView(
-        child: Container(
-          color: Colors.white,
-          width: 300,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                width: 300,
-                color: Colors.pink,
-                child: Padding(
-                  padding: EdgeInsets.all(20),
-                  child: Text(
-                    'Confirm Ride Details',
-                    style: TextStyle(color: Colors.white, fontSize: 22),
+      Container(
+        height: double.infinity,
+        child: SingleChildScrollView(
+          child: Container(
+            color: Colors.white,
+            width: 300,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  width: 300,
+                  color: Colors.pink,
+                  child: Padding(
+                    padding: EdgeInsets.all(20),
+                    child: Text(
+                      'Confirm...',
+                      style: TextStyle(color: Colors.white, fontSize: 22),
+                    ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(14, 20, 20, 5),
-                child: Text(
-                  'From:',
-                  style: TextStyle(fontSize: 14),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(14, 20, 20, 5),
+                  child: Text(
+                    'From:',
+                    style: TextStyle(color: Colors.pink, fontSize: 14),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(14, 0, 20, 5),
-                child: Text(
-                  _myRide.startAddress!,
-                  style: TextStyle(color: Colors.blue, fontSize: 14),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(14, 0, 20, 5),
+                  child: Text(
+                    _myRide.startAddress!,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 14),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(14, 20, 20, 5),
-                child: Text(
-                  'To:',
-                  style: TextStyle(fontSize: 14),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(14, 20, 20, 5),
+                  child: Text(
+                    'To:',
+                    style: TextStyle(color: Colors.pink, fontSize: 14),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(14, 0, 20, 5),
-                child: Text(
-                  _myRide.destAddress!,
-                  style: TextStyle(color: Colors.purple, fontSize: 14),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(14, 0, 20, 5),
+                  child: Text(
+                    _myRide.destAddress!,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 14),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(14, 20, 20, 5),
-                child: Text(
-                  'Vehicle Number:',
-                  style: TextStyle(fontSize: 14),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(14, 20, 20, 5),
+                  child: Text(
+                    'Vehicle Number:',
+                    style: TextStyle(color: Colors.pink, fontSize: 14),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(14, 0, 20, 5),
-                child: Text(
-                  _myRide.vehicleNum!,
-                  style: TextStyle(color: Colors.deepOrange, fontSize: 14),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(14, 0, 20, 5),
+                  child: Text(
+                    _myRide.vehicleNum!,
+                    style: TextStyle(fontSize: 14),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(14, 20, 20, 5),
-                child: Text(
-                  'Vehicle Type:',
-                  style: TextStyle(fontSize: 14),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(14, 20, 20, 5),
+                  child: Text(
+                    'Vehicle Type:',
+                    style: TextStyle(color: Colors.pink, fontSize: 14),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(14, 0, 20, 5),
-                child: Text(
-                  _myRide.vehicleType!,
-                  style: TextStyle(color: Colors.pink, fontSize: 14),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(14, 0, 20, 5),
+                  child: Text(
+                    _myRide.vehicleType!,
+                    style: TextStyle(fontSize: 14),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(14, 20, 20, 5),
-                child: Text(
-                  'Scheduled Time:',
-                  style: TextStyle(fontSize: 14),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(14, 20, 20, 5),
+                  child: Text(
+                    'Scheduled Time:',
+                    style: TextStyle(color: Colors.pink, fontSize: 14),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(14, 0, 20, 5),
-                child: Text(
-                  _myRide.scheduledTime!.toString(),
-                  style: TextStyle(color: Colors.cyan, fontSize: 14),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(14, 0, 20, 5),
+                  child: Text(
+                    _myRide.scheduledTime!.toString(),
+                    style: TextStyle(fontSize: 14),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(14, 20, 20, 5),
-                child: Text(
-                  'Cost:',
-                  style: TextStyle(fontSize: 14),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(14, 20, 20, 5),
+                  child: Text(
+                    'Cost:',
+                    style: TextStyle(color: Colors.pink, fontSize: 14),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(14, 0, 20, 5),
-                child: Text(
-                  _myRide.cost!,
-                  style: TextStyle(color: Colors.green, fontSize: 14),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(14, 0, 20, 5),
+                  child: Text(
+                    _myRide.cost!,
+                    style: TextStyle(fontSize: 14),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(20),
-                child: ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      _onCofirmRidePending = true;
-                    });
-                    _onConfirmRidePressed().then((response) {
+                Padding(
+                  padding: EdgeInsets.all(20),
+                  child: ElevatedButton(
+                    onPressed: () {
                       setState(() {
-                        _onCofirmRidePending = false;
+                        _onCofirmRidePending = true;
                       });
-                      if (response.statusCode == 200) {
-                        final Map<String, dynamic> body = json.decode(response.body);
-                        ComService.otp.add(body['OTP'].toString());
-                        ComService.rideStage.add(Stage.StartRide);
-                        MessageService.showMessage(
-                            context, "Confirm Ride Successful!", Colors.green);
-                      } else {
+                      _onConfirmRidePressed().then((response) {
+                        setState(() {
+                          _onCofirmRidePending = false;
+                        });
+                        if (response.statusCode == 200) {
+                          final Map<String, dynamic> body =
+                              json.decode(response.body);
+                          ComService.otp.add(body['OTP'].toString());
+                          ComService.rideStage.add(Stage.StartRide);
+                          MessageService.showMessage(context,
+                              "Confirm Ride Successful!", Colors.green);
+                        } else {
+                          MessageService.showMessage(
+                              context, "Confirm Ride Failed!", Colors.red);
+                        }
+                      }, onError: (_) {
                         MessageService.showMessage(
                             context, "Confirm Ride Failed!", Colors.red);
-                      }
-                    }, onError: (_) {
-                      MessageService.showMessage(
-                          context, "Confirm Ride Failed!", Colors.red);
-                    });
-                  },
-                  child: Text('Confirm Ride'),
+                      });
+                    },
+                    child: Text('Confirm Ride'),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
       Visibility(
         visible: _onCofirmRidePending,
-        child: LinearProgressIndicator(),
+        child: Container(
+          width: 300,
+          child: LinearProgressIndicator(
+            color: Colors.yellow,
+          ),
+        ),
       )
     ]);
   }

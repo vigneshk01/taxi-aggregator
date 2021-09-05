@@ -34,120 +34,127 @@ class _EndRideState extends State<EndRide> {
   @override
   Widget build(BuildContext context) {
     return Stack(children: [
-      SingleChildScrollView(
-        child: Container(
-          color: Colors.white,
-          width: 300,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                width: 300,
-                color: Colors.pink,
-                child: Padding(
-                  padding: EdgeInsets.all(20),
-                  child: Text(
-                    'Traveling...',
-                    style: TextStyle(color: Colors.white, fontSize: 22),
+      Container(
+        height: double.infinity,
+        child: SingleChildScrollView(
+          child: Container(
+            color: Colors.white,
+            width: 300,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  width: 300,
+                  color: Colors.pink,
+                  child: Padding(
+                    padding: EdgeInsets.all(20),
+                    child: Text(
+                      'Traveling...',
+                      style: TextStyle(color: Colors.white, fontSize: 22),
+                    ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(14, 20, 20, 5),
-                child: Text(
-                  'Driver:',
-                  style: TextStyle(fontSize: 14),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(14, 20, 20, 5),
+                  child: Text(
+                    'Driver:',
+                    style: TextStyle(color: Colors.pink, fontSize: 14),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(14, 0, 20, 5),
-                child: Text(
-                  _myRide.driverFirstName! +
-                      ' ' +
-                      _myRide.driverLastName!,
-                  style: TextStyle(color: Colors.blue, fontSize: 14),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(14, 0, 20, 5),
+                  child: Text(
+                    _myRide.driverFirstName! + ' ' + _myRide.driverLastName!,
+                    style: TextStyle(fontSize: 14),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(14, 20, 20, 5),
-                child: Text(
-                  'Vehicle Number:',
-                  style: TextStyle(fontSize: 14),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(14, 20, 20, 5),
+                  child: Text(
+                    'Vehicle Number:',
+                    style: TextStyle(color: Colors.pink, fontSize: 14),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(14, 0, 20, 5),
-                child: Text(
-                  _myRide.vehicleNum!,
-                  style: TextStyle(color: Colors.deepOrange, fontSize: 14),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(14, 0, 20, 5),
+                  child: Text(
+                    _myRide.vehicleNum!,
+                    style: TextStyle(fontSize: 14),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(14, 20, 20, 5),
-                child: Text(
-                  'Vehicle Type:',
-                  style: TextStyle(fontSize: 14),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(14, 20, 20, 5),
+                  child: Text(
+                    'Vehicle Type:',
+                    style: TextStyle(color: Colors.pink, fontSize: 14),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(14, 0, 20, 5),
-                child: Text(
-                  _myRide.vehicleType!,
-                  style: TextStyle(color: Colors.pink, fontSize: 14),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(14, 0, 20, 5),
+                  child: Text(
+                    _myRide.vehicleType!,
+                    style: TextStyle(fontSize: 14),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(14, 20, 20, 5),
-                child: Text(
-                  'Started Ride at:',
-                  style: TextStyle(fontSize: 14),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(14, 20, 20, 5),
+                  child: Text(
+                    'Started Ride at:',
+                    style: TextStyle(color: Colors.pink, fontSize: 14),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(14, 0, 20, 5),
-                child: Text(
-                  _myRide.startTime!.toIso8601String(),
-                  style: TextStyle(color: Colors.cyan, fontSize: 14),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(14, 0, 20, 5),
+                  child: Text(
+                    _myRide.startTime!.toIso8601String(),
+                    style: TextStyle(fontSize: 14),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(20),
-                child: ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      _onEndRidePending = true;
-                    });
-                    _onEndRidePressed().then((response) {
+                Padding(
+                  padding: EdgeInsets.all(20),
+                  child: ElevatedButton(
+                    onPressed: () {
                       setState(() {
-                        _onEndRidePending = false;
+                        _onEndRidePending = true;
                       });
-                      if (response.statusCode == 200) {
-                        final Map<String, dynamic> body = json.decode(response.body);
-                        _myRide.endTime = DateTime.parse(body['end_time']);
-                        ComService.myRide.add(_myRide);
-                        ComService.rideStage.add(Stage.FeedbackOnRide);
-                        MessageService.showMessage(
-                            context, "Ride Started Successful!", Colors.green);
-                      } else {
+                      _onEndRidePressed().then((response) {
+                        setState(() {
+                          _onEndRidePending = false;
+                        });
+                        if (response.statusCode == 200) {
+                          final Map<String, dynamic> body =
+                              json.decode(response.body);
+                          _myRide.endTime = DateTime.parse(body['end_time']);
+                          ComService.myRide.add(_myRide);
+                          ComService.rideStage.add(Stage.FeedbackOnRide);
+                          MessageService.showMessage(context,
+                              "Ride Started Successful!", Colors.green);
+                        } else {
+                          MessageService.showMessage(
+                              context, "Failed to Start Ride!", Colors.red);
+                        }
+                      }, onError: (_) {
                         MessageService.showMessage(
                             context, "Failed to Start Ride!", Colors.red);
-                      }
-                    }, onError: (_) {
-                      MessageService.showMessage(
-                          context, "Failed to Start Ride!", Colors.red);
-                    });
-                  },
-                  child: Text('End Ride'),
+                      });
+                    },
+                    child: Text('End Ride'),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
       Visibility(
         visible: _onEndRidePending,
-        child: LinearProgressIndicator(),
+        child: Container(
+          width: 300,
+          child: LinearProgressIndicator(
+            color: Colors.yellow,
+          ),
+        ),
       )
     ]);
   }

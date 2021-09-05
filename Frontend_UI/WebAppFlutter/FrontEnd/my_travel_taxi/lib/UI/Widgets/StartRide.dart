@@ -34,134 +34,147 @@ class _StartRideState extends State<StartRide> {
   @override
   Widget build(BuildContext context) {
     return Stack(children: [
-      SingleChildScrollView(
-        child: Container(
-          color: Colors.white,
-          width: 300,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                width: 300,
-                color: Colors.pink,
-                child: Padding(
-                  padding: EdgeInsets.all(20),
-                  child: Text(
-                    'Starting Ride...',
-                    style: TextStyle(color: Colors.white, fontSize: 22),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(14, 20, 20, 5),
-                child: Text(
-                  'Driver:',
-                  style: TextStyle(fontSize: 14),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(14, 0, 20, 5),
-                child: Text(
-                  _myRide.driverFirstName! +
-                      ' ' +
-                      _myRide.driverLastName!,
-                  style: TextStyle(color: Colors.blue, fontSize: 14),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(14, 20, 20, 5),
-                child: Text(
-                  'Vehicle Number:',
-                  style: TextStyle(fontSize: 14),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(14, 0, 20, 5),
-                child: Text(
-                  _myRide.vehicleNum!,
-                  style: TextStyle(color: Colors.deepOrange, fontSize: 14),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(14, 20, 20, 5),
-                child: Text(
-                  'Vehicle Type:',
-                  style: TextStyle(fontSize: 14),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(14, 0, 20, 5),
-                child: Text(
-                  _myRide.vehicleType!,
-                  style: TextStyle(color: Colors.pink, fontSize: 14),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(20),
-                child: Container(
-                  width: 150,
-                  child: TextFormField(
-                    readOnly: true,
-                    initialValue: ComService.otp.value,
-                    textAlign: TextAlign.center,
-                    decoration: InputDecoration(
-                      hintText: "OTP",
-                      filled: true,
-                      fillColor: Colors.white,
+      Container(
+        height: double.infinity,
+        child: SingleChildScrollView(
+          child: Container(
+            color: Colors.white,
+            width: 300,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  width: 300,
+                  color: Colors.pink,
+                  child: Padding(
+                    padding: EdgeInsets.all(20),
+                    child: Text(
+                      'Starting Ride...',
+                      style: TextStyle(color: Colors.white, fontSize: 22),
                     ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter password';
-                      }
-                      else if(value.length == 0 || value.length > 6) {
-                        return 'OTP should be 6 digits only';
-                      }
-                      else if(value.contains(RegExp(r'[0-9]')) == false){
-                        return 'OTP is a 6 digit number';
-                      }
-                      return null;
-                    },
                   ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(20),
-                child: ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      _onStartRidePending = true;
-                    });
-                    _onStartRidePressed().then((response) {
+                Padding(
+                  padding: EdgeInsets.fromLTRB(14, 20, 20, 5),
+                  child: Text(
+                    'Driver:',
+                    style: TextStyle(color: Colors.pink, fontSize: 14),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(14, 0, 20, 5),
+                  child: Text(
+                    _myRide.driverFirstName! + ' ' + _myRide.driverLastName!,
+                    style: TextStyle(fontSize: 14),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(14, 20, 20, 5),
+                  child: Text(
+                    'Vehicle Number:',
+                    style: TextStyle(color: Colors.pink, fontSize: 14),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(14, 0, 20, 5),
+                  child: Text(
+                    _myRide.vehicleNum!,
+                    style: TextStyle(fontSize: 14),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(14, 20, 20, 5),
+                  child: Text(
+                    'Vehicle Type:',
+                    style: TextStyle(color: Colors.pink, fontSize: 14),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(14, 0, 20, 5),
+                  child: Text(
+                    _myRide.vehicleType!,
+                    style: TextStyle(fontSize: 14),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(14, 20, 20, 5),
+                  child: Text(
+                    'OTP:',
+                    style: TextStyle(color: Colors.pink, fontSize: 14),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(14, 0, 20, 5),
+                  child: Container(
+                    width: 150,
+                    child: TextFormField(
+                      readOnly: true,
+                      initialValue: ComService.otp.value,
+                      textAlign: TextAlign.center,
+                      decoration: InputDecoration(
+                        hintText: "OTP",
+                        filled: true,
+                        fillColor: Colors.white,
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter password';
+                        } else if (value.length == 0 || value.length > 6) {
+                          return 'OTP should be 6 digits only';
+                        } else if (value.contains(RegExp(r'[0-9]')) == false) {
+                          return 'OTP is a 6 digit number';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(20),
+                  child: ElevatedButton(
+                    onPressed: () {
                       setState(() {
-                        _onStartRidePending = false;
+                        _onStartRidePending = true;
                       });
-                      if (response.statusCode == 200) {
-                        final Map<String, dynamic> body = json.decode(response.body);
-                        _myRide.startTime = DateTime.parse(body['start_time']);
-                        ComService.myRide.add(_myRide);
-                        ComService.rideStage.add(Stage.EndRide);
-                        MessageService.showMessage(
-                            context, "Ride Started Successful!", Colors.green);
-                      } else {
+                      _onStartRidePressed().then((response) {
+                        setState(() {
+                          _onStartRidePending = false;
+                        });
+                        if (response.statusCode == 200) {
+                          final Map<String, dynamic> body =
+                              json.decode(response.body);
+                          _myRide.startTime =
+                              DateTime.parse(body['start_time']);
+                          ComService.myRide.add(_myRide);
+                          ComService.rideStage.add(Stage.EndRide);
+                          MessageService.showMessage(context,
+                              "Ride Started Successful!", Colors.green);
+                        } else {
+                          MessageService.showMessage(
+                              context, "Failed to Start Ride!", Colors.red);
+                        }
+                      }, onError: (_) {
                         MessageService.showMessage(
                             context, "Failed to Start Ride!", Colors.red);
-                      }
-                    }, onError: (_) {
-                      MessageService.showMessage(
-                          context, "Failed to Start Ride!", Colors.red);
-                    });
-                  },
-                  child: Text('Start Ride'),
+                      });
+                    },
+                    child: Text('Start Ride'),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
       Visibility(
         visible: _onStartRidePending,
-        child: LinearProgressIndicator(),
+        child: Container(
+          width: 300,
+          child: LinearProgressIndicator(
+            color: Colors.yellow,
+          ),
+        ),
       )
     ]);
   }

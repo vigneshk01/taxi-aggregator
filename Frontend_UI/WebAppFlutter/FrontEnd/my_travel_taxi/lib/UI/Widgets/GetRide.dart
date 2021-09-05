@@ -54,230 +54,246 @@ class _GetRideState extends State<GetRide> {
   @override
   Widget build(BuildContext context) {
     return Stack(children: [
-      SingleChildScrollView(
-        child: Container(
-          color: Colors.white,
-          width: 300,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                width: 300,
-                color: Colors.pink,
-                child: Padding(
+      Container(
+        height: double.infinity,
+        child: SingleChildScrollView(
+          child: Container(
+            color: Colors.white,
+            width: 300,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  width: 300,
+                  color: Colors.pink,
+                  child: Padding(
+                    padding: EdgeInsets.all(20),
+                    child: Text(
+                      'Get A Ride...',
+                      style: TextStyle(color: Colors.white, fontSize: 22),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(14, 20, 20, 5),
+                  child: Flex(
+                      direction: Axis.horizontal,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(right: 5),
+                          child: Icon(Icons.location_on,
+                              color: Colors.blue, size: 18),
+                        ),
+                        Text(
+                          'Start Location',
+                          style: TextStyle(color: Colors.pink, fontSize: 18),
+                        ),
+                      ]),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(5, 10, 5, 5),
+                  child: Container(
+                    width: 300,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(color: Colors.pink),
+                      borderRadius: BorderRadius.all(Radius.circular(5)),
+                    ),
+                    child: DropdownButton(
+                        isExpanded: true,
+                        value: _startAddress,
+                        underline: Container(),
+                        onChanged: (String? newVal) {
+                          setState(() {
+                            _startAddress = newVal!;
+                            _startLatLng =
+                                _locList[_addressList.indexOf(newVal)];
+                            ComService.startLatLng.add(_startLatLng);
+                          });
+                        },
+                        items: Checker.checkMap['endPointsAddressList']
+                            .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  width: 276,
+                                  child: Text(
+                                    value,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              );
+                            })
+                            .where((DropdownMenuItem<String> item) =>
+                                item.value != _destAddress)
+                            .toList()),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(18, 0, 20, 4),
+                  child: Text(ComService.startLatLng.value.toString(),
+                      style: TextStyle(color: Colors.pink, fontSize: 12)),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(14, 20, 20, 5),
+                  child: Flex(
+                      direction: Axis.horizontal,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(right: 5),
+                          child: Icon(Icons.location_on,
+                              color: Colors.purpleAccent, size: 18),
+                        ),
+                        Text(
+                          'End Location',
+                          style: TextStyle(color: Colors.pink, fontSize: 18),
+                        ),
+                      ]),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(5),
+                  child: Container(
+                    width: 300,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(color: Colors.pink),
+                      borderRadius: BorderRadius.all(Radius.circular(5)),
+                    ),
+                    child: DropdownButton(
+                        isExpanded: true,
+                        underline: Container(),
+                        value: _destAddress,
+                        onChanged: (String? newVal) {
+                          setState(() {
+                            _destAddress = newVal!;
+                            _destLatLng =
+                                _locList[_addressList.indexOf(newVal)];
+                            ComService.destLatLng.add(_destLatLng);
+                          });
+                        },
+                        items: Checker.checkMap['endPointsAddressList']
+                            .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  width: 276,
+                                  child: Text(
+                                    value,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              );
+                            })
+                            .where((DropdownMenuItem<String> item) =>
+                                item.value != _startAddress)
+                            .toList()),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(18, 0, 20, 4),
+                  child: Text(ComService.destLatLng.value.toString(),
+                      style: TextStyle(color: Colors.pink, fontSize: 12)),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(18, 5, 10, 5),
+                  child: Flex(
+                      direction: Axis.horizontal,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(right: 5),
+                          child: Icon(Icons.directions_car_rounded, size: 18),
+                        ),
+                        DropdownButton(
+                            value: _vehicleType,
+                            onChanged: (String? newval) {
+                              setState(() {
+                                _vehicleType = newval!;
+                              });
+                            },
+                            style: TextStyle(color: Colors.pink),
+                            items: Checker.checkMap['vehicleTypeList']
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList()),
+                      ]),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(18, 5, 10, 5),
+                  child: Flex(
+                      direction: Axis.horizontal,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(right: 5),
+                          child: Icon(Icons.timer, size: 18),
+                        ),
+                        DropdownButton(
+                            value: _eta,
+                            onChanged: (String? newval) {
+                              setState(() {
+                                _eta = newval!;
+                              });
+                            },
+                            style: TextStyle(color: Colors.pink),
+                            items: Checker.checkMap['scheduleTimeList']
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList()),
+                      ]),
+                ),
+                Padding(
                   padding: EdgeInsets.all(20),
-                  child: Text(
-                    'Chosen Ride Details',
-                    style: TextStyle(color: Colors.white, fontSize: 22),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(14, 20, 20, 5),
-                child: Flex(
-                    direction: Axis.horizontal,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(right: 5),
-                        child: Icon(Icons.location_on,
-                            color: Colors.blue, size: 18),
-                      ),
-                      Text(
-                        'Start Location',
-                        style: TextStyle(color: Colors.pink, fontSize: 18),
-                      ),
-                    ]),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(5, 10, 5, 5),
-                child: Container(
-                  width: 300,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(color: Colors.pink),
-                    borderRadius: BorderRadius.all(Radius.circular(5)),
-                  ),
-                  child: DropdownButton(
-                      isExpanded: true,
-                      value: _startAddress,
-                      underline: Container(),
-                      onChanged: (String? newVal) {
-                        setState(() {
-                          _startAddress = newVal!;
-                          _startLatLng = _locList[_addressList.indexOf(newVal)];
-                          ComService.startLatLng.add(_startLatLng);
-                        });
-                      },
-                      items: Checker.checkMap['endPointsAddressList']
-                          .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Container(
-                                alignment: Alignment.center,
-                                width: 276,
-                                child: Text(value, textAlign: TextAlign.center,),
-                              ),
-                            );
-                          })
-                          .where((DropdownMenuItem<String> item) =>
-                              item.value != _destAddress)
-                          .toList()),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(18, 0, 20, 4),
-                child: Text(ComService.startLatLng.value.toString(),
-                    style: TextStyle(color: Colors.pink, fontSize: 12)),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(14, 20, 20, 5),
-                child: Flex(
-                    direction: Axis.horizontal,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(right: 5),
-                        child: Icon(Icons.location_on,
-                            color: Colors.purpleAccent, size: 18),
-                      ),
-                      Text(
-                        'End Location',
-                        style: TextStyle(color: Colors.pink, fontSize: 18),
-                      ),
-                    ]),
-              ),
-              Padding(
-                padding: EdgeInsets.all(5),
-                child: Container(
-                  width: 300,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(color: Colors.pink),
-                    borderRadius: BorderRadius.all(Radius.circular(5)),
-                  ),
-                  child: DropdownButton(
-                      isExpanded: true,
-                      underline: Container(),
-                      value: _destAddress,
-                      onChanged: (String? newVal) {
-                        setState(() {
-                          _destAddress = newVal!;
-                          _destLatLng = _locList[_addressList.indexOf(newVal)];
-                          ComService.destLatLng.add(_destLatLng);
-                        });
-                      },
-                      items: Checker.checkMap['endPointsAddressList']
-                          .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Container(
-                                alignment: Alignment.center,
-                                width: 276,
-                                child: Text(value, textAlign: TextAlign.center,),
-                              ),
-                            );
-                          })
-                          .where((DropdownMenuItem<String> item) =>
-                              item.value != _startAddress)
-                          .toList()),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(18, 0, 20, 4),
-                child: Text(ComService.destLatLng.value.toString(),
-                    style: TextStyle(color: Colors.pink, fontSize: 12)),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(18, 5, 10, 5),
-                child: Flex(
-                    direction: Axis.horizontal,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(right: 5),
-                        child: Icon(Icons.directions_car_rounded, size: 18),
-                      ),
-                      DropdownButton(
-                          value: _vehicleType,
-                          onChanged: (String? newval) {
-                            setState(() {
-                              _vehicleType = newval!;
-                            });
-                          },
-                          style: TextStyle(color: Colors.pink),
-                          items: Checker.checkMap['vehicleTypeList']
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList()),
-                    ]),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(18, 5, 10, 5),
-                child: Flex(
-                    direction: Axis.horizontal,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(right: 5),
-                        child: Icon(Icons.timer, size: 18),
-                      ),
-                      DropdownButton(
-                          value: _eta,
-                          onChanged: (String? newval) {
-                            setState(() {
-                              _eta = newval!;
-                            });
-                          },
-                          style: TextStyle(color: Colors.pink),
-                          items: Checker.checkMap['scheduleTimeList']
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList()),
-                    ]),
-              ),
-              Padding(
-                padding: EdgeInsets.all(20),
-                child: ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      _onGetARidePending = true;
-                    });
-                    _onGetRidePressed().then((response) {
+                  child: ElevatedButton(
+                    onPressed: () {
                       setState(() {
-                        _onGetARidePending = false;
+                        _onGetARidePending = true;
                       });
-                      if (response.statusCode == 200) {
-                        final body = json.decode(response.body);
-                        setRide(body);
-                        MessageService.showMessage(
-                            context, "Get A Ride Successful!", Colors.green);
-                      } else {
+                      _onGetRidePressed().then((response) {
+                        setState(() {
+                          _onGetARidePending = false;
+                        });
+                        if (response.statusCode == 200) {
+                          final body = json.decode(response.body);
+                          setRide(body);
+                          MessageService.showMessage(
+                              context, "Get A Ride Successful!", Colors.green);
+                        } else {
+                          MessageService.showMessage(
+                              context, "Get A Ride Failed!", Colors.red);
+                        }
+                      }, onError: (_) {
                         MessageService.showMessage(
                             context, "Get A Ride Failed!", Colors.red);
-                      }
-                    }, onError: (_) {
-                      MessageService.showMessage(
-                          context, "Get A Ride Failed!", Colors.red);
-                    });
-                  },
-                  child: Text('Get A Ride'),
+                      });
+                    },
+                    child: Text('Get A Ride'),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
       Visibility(
         visible: _onGetARidePending,
-        child: LinearProgressIndicator(),
+        child: Container(
+          width: 300,
+          child: LinearProgressIndicator(
+            color: Colors.yellow,
+          ),
+        ),
       ),
     ]);
   }
