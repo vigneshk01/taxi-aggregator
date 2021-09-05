@@ -2,13 +2,15 @@ import datetime
 import random
 from json import dumps
 from bson.son import SON
-from flask import Flask, request
+from flask import Flask, request, make_response, jsonify
 from app.database import Database
+import config
 
 app = Flask(__name__)
+app.config.from_object(config)
 db = Database()
 # TAXI_COLLECTION = 'taxi-reg-data'
-TAXI_COLLECTION = 'taxi'
+# TAXI_COLLECTION = 'taxi'
 LOCATION_COLLECTION = 'boundary'
 RIDE_DETAILS_COLLECTION = 'ridedetails'
 STREAM_COLLECTION = 'taxi_location_stream'
@@ -28,7 +30,7 @@ def get_taxi_list(shift_id):  # will get called every minute
     if int(shift_id) == 6:
         print(shift_id)
         curr_time = "06:00"
-        taxi_data = db.get_all_data(TAXI_COLLECTION, {'Shift_Start_Time': curr_time},
+        taxi_data = db.get_all_data(app.config["TAXI_COLLECTION"], {'Shift_Start_Time': curr_time},
                                     {'_id': 0, 'TaxiID': 1, 'taxi_type': 1})
         list_cur = list(taxi_data)
         json_data = dumps(list_cur)
@@ -71,7 +73,7 @@ def get_special_events():
 
 @app.route("/boundary", methods=['GET'])
 def get_boundary():
-    location_data = db.get_all_data(LOCATION_COLLECTION, {'geometry.type': 'Polygon'}, {'_id': 0})
+    location_data = db.get_all_data(app.config["LOCATION_COLLECTION"], {'geometry.type': 'Polygon'}, {'_id': 0})
     list_cur = list(location_data)
     json_data = dumps(list_cur)
     return json_data
@@ -173,5 +175,8 @@ def confirm_taxi():
     return None
 
 
+@app.errorhandler(404)
+def resource_not_found(e):
+    return make_response(jsonify(error='Not found!'), 404)
 # if __name__ == "__main__":
 #     app.run(debug=True)

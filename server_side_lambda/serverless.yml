@@ -12,16 +12,19 @@ provider:
   apiName: taxi-api-gateway # Use a custom name for the API Gateway API
   lambdaHashingVersion: 20201221
 
+  iam:
+    role: ServerlessLambdaRole
+
   deploymentBucket:
     blockPublicAccess: true
     serverSideEncryption: AES256
     tags: # Tags that will be added to each of the deployment resources
       app: taxi
-    deploymentPrefix: serverless
 
 plugins:
   - serverless-python-requirements
   - serverless-wsgi
+
 custom:
   wsgi:
     app: app/models.app
@@ -34,17 +37,45 @@ package:
 
 functions:
    base: # The lambda Function name
+    dependsOn: ServerlessLambdaRole
     handler: wsgi_handler.handler
     runtime: python3.9
-    role: arn:aws:iam::428938486474:role/service-role/lambda-cloud-project-role # IAM role which will be used for this function
+    role: ServerlessLambdaRole # IAM role which will be used for this function
     events: # The Events that trigger this Function
       - http: GET /
-      - http: GET /taxi/{shift_id}
-      - http: GET /taxi/specialEvent
-      - http: GET /boundary
-      - http: GET /locations
-      - http: GET /newRequests
-      - http: GET /taxi/migrate
-      - http: POST /bookTaxi
-      - http: POST /bookTaxi/confirm
-      - http: POST /stream
+
+      - http: GET /taxis
+      - http: GET /taxis/migrate
+      - http: GET /taxis/special-events
+      - http: GET /taxis/new-requests
+      - http: POST /taxis/stream
+
+      - http: GET /city/boundary
+      - http: GET /city/locations
+
+      - http: POST /users/book-Taxi
+      - http: POST /users/book-Taxi/confirm
+
+
+resources:
+  Resources:
+    ServerlessLambdaRole:
+      Type: AWS::IAM::Role
+      Properties:
+        Path: /service-role/
+        RoleName: serverless-lambda-role
+        AssumeRolePolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Principal:
+                Service:
+                  - lambda.amazonaws.com
+                  - events.amazonaws.com
+                  - apigateway.amazonaws.com
+              Action: sts:AssumeRole
+        # AWS Managed Policies
+        ManagedPolicyArns:
+          - arn:aws:iam::aws:policy/CloudWatchFullAccess
+          - arn:aws:iam::aws:policy/AmazonKinesisFullAccess
+          - arn:aws:iam::aws:policy/AmazonSNSFullAccess
