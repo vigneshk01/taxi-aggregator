@@ -4,13 +4,14 @@ from json import dumps
 from bson.son import SON
 from flask import Flask, request, make_response, jsonify
 from app.database import Database
+from sklearn.cluster import KMeans
 import config
 
 app = Flask(__name__)
 app.config.from_object(config)
 db = Database()
 # TAXI_COLLECTION = 'taxi-reg-data'
-# TAXI_COLLECTION = 'taxi'
+TAXI_COLLECTION = 'taxi'
 LOCATION_COLLECTION = 'boundary'
 RIDE_DETAILS_COLLECTION = 'ridedetails'
 STREAM_COLLECTION = 'taxi_location_stream'
@@ -26,7 +27,17 @@ def home():
 
 @app.route("/taxi/<shift_id>", methods=['GET'])
 def get_taxi_list(shift_id):  # will get called every minute
-
+    curr_time = datetime.now().time()
+    if(curr_time.hour > 5 and curr_time.hour < 18):
+        curr_time = '06:00'
+    else:
+        curr_time = '18:00'
+    taxi_data = db.get_all_data(TAXI_COLLECTION, {'Shift_Start_Time': curr_time},
+                                {'_id': 0, 'TaxiID': 1, 'taxi_type': 1})
+    list_cur = list(taxi_data)
+    json_data = dumps(list_cur)
+    return json_data
+    '''
     if int(shift_id) == 6:
         print(shift_id)
         curr_time = "06:00"
@@ -35,6 +46,7 @@ def get_taxi_list(shift_id):  # will get called every minute
         list_cur = list(taxi_data)
         json_data = dumps(list_cur)
         return json_data
+    '''
 
 
 # @app.route("/taxi/18", methods=['GET'])
@@ -99,26 +111,101 @@ def get_new_ride_requests():
     data = request.json
     lattitude = request.args.get('lat')
     longitude = request.args.get('long')
-    coll_documents = db.get_single_data(STREAM_COLLECTION, data, {'_id': 0, 'current_location': 1, 'taxiID': 1,
-                                                                  'taxi_type': 1})
-    query = {"request_status": "open"}
+    #coll_documents = db.get_single_data(STREAM_COLLECTION, data, {'_id': 0, 'current_location': 1, 'taxiID': 1,
+    #                                                              'taxi_type': 1})
+    query = {"request_status": "open", 'taxiID': request.args.get('taxi_ID')}
 
-    # db.get_single_data()
-    return
+    coll_documents = db.get_single_data(RIDE_DETAILS_COLLECTION, query, {'_id': 0, 'current_location': 1, 'taxiID': 1,
+                                                                  'taxi_type': 1})
+    json_data = dumps(coll_documents)
+    return json_data
 
 
 @app.route("/taxi/migrate", methods=['GET'])
 def migrate_taxi():
-    return
+    time_frame = datetime.datetime.now() - datetime.timedelta(minutes = 20)
+    query = {'timestamp': {'$gte': time_frame}}
+    coll_documents = db.get_all_data(BOOKING_HISTORY_COLLECTION, query, {'_id': 0, 'current_location': 1})
+    list_coll = list(c['current_location']['coordinates'] for c in coll_documents)
+    kmeans = KMeans(init = "random", n_clusters = 5, n_init = 5, max_iter = 100)
+    kmeans.fit(list_coll)
+    #print(kmeans.cluster_centers_)
+    json_list = []
+    for cc in kmeans.cluster_centers_:
+        json_list.append({
+            'current_location': {
+                'type': 'Point',
+                'coordinates': [cc[0], cc[1]]
+            }
+        })
+    json_obj = dumps(json_list)
+    return json_obj
 
 
 @app.route("/bookTaxi", methods=['POST'])
 def book_taxi():
     data = request.json
     location = data['current_location']
-    range_query = {'current_location': SON([("$near", location), ("$maxDistance", 1000)])}
-    coll_documents = db.get_all_data(STREAM_COLLECTION, range_query, {'_id': 0, 'current_location': 1, 'taxiID': 1,
-                                                                      'taxi_type': 1})
+    taxi_type = data['preffered_taxi_type']
+    if taxi_type == 'All':
+        agg_query = [
+            {
+                '$geoNear'  : {
+                    'near': location,
+                    'distanceField': 'distance', 
+                    'maxDistance': 1000,
+                }
+            },{
+                '$match'    : {
+                    'status': 'Available'
+                }
+            }, {
+                '$sort'     : {
+                    'taxiID': 1, 
+                    'timestamp': -1
+                }
+            }, {
+                '$group'    : {
+                    '_id': '$taxiID',
+                    'taxiID': {'$first': '$taxiID'},
+                    'current_location': {'$first': '$current_location'}, 
+                    'taxi_type': {'$first': '$taxi_type'}
+                }       
+            }
+        ]
+        # $group is not updating properly. Other pipes are working correctly.
+    else:
+        agg_query = [
+            {
+                '$geoNear'  : {
+                    'near': location,
+                    'distanceField': 'distance', 
+                    'maxDistance': 1000,
+                }
+            },{
+                '$match'    : {
+                    'status': 'Available',
+                    'taxi_type': taxi_type
+                }
+            }, {
+                '$sort'     : {
+                    'taxiID': 1, 
+                    'timestamp': -1
+                }
+            }, {
+                '$group'    : {
+                    '_id': '$taxiID',
+                    'taxiID': {'$first': '$taxiID'},
+                    'current_location': {'$first': '$current_location'}, 
+                    'taxi_type': {'$first': '$taxi_type'}
+                }       
+            }
+        ]
+    #coll_documents = db.get_all_data(STREAM_COLLECTION, range_query, {'_id': 0, 'current_location': 1, 'taxiID': 1,
+    #                                                                  'taxi_type': 1})
+    coll_documents = db.generate_aggregate(STREAM_COLLECTION, agg_query)
+    #Get list of n nearest taxis 
+    data['timestamp'] = datetime.datetime.now()
     list_coll = list(coll_documents)
     if len(list_coll) > 0:
         json_data = dumps(list_coll)
