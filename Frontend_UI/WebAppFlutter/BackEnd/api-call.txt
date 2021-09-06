@@ -91,7 +91,8 @@ API Gateway URL:
 		"status": "ACTIVE"
 		"user_type": "Taxi"
 		"username": "92f1a5e5011a37f5d1fd9cf6e5e6c16f826023e94d76ae3436d6d15265f5bde0"
-		"vehicle_num": "KA09T1661"
+		"vehicle_num": "KA09T1661",
+		"vehicle_type": "UTILITY"
 	}
 	Response:
 	---------
