@@ -22,8 +22,12 @@ API Gateway URL:
 	Response:
 	---------
 	{
-		"APIKey":"3b8987fc336962d247878853df95d8f615dd99bc16b65d320fd8a2cc0b3ea8cd"
+		"statusCode": 200,
+		"body": {
+					"APIKey":"3b8987fc336962d247878853df95d8f615dd99bc16b65d320fd8a2cc0b3ea8cd"
+				}		
 	}
+	
 	
 	b) Taxi:
 	--------
@@ -39,8 +43,12 @@ API Gateway URL:
 	Response:
 	---------
 	{
-		"APIKey":"c88debbb56b66ae78929c82b951abba1a218a702a0397a31042150f5ff250ab2"
+		"statusCode": 200,
+		"body": {
+					"APIKey":"c88debbb56b66ae78929c82b951abba1a218a702a0397a31042150f5ff250ab2"
+				}			
 	}
+	
 	
 2) SIGN:
 --------
@@ -63,7 +71,10 @@ API Gateway URL:
 	Response:
 	---------
 	{
-		"Successfully added user"
+		"statusCode": 200,
+		"body": {
+					"Successfully added user"
+				}			
 	}
 	
 	b) Taxi:
@@ -85,7 +96,10 @@ API Gateway URL:
 	Response:
 	---------
 	{
-		"Successfully added user"
+		"statusCode": 200,
+		"body": {
+					"Successfully added user"
+				}			
 	}
 	
 3) NEARBY RIDES:
@@ -103,30 +117,34 @@ API Gateway URL:
 	
 	Response:
 	---------
-	[
-		{
-			"vehicle_num": "AP10L4747",
-			"vehicle_type": "LUXURY",
-			"location": {
-				"type": "Point",
-				"coordinates": [
-					12.9809302,
-					77.5971314
-				]
-			}
-		},
-		{
-			"vehicle_num": "KA09M1010",
-			"vehicle_type": "DELUXE",
-			"location": {
-				"type": "Point",
-				"coordinates": [
-					12.9776176,
-					77.5993393
-				]
-			}
-		}
-	]
+	{
+		"statusCode": 200,
+		"body": [
+					{
+						"vehicle_num": "AP10L4747",
+						"vehicle_type": "LUXURY",
+						"location": {
+							"type": "Point",
+							"coordinates": [
+								12.9809302,
+								77.5971314
+							]
+						}
+					},
+					{
+						"vehicle_num": "KA09M1010",
+						"vehicle_type": "DELUXE",
+						"location": {
+							"type": "Point",
+							"coordinates": [
+								12.9776176,
+								77.5993393
+							]
+						}
+					}
+				]			
+	}
+	
 	
 4) GET A RIDE:
 --------------
@@ -147,17 +165,20 @@ API Gateway URL:
 	Response:
 	---------
 	{
-		"firstname":"Aravind",
-		"lastname":"Prabhakaran",
-		"vehicle_num":"KA09M1010",
-		"vehicle_type":"DELUXE",
-		"location":
-		{
-			"type":"Point",
-			"coordinates":[12.9776176,77.5993393]
-		},
-		"cost":"36.09"
+		"statusCode": 200,
+		"body": {
+					"firstname":"Aravind",
+					"lastname":"Prabhakaran",
+					"vehicle_num":"KA09M1010",
+					"vehicle_type":"DELUXE",
+					"location": {
+									"type":"Point",
+									"coordinates":[12.9776176,77.5993393]
+								},
+					"cost":"36.09"
+				}			
 	}
+	
 	
 5) CONFIRM RIDE:
 ----------------
@@ -184,6 +205,11 @@ API Gateway URL:
 	Response:
 	---------
 	{
+		"statusCode": 200,
+		"body":
+				
+	}
+	{
 		"OTP":637799
 	}
 	
@@ -206,7 +232,10 @@ API Gateway URL:
 	Response:
 	---------
 	{
-		"start_time":"2021-09-05T22:47:32.207"
+		"statusCode": 200,
+		"body": {
+					"start_time":"2021-09-05T22:47:32.207"
+				}			
 	}
 	
 7) END RIDE:
@@ -227,7 +256,10 @@ API Gateway URL:
 	Response:
 	---------
 	{
-		"end_time":"2021-09-05T22:49:33.246"
+		"statusCode": 200,
+		"body": {
+					"end_time":"2021-09-05T22:49:33.246"
+				}			
 	}
 	
 8) FEEDBACK:
@@ -249,10 +281,166 @@ API Gateway URL:
 	Response:
 	---------
 	{
-		"passenger_rating":3,
-		"passenger_comments":"Good and comfortable"
+		"statusCode": 200,
+		"body": {
+					"passenger_rating":3,
+					"passenger_comments":"Good and comfortable"
+				}			
 	}
 	
+	
+9) TAXI LOC UPDATE:
+-------------------
+	URL:
+	----
+	'https://fep34ikk65.execute-api.us-east-1.amazonaws.com/dev/api/user/updateuser'
+	
+	Request:
+	--------
+	{
+		"userType": "Taxi",
+		"updateType": "taxiLoc",
+		"apiKey": "d4501bb8c058e2879043eca139de1912b3ac608ea76e6a503bc247c8059832a0",
+		"vehicle_num": "KA09T1661",
+		"lat": 12.9862971,
+		"lng": 77.595877,
+		"status": "ACTIVE"
+	}
+	
+	Response:
+	---------
+	{
+		"statusCode": 200,
+		"body": {
+					"Successful update!"
+				}			
+	}
+	
+	
+10) GET ALL TAXIS:
+-----------------	
+	URL:
+	----
+	'https://fep34ikk65.execute-api.us-east-1.amazonaws.com/dev/alltaxis'
+	
+	Response:
+	---------
+	{
+		"statusCode": 200,
+		"body": [
+				  {
+					"firstname": "Aravind",
+					"lastname": "Prabhakaran",
+					"username": "86403b9b2eb52304f546b0ed283976b7c1b6f482ae12af335fdf36b56aaff064",
+					"password": "c3f6dee71615c2995427e8ed8aeab00c63c78394b251c54d5933ca0490b3dbde",
+					"vehicle_num": "KA09M1010",
+					"vehicle_type": "DELUXE",
+					"driving_license_num": "KA1320120123456",
+					"location": {
+					  "type": "Point",
+					  "coordinates": [
+						12.9776176,
+						77.5993393
+					  ]
+					},
+					"last_updated_timestamp": "2021-09-05T17:34:49.454Z",
+					"APIKey": "c88debbb56b66ae78929c82b951abba1a218a702a0397a31042150f5ff250ab2",
+					"status": "ACTIVE"
+				  },
+				  {
+					"firstname": "Salim",
+					"lastname": "Khan",
+					"username": "2f94a1734faff4ffbb35590e6ea7353323d79d05cef349e28026adda0c763d0e",
+					"password": "4d0abf162965cbe07f6342f8f4068176092826f0a7e740af1837e2fcdaac9cde",
+					"vehicle_num": "AP10L4747",
+					"vehicle_type": "LUXURY",
+					"driving_license_num": "AP8881114366456",
+					"location": {
+					  "type": "Point",
+					  "coordinates": [
+						12.9809302,
+						77.5971314
+					  ]
+					},
+					"last_updated_timestamp": "2021-08-31T18:28:00.921Z",
+					"APIKey": "4d6c042dd32c495edde88a8ddec2346767191da12b14f2602b0fb63f55ccf149",
+					"status": "ACTIVE"
+				  },
+				  {
+					"firstname": "Venkat",
+					"lastname": "Rao",
+					"username": "92f1a5e5011a37f5d1fd9cf6e5e6c16f826023e94d76ae3436d6d15265f5bde0",
+					"password": "20e50916fdc1ac62453d064a940975701e19230bcc015c6a50281f36ff6a0b7f",
+					"vehicle_num": "KA09T1661",
+					"vehicle_type": "UTILITY",
+					"driving_license_num": "KA1388927723456",
+					"location": {
+					  "type": "Point",
+					  "coordinates": [
+						12.9862971,
+						77.595877
+					  ]
+					},
+					"last_updated_timestamp": "2021-09-05T19:34:03.712Z",
+					"APIKey": "d4501bb8c058e2879043eca139de1912b3ac608ea76e6a503bc247c8059832a0",
+					"status": "ACTIVE"
+				  }
+				]
+	}
+	
+11) GET BOUNDARY:
+-----------------	
+	URL:
+	----
+	'https://fep34ikk65.execute-api.us-east-1.amazonaws.com/dev/ridesearch/getboundary'
+	
+	Response:
+	---------
+	{
+		"statusCode": 200,
+		"body": {
+					"city": "Bangalore",
+					"geometry": {
+									"type": "Polygon",
+									"coordinates": [
+													  [
+														[
+														  77.48039245605469,
+														  13.053392453653448
+														],
+														[
+														  77.47215270996094,
+														  12.963074139604124
+														],
+														[
+														  77.50991821289062,
+														  12.86335142951402
+														],
+														[
+														  77.67814636230469,
+														  12.841929289611192
+														],
+														[
+														  77.76809692382811,
+														  12.944337340144848
+														],
+														[
+														  77.75711059570311,
+														  13.026300414486952
+														],
+														[
+														  77.60913848876952,
+														  13.1155925540513
+														],
+														[
+														  77.48039245605469,
+														  13.053392453653448
+														]
+													  ]
+													]
+								}
+				}
+	}
 	
 	
 	
