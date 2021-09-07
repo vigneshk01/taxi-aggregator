@@ -9,7 +9,7 @@ class Database:
     # PORT = '27017'
     # DB_NAME = 'test'
     DB_NAME = 'glcapstone_taxi_db'
-    CONNECTION_STRING = "mongodb+srv://sreenathk88:armageddon1@glcapstone-taxi-cluster.agfup.mongodb.net/test" \
+    CONNECTION_STRING = "mongodb+srv://<>/test" \
                         "?retryWrites=true&w=majority"
 
     def __init__(self):

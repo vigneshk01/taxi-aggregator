@@ -2,7 +2,6 @@ import datetime
 import random
 import string
 from bson import ObjectId
-
 from database import Database
 
 passenger_rating_lst = ["1:Poor Ride", "2:Below Average Ride", "3:Decent Ride", "4:Good Ride", "5:Awesome Ride"]
