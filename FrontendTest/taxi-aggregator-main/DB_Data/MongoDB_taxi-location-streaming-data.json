@@ -1,0 +1,11 @@
+[
+	{
+	"taxiId" : ""
+	"timestamp" : ""
+	"taxiStatus" : ""
+	"geometry": {
+				"type": "Point",
+				"coordinates": ""
+			}
+	}
+]
