@@ -30,22 +30,21 @@ class Taxi:
         taxi_list = self._api.get_request('taxi/6')
         self._Taxi = taxi_list
 
-    def taxi_template(self, taxi_id, coordinates, taxi_type, taxi_status='Available'):
+    def taxi_template(self, api_key, vehicle_num, status, random_location):
         template_dict = {
-            "taxiId": taxi_id,
-            "timestamp": datetime.now().strftime("%Y-%m-%dT%H:%M:%S"),
-            "status": taxi_status,
-            "taxi_type": taxi_type,
-            "current_location": {
-                "type": "Point",
-                "coordinates": coordinates
-            }
+            "userType": 'Taxi',
+            "updateType": 'taxiLoc',
+            "apiKey": api_key,
+            "vehicle_num": vehicle_num,
+            "status": status,
+            "lng": random_location[0],
+            "lat": random_location[1]
         }
         return template_dict
 
 
 class KinesisPublishAndMovement(Taxi):
-    LOCATION_FILE = 'Movement_Location_History_Json/taxi_location_history.json'
+    BASED_FILE_LOCATION = 'Movement_Location_History_Json'
 
     def __init__(self):
         Taxi.__init__(self)
@@ -56,20 +55,20 @@ class KinesisPublishAndMovement(Taxi):
     def publish_kinesis_data(self, data):
         message = json.dumps(data)
         response = self._Kinesis_Handle.put_record(
-            StreamName=self._Data_Stream_Name, Data=message, PartitionKey=data['taxiId']
+            StreamName=self._Data_Stream_Name, Data=message, PartitionKey=data['vehicle_num']
         )
         print(f'Data pushed successfully and res- {response}')
 
-    def get_recent_long_lat_by_taxi_id(self, taxi_id):
+    def get_recent_long_lat_for_taxi_id(self):
         long_lat_data = []
         if self._recent_locations:
-            long_lat_data = self._recent_locations[taxi_id]['current_location']['coordinates']
+            long_lat_data = [self._recent_locations['lng'], self._recent_locations['lat']]
         else:
             print('No location history found')
         return long_lat_data
 
-    def get_taxi_data(self, taxi_id):
-        return self._recent_locations[taxi_id]
+    def get_taxi_data(self):
+        return self._recent_locations
 
     def calculate_movement(self, long, lat, distance=0.2):
         R = 6378.1  # Radius of the Earth
@@ -90,17 +89,14 @@ class KinesisPublishAndMovement(Taxi):
 
         return [lon2, lat2]
 
-    def read_recent_location(self):
-        recent_loc_file = open(self.LOCATION_FILE, "r")
+    def read_recent_location(self, taxi_id):
+        recent_loc_file = open(f'{self.BASED_FILE_LOCATION}/{taxi_id}_location_history.json', "r")
         self._recent_locations = json.load(recent_loc_file)
         recent_loc_file.close()
 
-    def update_location(self, taxi_id, data):
-        self._recent_locations[taxi_id] = data
-
-    def update_all_location_to_json(self):
-        recent_loc_file = open(self.LOCATION_FILE, "w")
-        json.dump(self._recent_locations, recent_loc_file, indent=4)
+    def update_location_to_json(self, taxi_id, taxi_data):
+        recent_loc_file = open(f'{self.BASED_FILE_LOCATION}/{taxi_id}_location_history.json', "w")
+        json.dump(taxi_data, recent_loc_file, indent=4)
         recent_loc_file.close()
 
     def choose_random_from_list(self, locality_location):
@@ -113,18 +109,21 @@ class KinesisPublishAndMovement(Taxi):
         polygon = Polygon(boundary_list)
         return polygon.contains(point)
 
-    def stream_template_data(self, taxi_id, long, lat, taxi_type):
+    def stream_template_data(self, taxi, long, lat):
         new_long_lat = [long, lat]
-        stream_template = Taxi.taxi_template(self, taxi_id, new_long_lat, taxi_type)
-        print(f'Pushed Data - {stream_template}')
+        stream_template = Taxi.taxi_template(
+            self, taxi['APIKey'], taxi['vehicle_num'], taxi['status'], new_long_lat
+        )
         # For Api stream insert
-        #self._api.post_stream('/stream', stream_template)
+        # self._api.post_stream('/api/users/updateuser', stream_template)
         # For Direct kinesis insert
-        #self.publish_kinesis_data(stream_template)
+        self.publish_kinesis_data(stream_template)
         return stream_template
 
 
 class RandomTaxiGenerateModel(KinesisPublishAndMovement):
+    BASED_FILE_LOCATION = 'Movement_Location_History_Json'
+    LOCATION = 'location_in_boundary/location.json'
 
     def __init__(self):
         KinesisPublishAndMovement.__init__(self)
@@ -144,13 +143,13 @@ class RandomTaxiGenerateModel(KinesisPublishAndMovement):
 
     def extract_location(self):
         if len(self._boundary) != 0:
-            return self._boundary[0]['geometry']['coordinates']
+            return self._boundary['geometry']['coordinates']
         else:
             print('No location found')
             return []
 
     def get_boundary(self):
-        boundary = self._api.get_request('boundary')
+        boundary = self._api.get_request('/api/ridesearch/getboundary')
         if len(boundary) == 0:
             print('Sorry no boundary found')
             self._latest_error = 'Sorry no boundary found'
@@ -172,28 +171,30 @@ class RandomTaxiGenerateModel(KinesisPublishAndMovement):
         print(randomvalue)
 
     def get_data_random_location(self):
-        get_all_location = self._api.get_request('locations')
-        location_list = [all_loc['geometry']['coordinates'] for all_loc in get_all_location]
+        get_all_location = open(self.LOCATION, "r")
+        location_list = json.load(get_all_location)
         self._location_list = location_list
+        get_all_location.close()
 
     def generate_random_from_list(self):
         return random.choice(self._location_list)
 
-    def generate_random_location_for_taxi(self, taxis):
-        list_of_taxi_dict = dict()
+    def create_json_with_taxi_id(self, taxi_id, taxi_data):
+        filename = f'{self.BASED_FILE_LOCATION}/{taxi_id}_location_history.json'
+        with open(filename, 'w') as file_object:  # open the file in write mode
+            json.dump(taxi_data, file_object, indent=4)
 
+    def generate_random_location_for_taxi(self, taxis):
         if len(taxis) == 0:
             print('No Taxis is register in the system')
         else:
             for taxi in taxis:
                 random_location = self.generate_random_from_list()
-                taxi_dict = Taxi.taxi_template(self, taxi['TaxiID'], random_location, taxi['taxi_type'])
+                taxi_dict = Taxi.taxi_template(
+                    self, taxi['APIKey'], taxi['vehicle_num'], taxi['status'], random_location
+                )
                 # For Direct kinesis insert
-                #KinesisPublishAndMovement.publish_kinesis_data(self, taxi_dict)
+                KinesisPublishAndMovement.publish_kinesis_data(self, taxi_dict)
                 # For Api stream insert
-                #self._api.post_stream('/stream', taxi_dict)
-                list_of_taxi_dict[taxi['TaxiID']] = taxi_dict
-
-            filename = 'Movement_Location_History_Json/taxi_location_history.json'
-            with open(filename, 'w') as file_object:  # open the file in write mode
-                json.dump(list_of_taxi_dict, file_object, indent=4)
+                # self._api.post_stream('/api/users/updateuser', taxi_dict)
+                self.create_json_with_taxi_id(taxi['vehicle_num'], taxi_dict)

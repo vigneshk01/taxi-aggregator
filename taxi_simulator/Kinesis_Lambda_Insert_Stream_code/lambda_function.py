@@ -1,39 +1,33 @@
 import json
 import os
 import base64
-from pymongo import MongoClient
-from pymongo.errors import ConnectionFailure
+import requests
+
+Headers = {'Content-type': 'application/json'}
 
 
-def connect_db(connection_string, db_name):
-    db_conn = MongoClient(connection_string)
-    db_instance = None
-    try:
-        db_instance = db_conn[db_name]
-    except ConnectionFailure:
-        print('Connection error to connect mongoDb')
+def push_data_db(base_url, route, data):
+    r = requests.post(f'{base_url}{route}', json.dumps(data), headers=Headers)
+    if r.status_code == 200:
+        print(f'response - {r.text}')
+        return r.text
+    else:
+        print('Error while retrieving data')
+        return None
 
-    return db_instance
-
-
-def insert_data(db, collection, data):
-    db_collection = db[collection]
-    document = db_collection.insert_one(data)
-    return document.inserted_id
 
 def lambda_handler(event, context):
-    db = connect_db(os.environ['CONNECTIONSTRING'], os.environ['DB_NAME'])
-    insert_ids = []
+    base_url = os.environ['BASE_URL']
+    route = os.environ['ROUTE']
     for record in event['Records']:
         # Kinesis data is base64 encoded so decode here
         payload = base64.b64decode(record["kinesis"]["data"])
-        payload_dict = json.loads(payload.decode('utf-8'))
+        payload_dict = json.loads(payload.decode("utf-8"))
         print("Message arrived: " + str(payload_dict))
-        insert_id = insert_data(db, 'taxi-location-stream', payload_dict)
-        print(f'Data inserted succesfully in DB with Id - {insert_id}')
-        insert_ids.append(insert_id)
+        result = push_data_db(base_url, route, payload_dict)
+        if result:
+            print(f'Data inserted successfully in DB for vehicle - {payload_dict["vehicle_num"]}')
+        else:
+            print(f'Error in updating data in db for vehicle number - {payload_dict["vehicle_num"]}')
 
-    return {
-        'statusCode': 200,
-        'body': 'success'
-    }
+    return {'statusCode': 200, 'body': 'success'}

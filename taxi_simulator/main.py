@@ -1,83 +1,85 @@
-import sched
 import time
+from api import Api
 from model import RandomTaxiGenerateModel, Taxi, KinesisPublishAndMovement
-from schedule import every, repeat, run_pending, clear
-
-file = 'Movement_Location_History_Json/taxi_location_history.json'
+from schedule import every, run_pending
 
 
 def log_time():
-    print('---------------------------')
+    print(f'---------------------------')
     struct_time = time.localtime()  # get struct_time
     time_string = time.strftime("%m/%d/%Y, %H:%M:%S", struct_time)
     print(time_string)
 
 
-def clear_taxi_movement():
-    print('-----------------')
-    print('First Clearing taxi_movement job..')
-    clear('taxi_movement')
-    print('Job cleared')
+class GenerateAndMove:
 
+    def __init__(self, taxi, area_boundary):
+        self._taxi = [taxi]
+        self._taxi_details = taxi
+        self._boundary = area_boundary
+        self.generate_and_move()
 
-@repeat(every(6).hours)
-def case_taxi_generator(once_only=False):
-    if not once_only:
-        clear_taxi_movement()
+    def generate_and_move(self):
+        random_taxi = RandomTaxiGenerateModel()
+        random_taxi.get_data_random_location()
+        random_taxi.generate_random_location_for_taxi(self._taxi)
+        dict_to_used = {
+            'taxi': self._taxi[0],
+            'boundary': self._boundary,
+            'location_list': random_taxi.location_list
+        }
+        every(1).minutes.do(
+            self.move_taxi, dict_to_used
+        ).tag(f'taxi_movement_{self._taxi_details["vehicle_num"]}').run()
 
-    print('-----------------')
-    print('Start taxi random allocation and movement')
-    taxi = Taxi()
-    taxi.get_taxis()
-    print(taxi.taxis)
-    random_taxi = RandomTaxiGenerateModel()
-    random_taxi.get_data_random_location()
-    random_taxi.generate_random_location_for_taxi(taxi.taxis)
-    generate_movement(taxi, random_taxi)
-
-
-def move_taxi(kwargs):
-    log_time()
-    movement = KinesisPublishAndMovement()
-    movement.read_recent_location()
-    print(f'Taxi movement start')
-    for taxi in kwargs['all_taxi']:
-        old_long_lat = movement.get_recent_long_lat_by_taxi_id(taxi['TaxiID'])
+    def move_taxi(self, common_dict):
+        log_time()
+        taxi = common_dict['taxi']
+        movement = KinesisPublishAndMovement()
+        movement.read_recent_location(taxi['vehicle_num'])
+        old_long_lat = movement.get_recent_long_lat_for_taxi_id()
         if len(old_long_lat) != 0:
             new_long_lat = movement.calculate_movement(old_long_lat[0], old_long_lat[1])
             check_within_boundary = movement.check_point_in_boundary(
-                new_long_lat[0], new_long_lat[1], kwargs['boundary']
+                new_long_lat[0], new_long_lat[1], common_dict['boundary']
             )
             if check_within_boundary:
-                new_data = movement.stream_template_data(
-                    taxi['TaxiID'], new_long_lat[0], new_long_lat[1], taxi['taxi_type']
-                )
+                new_data = movement.stream_template_data(taxi, new_long_lat[0], new_long_lat[1])
             else:
-                long_lat_data = movement.choose_random_from_list(kwargs['location_list'])
-                new_data = movement.stream_template_data(
-                    taxi['TaxiID'], long_lat_data[0], long_lat_data[1], taxi['taxi_type']
-                )
-            movement.update_location(taxi['TaxiID'], new_data)
+                long_lat_data = movement.choose_random_from_list(common_dict['location_list'])
+                new_data = movement.stream_template_data(taxi, long_lat_data[0], long_lat_data[1])
+            movement.update_location_to_json(taxi['vehicle_num'], new_data)
         else:
-            print(f'No long lat found for taxi with id - {taxi["TaxiID"]}')
-    movement.update_all_location_to_json()
-    print('Taxi movement finish')
+            print(f'No long lat found for taxi with id - {taxi["vehicle_num"]}')
 
 
-def generate_movement(taxi_object, random_taxi_object):
-    all_taxi = taxi_object.taxis
-    random_taxi_object.get_boundary()
-    dict_to_used = {
-        'all_taxi': all_taxi,
-        'boundary': random_taxi_object.extract_location(),
-        'location_list': random_taxi_object.location_list
-    }
-    every(1).minutes.do(move_taxi, dict_to_used).tag('taxi_movement').run()
+def call_api_taxis():
+    api = Api()
+    taxis = api.get_request('/alltaxis')
+    return taxis
+
+def call_api_boundary():
+    api = Api()
+    boundary = api.get_request('/api/ridesearch/getboundary')
+    return boundary
 
 
-# Driver program
+def taxi_generator():
+    try:
+        taxi_list = call_api_taxis()
+        boundary = call_api_boundary()
+        if taxi_list and boundary:
+            area_boundary = boundary['geometry']['coordinates']
+            for val in taxi_list:
+                GenerateAndMove(val, area_boundary)
+        else:
+            raise TypeError
+    except TypeError:
+        print('Error in Api')
+
+
 if __name__ == "__main__":
-    case_taxi_generator(True)
+    taxi_generator()
     while True:
         try:
             run_pending()

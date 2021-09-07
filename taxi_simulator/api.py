@@ -4,7 +4,7 @@ import json
 
 class Api:
 
-    BASE_URL = 'http://127.0.0.1:5000/'
+    BASE_URL = 'https://fep34ikk65.execute-api.us-east-1.amazonaws.com/dev'
 
     def __init__(self):
         self._base_url = self.BASE_URL
@@ -19,7 +19,7 @@ class Api:
             return None
 
     # This is only for testing purpose
-    def post_stream(self, path, data, ):
+    def post_stream(self, path, data):
         r = requests.post(f'{self._base_url}{path}', json.dumps(data), headers=self._headers)
         if r.status_code == 200:
             print(f'response - {r.text}')
