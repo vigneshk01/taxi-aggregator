@@ -17,6 +17,7 @@ lat_longs = [(12.9035, 77.4914), (12.8546, 77.5676), (12.9872, 77.5197), (13.100
 class MyRide:
     def __init__(self):
         self.vehicle_nums = self.generate_vehicle_details(50)
+        self.object_ids = self.generate_random_passenger_id(50)
         self._db = Database()
         self._gapi = Gapi()
         self.dummy = {}
@@ -27,6 +28,14 @@ class MyRide:
         t_type = random.choices(taxi_type, weights=[40, 60, 100], k=1)
         random_type = t_type[0]
         return random_type
+
+    @staticmethod
+    def generate_random_passenger_id(k_count=100):
+        object_id_list = []
+        for i in range(0, k_count):
+            oid = ObjectId()
+            object_id_list.append(oid)
+        return object_id_list
 
     def generate_vehicle_details(self, k_count=50):
         district = random.sample(range(10, 99), k=k_count)
@@ -104,12 +113,12 @@ if __name__ == "__main__":
 
     date_generated = [start + datetime.timedelta(days=x) for x in range(0, (end - start).days + 1)]
     for date in date_generated:
-        vehicle_nums = ride.randomize_vehicles(2)  # default 20
+        vehicle_nums = ride.randomize_vehicles(20)  # default 20
         for vehicle in vehicle_nums:
-            hrs_list = random.sample(range(6, 18), k=1)  # default 6
+            hrs_list = random.sample(range(6, 18), k=6)  # default 6
             for hour in hrs_list:
 
-                passenger_id = ObjectId()
+                passenger_id = random.choice(ride.object_ids)
                 vehicle_num = vehicle.split(':')[0]
                 vehicle_type = vehicle.split(':')[1]
 
@@ -121,6 +130,7 @@ if __name__ == "__main__":
                 location_list = ride.get_location_details()
                 start_location = location_list[0]
                 end_location = location_list[1]
+                total_distance = str(random.choice(range(1, 40)))+" km"
 
                 gen_time = ride.get_time_details(date, hour)
                 booked_time = datetime.datetime.strftime(gen_time["booked_time"], '%Y-%m-%dT%H:%M:%S.%f')[:-3]
@@ -128,7 +138,7 @@ if __name__ == "__main__":
                 end_time = datetime.datetime.strftime(gen_time["end_time"], '%Y-%m-%dT%H:%M:%S.%f')[:-3]
 
                 # to simulate the ride CALLS gapi
-                simulate_ride = 1
+                simulate_ride = 0
                 if simulate_ride == 1:
                     time.sleep(5)
                     data = ride.simulate_movement(start_location, end_location, False)
@@ -158,6 +168,6 @@ if __name__ == "__main__":
                               'dest_loc': {"type": "Point", "coordinates": end_location}, 'booked_time': booked_time,
                               'start_time': start_time, 'end_time': end_time, 'vehicle_type': vehicle_type,
                               'vehicle_num': vehicle_num, 'cost': cost, 'passenger_rating': rating,
-                              'passenger_comments': comment}
+                              'passenger_comments': comment, 'total_distance': total_distance}
 
-                ride.insert_data_to_db('rides', ride_query)
+                ride.insert_data_to_db('rides_new', ride_query)
