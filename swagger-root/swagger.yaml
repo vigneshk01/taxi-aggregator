@@ -1,191 +1,134 @@
----
-swagger: "2.0"
+openapi: 3.0.1
 info:
-  description: This is a Taxi server API configuration template.
-  version: "3"
-  title: taxi-api-gateway
-host: test.execute-api.us-east-1.amazonaws.com
-basePath: /dev
+  title: glcapstone-taxi-api
+  version: "6"
+servers:
+- url: /
 tags:
-- name: taxi
-  description: for taxi and booking operations
-- name: user
-  description: for user operations
-- name: city
-  description: for fetching boundary and location details
-- name: requests
-  description: for fetching boundary and location details
-schemes:
-- https
-- http
+- name: taxis
+  description: invoked by taxi simulator and UI for fetching taxi details
+- name: users
+  description: invoked by user simulator UI for registering and manipulating users
+- name: rides
+  description: for booking a ride and updating the live location
+- name: ridesearch
+  description: for searching cabs within the nearby area
 paths:
-  /:
+  /alltaxis:
     get:
       tags:
-      - taxi
-      summary: 'Base API Path '
-      description: returns welcome message
-      produces:
-      - application/json
-      parameters: []
+      - taxis
       responses:
         "200":
-          description: successful operation
-        "404":
-          description: request not found.
-        "500":
-          description: Unexpected error.
-  /boundary:
-    get:
-      tags:
-      - city
-      summary: lists the boundary details of a city
-      description: returns boundary details
-      produces:
-      - application/json
-      parameters: []
-      responses:
-        "200":
-          description: successful operation
-        "404":
-          description: request not found.
-        "500":
-          description: Unexpected error.
-  /locations:
-    get:
-      tags:
-      - city
-      summary: Get the list of locations within a city
-      description: returns list of locations
-      produces:
-      - application/json
-      parameters: []
-      responses:
-        "200":
-          description: successful operation
-        "404":
-          description: request not found.
-        "500":
-          description: Unexpected error.
-  /newRequests:
-    get:
-      tags:
-      - taxi
-      summary: Get a single request under request queue
-      description: returns new requests for ride
-      produces:
-      - application/json
-      parameters: []
-      responses:
-        "200":
-          description: successful operation
-        "404":
-          description: request not found.
-        "500":
-          description: Unexpected error.
-  /taxi/migrate:
-    get:
-      tags:
-      - taxi
-      summary: Find the locations to move the taxi to
-      description: returns the lat long of location to move
-      produces:
-      - application/json
-      parameters: []
-      responses:
-        "200":
-          description: successful operation
-        "404":
-          description: request not found.
-        "500":
-          description: Unexpected error.
-  /taxi/specialEvent:
-    get:
-      tags:
-      - taxi
-      summary: Find list of special events
-      description: returns special events
-      produces:
-      - application/json
-      parameters: []
-      responses:
-        "200":
-          description: successful operation
-        "404":
-          description: request not found.
-        "500":
-          description: Unexpected error.
-  /taxi/{shift_id}:
-    get:
-      tags:
-      - taxi
-      summary: 'Base API Path '
-      description: returns welcome message
-      produces:
-      - application/json
-      parameters:
-      - name: shift_id
-        in: path
-        required: true
-        type: number
-      responses:
-        "200":
-          description: successful operation
-        "404":
-          description: request not found.
-        "500":
-          description: Unexpected error.
-  /stream:
+          description: 200 response
+        "400":
+          description: 400 response
+  /api/rides/confirmride:
     post:
       tags:
-      - requests
-      summary: Confirm the ride request
-      description: Confirm ride request
-      consumes:
-      - application/json
-      parameters:
-      - in: body
-        name: taxiId
-        description: ID of taxi that needs to be updated
-        required: true
+      - rides
       responses:
         "200":
-          description: successful operation
-        "405":
-          description: Invalid input
-  /bookTaxi/confirm:
+          description: 200 response
+        "400":
+          description: 400 response
+  /api/rides/getaride:
     post:
       tags:
-      - requests
-      summary: Confirm the ride request
-      description: Confirm ride request
-      consumes:
-      - application/json
-      parameters:
-      - in: body
-        name: taxiId
-        description: ID of taxi that needs to be updated
-        required: true
+      - rides
       responses:
         "200":
-          description: successful operation
-        "405":
-          description: Invalid input
-  /bookTaxi:
+          description: 200 response
+        "400":
+          description: 400 response
+  /api/rides/getridedetails:
     post:
       tags:
-      - requests
-      summary: Confirm the ride request
-      description: Confirm ride request
-      consumes:
-      - application/json
-      parameters:
-      - in: body
-        name: taxiId
-        description: ID of taxi that needs to be updated
-        required: true
+      - rides
       responses:
         "200":
-          description: successful operation
-        "405":
-          description: Invalid input
+          description: 200 response
+        "400":
+          description: 400 response
+  /api/rides/getridelocation:
+    post:
+      tags:
+      - rides
+      responses:
+        "200":
+          description: 200 response
+        "400":
+          description: 400 response
+  /api/rides/updateride:
+    post:
+      tags:
+      - rides
+      responses:
+        "200":
+          description: 200 response
+        "400":
+          description: 400 response
+  /api/ridesearch/getboundary:
+    get:
+      tags:
+      - ridesearch
+      responses:
+        "200":
+          description: 200 response
+        "400":
+          description: 400 response
+  /api/ridesearch/getnearbyrides:
+    post:
+      tags:
+      - ridesearch
+      responses:
+        "200":
+          description: 200 response
+        "400":
+          description: 400 response
+  /api/users/getuser:
+    post:
+      tags:
+      - users
+      responses:
+        "200":
+          description: 200 response
+        "400":
+          description: 400 response
+  /api/users/login:
+    post:
+      tags:
+      - users
+      responses:
+        "200":
+          description: 200 response
+        "400":
+          description: 400 response
+  /api/users/newuser:
+    post:
+      tags:
+      - users
+      responses:
+        "200":
+          description: 200 response
+        "400":
+          description: 400 response
+  /api/users/removeuser:
+    post:
+      tags:
+      - users
+      responses:
+        "200":
+          description: 200 response
+        "400":
+          description: 400 response
+  /api/users/updateuser:
+    post:
+      tags:
+      - users
+      responses:
+        "200":
+          description: 200 response
+        "400":
+          description: 400 response
+components: {}
