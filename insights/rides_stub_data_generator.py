@@ -25,7 +25,7 @@ class MyRide:
     @staticmethod
     def get_vehicle_type():
 
-        t_type = random.choices(taxi_type, weights=[40, 60, 100], k=1)
+        t_type = random.choices(taxi_type, weights=[5, 3, 2], k=1)
         random_type = t_type[0]
         return random_type
 
@@ -63,14 +63,19 @@ class MyRide:
         op = random.randint(st, ed)
         return op
 
+    @staticmethod
+    def get_random_gauss_number(mean, std):
+        op = int(random.gauss(mean, std))
+        return op
+
     def get_time_details(self, dt, hr):
         time_dict = {}
         timestamp = dt + datetime.timedelta(hours=hr)
         curr_min = self.get_random_number(00, 60)
         time_dict["booked_time"] = timestamp + datetime.timedelta(minutes=curr_min)
-        random_ride_start = self.get_random_number(5, 20)
+        random_ride_start = self.get_random_gauss_number(15, 5)
         time_dict["start_time"] = time_dict["booked_time"] + datetime.timedelta(minutes=random_ride_start)
-        random_ride_end = self.get_random_number(5, 120)
+        random_ride_end = self.get_random_gauss_number(60, 20)
         time_dict["end_time"] = time_dict["start_time"] + datetime.timedelta(minutes=random_ride_end)
         return time_dict
 
