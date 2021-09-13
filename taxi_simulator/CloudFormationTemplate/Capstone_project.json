@@ -28,7 +28,7 @@
         "S3BucketForLambda":{
             "Type": "String",
             "Description": "Please enter s3 bucket name in which you have added .zip file for code. This is mandotary",
-            "Default": "gl-cap-taxi",
+            "Default": "gl-capstone",
             "AllowedPattern" : ".+"
         },
         "S3KeyForLambda":{

@@ -5,7 +5,7 @@ import json
 import boto3
 import math
 from api import Api
-from datetime import datetime
+import time
 from shapely.geometry import Point
 from shapely.geometry.polygon import Polygon
 
@@ -111,16 +111,16 @@ class KinesisPublishAndMovement(Taxi):
 
     def stream_template_data(self, taxi, long, lat):
         new_long_lat = [long, lat]
-        "current time stamp"
-        "multiple of  7" > "INACTIVE"
+        status = taxi['status']
+        if int(time.time()) % 7 == 0:
+            status = "INACTIVE"
         stream_template = Taxi.taxi_template(
-            self, taxi['APIKey'], taxi['vehicle_num'], taxi['status'], new_long_lat
+            self, taxi['APIKey'], taxi['vehicle_num'], status, new_long_lat
         )
-        print(stream_template)
         # For Api stream insert
-        self._api.post_stream('/api/users/updateuser', stream_template)
+        # self._api.post_stream('/api/users/updateuser', stream_template)
         # For Direct kinesis insert
-        #self.publish_kinesis_data(stream_template)
+        self.publish_kinesis_data(stream_template)
         return stream_template
 
 
@@ -196,9 +196,8 @@ class RandomTaxiGenerateModel(KinesisPublishAndMovement):
                 taxi_dict = Taxi.taxi_template(
                     self, taxi['APIKey'], taxi['vehicle_num'], taxi['status'], random_location
                 )
-                print(taxi_dict)
                 # For Direct kinesis insert
-                # KinesisPublishAndMovement.publish_kinesis_data(self, taxi_dict)
+                KinesisPublishAndMovement.publish_kinesis_data(self, taxi_dict)
                 # For Api stream insert
-                self._api.post_stream('/api/users/updateuser', taxi_dict)
+                # self._api.post_stream('/api/users/updateuser', taxi_dict)
                 self.create_json_with_taxi_id(taxi['vehicle_num'], taxi_dict)

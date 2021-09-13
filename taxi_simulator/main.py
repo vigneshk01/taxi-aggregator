@@ -30,7 +30,7 @@ class GenerateAndMove:
         }
         every(1).minutes.do(
             self.move_taxi, dict_to_used
-        ).tag(f'taxi_movement_{self._taxi_details["vehicle_num"]}').run()
+        ).tag(f'taxi_movement_{self._taxi_details["vehicle_num"]}')
 
     def move_taxi(self, common_dict):
         log_time()
