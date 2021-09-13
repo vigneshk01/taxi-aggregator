@@ -1,0 +1,134 @@
+openapi: 3.0.1
+info:
+  title: glcapstone-taxi-api
+  version: "6"
+servers:
+- url: /
+tags:
+- name: taxis
+  description: invoked by taxi simulator and UI for fetching taxi details
+- name: users
+  description: invoked by user simulator UI for registering and manipulating users
+- name: rides
+  description: for booking a ride and updating the live location
+- name: ridesearch
+  description: for searching cabs within the nearby area
+paths:
+  /alltaxis:
+    get:
+      tags:
+      - taxis
+      responses:
+        "200":
+          description: 200 response
+        "400":
+          description: 400 response
+  /api/rides/confirmride:
+    post:
+      tags:
+      - rides
+      responses:
+        "200":
+          description: 200 response
+        "400":
+          description: 400 response
+  /api/rides/getaride:
+    post:
+      tags:
+      - rides
+      responses:
+        "200":
+          description: 200 response
+        "400":
+          description: 400 response
+  /api/rides/getridedetails:
+    post:
+      tags:
+      - rides
+      responses:
+        "200":
+          description: 200 response
+        "400":
+          description: 400 response
+  /api/rides/getridelocation:
+    post:
+      tags:
+      - rides
+      responses:
+        "200":
+          description: 200 response
+        "400":
+          description: 400 response
+  /api/rides/updateride:
+    post:
+      tags:
+      - rides
+      responses:
+        "200":
+          description: 200 response
+        "400":
+          description: 400 response
+  /api/ridesearch/getboundary:
+    get:
+      tags:
+      - ridesearch
+      responses:
+        "200":
+          description: 200 response
+        "400":
+          description: 400 response
+  /api/ridesearch/getnearbyrides:
+    post:
+      tags:
+      - ridesearch
+      responses:
+        "200":
+          description: 200 response
+        "400":
+          description: 400 response
+  /api/users/getuser:
+    post:
+      tags:
+      - users
+      responses:
+        "200":
+          description: 200 response
+        "400":
+          description: 400 response
+  /api/users/login:
+    post:
+      tags:
+      - users
+      responses:
+        "200":
+          description: 200 response
+        "400":
+          description: 400 response
+  /api/users/newuser:
+    post:
+      tags:
+      - users
+      responses:
+        "200":
+          description: 200 response
+        "400":
+          description: 400 response
+  /api/users/removeuser:
+    post:
+      tags:
+      - users
+      responses:
+        "200":
+          description: 200 response
+        "400":
+          description: 400 response
+  /api/users/updateuser:
+    post:
+      tags:
+      - users
+      responses:
+        "200":
+          description: 200 response
+        "400":
+          description: 400 response
+components: {}
