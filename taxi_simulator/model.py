@@ -32,8 +32,8 @@ class Taxi:
 
     def taxi_template(self, api_key, vehicle_num, status, random_location):
         template_dict = {
-            "userType": 'Taxi',
-            "updateType": 'taxiLoc',
+            "user_type": 'Taxi',
+            "update_type": 'taxiLoc',
             "apiKey": api_key,
             "vehicle_num": vehicle_num,
             "status": status,
@@ -70,7 +70,7 @@ class KinesisPublishAndMovement(Taxi):
     def get_taxi_data(self):
         return self._recent_locations
 
-    def calculate_movement(self, long, lat, distance=0.2):
+    def calculate_movement(self, long, lat, distance=0.5):
         R = 6378.1  # Radius of the Earth
         brng = 1.57  # Bearing is 90 degrees converted to radians.
         d = distance  # Distance in km
@@ -111,13 +111,16 @@ class KinesisPublishAndMovement(Taxi):
 
     def stream_template_data(self, taxi, long, lat):
         new_long_lat = [long, lat]
+        "current time stamp"
+        "multiple of  7" > "INACTIVE"
         stream_template = Taxi.taxi_template(
             self, taxi['APIKey'], taxi['vehicle_num'], taxi['status'], new_long_lat
         )
+        print(stream_template)
         # For Api stream insert
-        # self._api.post_stream('/api/users/updateuser', stream_template)
+        self._api.post_stream('/api/users/updateuser', stream_template)
         # For Direct kinesis insert
-        self.publish_kinesis_data(stream_template)
+        #self.publish_kinesis_data(stream_template)
         return stream_template
 
 
@@ -193,8 +196,9 @@ class RandomTaxiGenerateModel(KinesisPublishAndMovement):
                 taxi_dict = Taxi.taxi_template(
                     self, taxi['APIKey'], taxi['vehicle_num'], taxi['status'], random_location
                 )
+                print(taxi_dict)
                 # For Direct kinesis insert
-                KinesisPublishAndMovement.publish_kinesis_data(self, taxi_dict)
+                # KinesisPublishAndMovement.publish_kinesis_data(self, taxi_dict)
                 # For Api stream insert
-                # self._api.post_stream('/api/users/updateuser', taxi_dict)
+                self._api.post_stream('/api/users/updateuser', taxi_dict)
                 self.create_json_with_taxi_id(taxi['vehicle_num'], taxi_dict)
