@@ -230,3 +230,21 @@ class User:
         else:
             print('Error while retrieving data')
         return None
+
+    def feedback(self,  OTP, apiKey, comments, rating):
+        path = "/api/rides/updateride"
+        data = {
+            "OTPHash": str(hashlib.sha256( OTP.encode("utf-8") ).hexdigest()),
+            "apiKey": apiKey,
+            "passenger_comments": comments,
+            "passenger_rating": rating,
+            "update_type": "feedback"
+
+        }
+        res = requests.post(f'{self._base_url}{path}', json.dumps(data), headers=self._headers)
+        if res.status_code == 200:
+
+            return res
+        else:
+            print('Error while retrieving data')
+        return None
