@@ -117,6 +117,7 @@ class KinesisPublishAndMovement(Taxi):
         stream_template = Taxi.taxi_template(
             self, taxi['APIKey'], taxi['vehicle_num'], status, new_long_lat
         )
+        # print(stream_template)
         # For Api stream insert
         # self._api.post_stream('/api/users/updateuser', stream_template)
         # For Direct kinesis insert
@@ -187,15 +188,19 @@ class RandomTaxiGenerateModel(KinesisPublishAndMovement):
         with open(filename, 'w') as file_object:  # open the file in write mode
             json.dump(taxi_data, file_object, indent=4)
 
-    def generate_random_location_for_taxi(self, taxis):
+    def generate_random_location_for_taxi(self, taxis, index):
         if len(taxis) == 0:
             print('No Taxis is register in the system')
         else:
             for taxi in taxis:
-                random_location = self.generate_random_from_list()
+                if index > len(self._location_list):
+                    random_location = self.generate_random_from_list()
+                else:
+                    random_location = self._location_list[index]
                 taxi_dict = Taxi.taxi_template(
                     self, taxi['APIKey'], taxi['vehicle_num'], taxi['status'], random_location
                 )
+                # print(taxi_dict)
                 # For Direct kinesis insert
                 KinesisPublishAndMovement.publish_kinesis_data(self, taxi_dict)
                 # For Api stream insert
