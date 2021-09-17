@@ -5,16 +5,16 @@ from pymongo import MongoClient
 class Database:
     # Class static variables used for database host ip and port information, database name
     # Static variables are referred to by using <class_name>.<variable_name>
-    # HOST = '127.0.0.1'
-    # PORT = '27017'
+    HOST = '127.0.0.1'
+    PORT = '27017'
     # DB_NAME = 'test'
     DB_NAME = 'glcapstone_taxi_db'
     CONNECTION_STRING = "mongodb+srv://<>/test" \
                         "?retryWrites=true&w=majority"
 
     def __init__(self):
-        # self._db_conn = MongoClient(f'mongodb://{Database.HOST}:{Database.PORT}')
-        self._db_conn = MongoClient(Database.CONNECTION_STRING)
+        self._db_conn = MongoClient(f'mongodb://{Database.HOST}:{Database.PORT}')
+        #self._db_conn = MongoClient(Database.CONNECTION_STRING)
         self._db = self._db_conn[Database.DB_NAME]
 
     # This method finds a single document using field information provided in the key parameter

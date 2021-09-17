@@ -45,7 +45,7 @@ passenger_rating_lst = ["1:Poor Ride", "2:Below Average Ride", "3:Decent Ride", 
 taxi_types = ["UTILITY", "DELUXE", "LUXURY"]
 types_cost = [10, 15, 25]
 
-BANGALORE_BOUNDARY_JSON = '../db_structure_and_data/map_data/bengaluru_simple_polygon.geojson.json'
+BANGALORE_BOUNDARY_JSON = 'db_structure_and_data/map_data/bengaluru_simple_polygon.geojson.json'
 with open(BANGALORE_BOUNDARY_JSON) as f:
     data = json.load(f)
 BANGALORE_POLYGON_DATA = data['features'][0]['geometry']
@@ -174,7 +174,7 @@ if __name__ == "__main__":
                 user_list = random.sample(book.random_passenger_list_odd, hourly_ride_count[hour - SHIFT_START])
 
             if hour == RUSH_HOUR_1 or hour == RUSH_HOUR_2:
-                user_list.append(book.daily_passenger_list)
+                user_list.extend(book.daily_passenger_list)
 
             special_trip_start_count = 0
             special_trip_end_count = 0
@@ -188,9 +188,11 @@ if __name__ == "__main__":
                 lat_long = book.get_location_details()
                 if day == SPECIAL_DAY and hour == SPECIAL_HOUR_1 and special_trip_start_count < SPECIAL_BOOKING_COUNT:
                     lat_long[1] = SPECIAL_LAT_LONG
+                    lat_long[1] = (lat_long[1][0] + (random.randrange(10, 99) / 10000), lat_long[1][1] + (random.randrange(10, 99) / 10000))
                     special_trip_start_count += 1
                 if day == SPECIAL_DAY and hour == SPECIAL_HOUR_2 and special_trip_end_count < SPECIAL_BOOKING_COUNT:
                     lat_long[0] = SPECIAL_LAT_LONG
+                    lat_long[0] = (lat_long[0][0] + (random.randrange(10, 99) / 10000), lat_long[0][1] + (random.randrange(10, 99) / 10000))
                     special_trip_end_count += 1
 
                 book_query = {
