@@ -70,7 +70,7 @@ class KinesisPublishAndMovement(Taxi):
     def get_taxi_data(self):
         return self._recent_locations
 
-    def calculate_movement(self, long, lat, distance=0.5):
+    def calculate_movement(self, long, lat, distance=0.3):
         R = 6378.1  # Radius of the Earth
         brng = 1.57  # Bearing is 90 degrees converted to radians.
         d = distance  # Distance in km

@@ -16,12 +16,12 @@
         "IAMRoleName":{
             "Type": "String",
             "Description": "Create correct role before running template or if you have role in place give correct name",
-            "Default": "EC2-GL-Project-M03",
+            "Default": "EC2_Multi_Role",
             "AllowedPattern" : ".+"
         },
         "KinesisName":{
             "Type" : "String",
-            "Default" : "taxi_movement",
+            "Default" : "taxi-movement",
             "Description" : "Enter name of your kinesis stream",
             "AllowedPattern" : ".+"
         },
@@ -82,13 +82,13 @@
               },
               "Path": "/",
               "Policies": [{
-                "PolicyName": "root",
+                "PolicyName": "lambda_default",
                 "PolicyDocument": {
                   "Version": "2012-10-17",
                   "Statement": [{ "Effect": "Allow", "Action": ["logs:*"], "Resource": "arn:aws:logs:*:*:*" }]
                 }
               },{
-                "PolicyName": "root_1",
+                "PolicyName": "Lambda_Kinesis_Role",
                 "PolicyDocument": {
                   "Version": "2012-10-17",
                   "Statement": [{"Effect": "Allow","Action": "kinesis:*","Resource": "*"}]
