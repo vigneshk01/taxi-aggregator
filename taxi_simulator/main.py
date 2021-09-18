@@ -13,16 +13,17 @@ def log_time():
 
 class GenerateAndMove:
 
-    def __init__(self, taxi, area_boundary):
+    def __init__(self, taxi, area_boundary, index):
         self._taxi = [taxi]
         self._taxi_details = taxi
         self._boundary = area_boundary
+        self._index = index
         self.generate_and_move()
 
     def generate_and_move(self):
         random_taxi = RandomTaxiGenerateModel()
         random_taxi.get_data_random_location()
-        random_taxi.generate_random_location_for_taxi(self._taxi)
+        random_taxi.generate_random_location_for_taxi(self._taxi, self._index)
         dict_to_used = {
             'taxi': self._taxi[0],
             'boundary': self._boundary,
@@ -30,7 +31,7 @@ class GenerateAndMove:
         }
         every(1).minutes.do(
             self.move_taxi, dict_to_used
-        ).tag(f'taxi_movement_{self._taxi_details["vehicle_num"]}').run()
+        ).tag(f'taxi_movement_{self._taxi_details["vehicle_num"]}')
 
     def move_taxi(self, common_dict):
         log_time()
@@ -70,8 +71,8 @@ def taxi_generator():
         boundary = call_api_boundary()
         if taxi_list and boundary:
             area_boundary = boundary['geometry']['coordinates']
-            for val in taxi_list:
-                GenerateAndMove(val, area_boundary)
+            for index, val in enumerate(taxi_list, start=0):
+                GenerateAndMove(val, area_boundary, index)
         else:
             raise TypeError
     except TypeError:

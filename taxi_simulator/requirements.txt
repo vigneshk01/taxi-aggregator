@@ -1,0 +1,5 @@
+boto3==1.17.68
+numpy==1.19.5
+schedule==1.1.0
+requests==2.25.1
+Shapely==1.7.1

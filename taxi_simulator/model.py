@@ -5,7 +5,7 @@ import json
 import boto3
 import math
 from api import Api
-from datetime import datetime
+import time
 from shapely.geometry import Point
 from shapely.geometry.polygon import Polygon
 
@@ -32,8 +32,8 @@ class Taxi:
 
     def taxi_template(self, api_key, vehicle_num, status, random_location):
         template_dict = {
-            "userType": 'Taxi',
-            "updateType": 'taxiLoc',
+            "user_type": 'Taxi',
+            "update_type": 'taxiLoc',
             "apiKey": api_key,
             "vehicle_num": vehicle_num,
             "status": status,
@@ -70,7 +70,7 @@ class KinesisPublishAndMovement(Taxi):
     def get_taxi_data(self):
         return self._recent_locations
 
-    def calculate_movement(self, long, lat, distance=0.2):
+    def calculate_movement(self, long, lat, distance=0.3):
         R = 6378.1  # Radius of the Earth
         brng = 1.57  # Bearing is 90 degrees converted to radians.
         d = distance  # Distance in km
@@ -111,9 +111,13 @@ class KinesisPublishAndMovement(Taxi):
 
     def stream_template_data(self, taxi, long, lat):
         new_long_lat = [long, lat]
+        status = taxi['status']
+        if int(time.time()) % 7 == 0:
+            status = "INACTIVE"
         stream_template = Taxi.taxi_template(
-            self, taxi['APIKey'], taxi['vehicle_num'], taxi['status'], new_long_lat
+            self, taxi['APIKey'], taxi['vehicle_num'], status, new_long_lat
         )
+        # print(stream_template)
         # For Api stream insert
         # self._api.post_stream('/api/users/updateuser', stream_template)
         # For Direct kinesis insert
@@ -184,15 +188,19 @@ class RandomTaxiGenerateModel(KinesisPublishAndMovement):
         with open(filename, 'w') as file_object:  # open the file in write mode
             json.dump(taxi_data, file_object, indent=4)
 
-    def generate_random_location_for_taxi(self, taxis):
+    def generate_random_location_for_taxi(self, taxis, index):
         if len(taxis) == 0:
             print('No Taxis is register in the system')
         else:
             for taxi in taxis:
-                random_location = self.generate_random_from_list()
+                if index > len(self._location_list):
+                    random_location = self.generate_random_from_list()
+                else:
+                    random_location = self._location_list[index]
                 taxi_dict = Taxi.taxi_template(
                     self, taxi['APIKey'], taxi['vehicle_num'], taxi['status'], random_location
                 )
+                # print(taxi_dict)
                 # For Direct kinesis insert
                 KinesisPublishAndMovement.publish_kinesis_data(self, taxi_dict)
                 # For Api stream insert

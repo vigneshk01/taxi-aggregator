@@ -30,7 +30,10 @@ exports.handler = async (event) => {
         let projection = {
             projection: {
                 _id: 0,
-                current_vehicle_location: 1
+                current_vehicle_location: 1,
+                instruction: 1,
+                distance: 1,
+                duration: 1
             }
         };
       
