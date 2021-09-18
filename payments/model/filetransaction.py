@@ -5,11 +5,13 @@ class transcation:
     txnid =""
     SALT=""
     merchantKey=""
+    receiptNo=""
 
     def __init__(self):
         self.txnid = 'abcdef123R'
-        self.SALT ='yoursaltkeyvalue'
-        self.merchantKey ='your merchant key'
+        self.SALT ='your merchant salt'
+        self.merchantKey ='your merchent key'
+        self.receiptNo=''
 
 
 
@@ -23,6 +25,12 @@ class transcation:
         final_string = ''.join(sam_list)  
 
         self.txnid = final_string
+    
+    def genrateReceiptNo(self):  
+        digit_count =5
+        str1 = 'TCare'
+        str1 += ''.join((random.choice(string.digits) for x in range(digit_count)))  
+        self.receiptNo = str1
         
 
     
@@ -34,4 +42,9 @@ class transcation:
 
     def getmerchantKey(self):
         return self.merchantKey
+
+    def getreceiptNo(self):
+        return self.receiptNo
+
+
 

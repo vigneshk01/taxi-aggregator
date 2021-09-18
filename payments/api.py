@@ -15,6 +15,7 @@ app.config["DEBUG"] = True
 t = transcation()
 
 t.random_string(7,5)
+t.genrateReceiptNo()
 
 
 @app.route('/', methods=['GET'])
@@ -22,6 +23,7 @@ def home():
     cost = request.args.get('cost')
 
     if(cost==None):
+       print("hi")
        return render_template("error.html")
 
 
@@ -35,7 +37,8 @@ def home():
         'surl': 'http://192.168.29.186:8080/checkstatus',
         'furl': 'http://192.168.29.186:8080/checkstatus',
         'phone': '9876543210',
-        'hash': 'hehfhh'
+        'hash': 'hehfhh',
+        'receiptNo': t.getreceiptNo()
      }
 
     strliteral = value['key']+"|"+value['txnid']+"|"+value['amount']+"|"+value['productinfo']+"|"+value['firstname']+"|"+value['email']+"|||||||||||"+t.getSALT()
@@ -43,6 +46,10 @@ def home():
     value['hash'] = hashvalue.hexdigest()
 
     render_template("index.html",data = value)
+
+    # resp = {
+    #     "status": "Inprogress"
+    # }
 
     return render_template("index.html",data = value)
 
