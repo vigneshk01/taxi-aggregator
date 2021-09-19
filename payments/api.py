@@ -66,7 +66,7 @@ def transacdetails():
     strliteral = t.getmerchantKey()+'|verify_payment|'+t.getTXNid()+'|'+t.getSALT()
     strliteralHex= hashlib.sha512(strliteral.encode()) 
     hashvalue = strliteralHex.hexdigest()
-    payload = 'key=qKouc2&command=verify_payment&var1=dXxMTFfVinHs45&hash='+hashvalue
+    payload = 'key='+t.getmerchantKey()+'&command=verify_payment&var1='+t.getTXNid()+'&hash='+hashvalue
     headers = { "Accept": "application/json", "Content-Type": "application/x-www-form-urlencoded" }
 
     r = requests.request("POST", url, data=payload, headers=headers)
