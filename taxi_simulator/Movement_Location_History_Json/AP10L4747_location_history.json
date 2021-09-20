@@ -1,0 +1,9 @@
+{
+    "user_type": "Taxi",
+    "update_type": "taxiLoc",
+    "apiKey": "4d6c042dd32c495edde88a8ddec2346767191da12b14f2602b0fb63f55ccf149",
+    "vehicle_num": "AP10L4747",
+    "status": "ACTIVE",
+    "lng": 77.62015859993944,
+    "lat": 12.982694941843896
+}
