@@ -1,9 +1,0 @@
-{
-    "user_type": "Taxi",
-    "update_type": "taxiLoc",
-    "apiKey": "dfccadc7dfcca87d34e4dc9a3ed7118c4eb238897acb4b75ddc579ab886217c2",
-    "vehicle_num": "KA22A1610",
-    "status": "ACTIVE",
-    "lng": 77.61398829919344,
-    "lat": 12.969532269968488
-}

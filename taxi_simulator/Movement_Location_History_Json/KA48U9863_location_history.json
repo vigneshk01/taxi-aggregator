@@ -1,9 +1,0 @@
-{
-    "user_type": "Taxi",
-    "update_type": "taxiLoc",
-    "apiKey": "7f615f182ffe1e38d2a631b276309d7adc7deece784a12ce687addc2170e34d5",
-    "vehicle_num": "KA48U9863",
-    "status": "BOOKED",
-    "lng": 77.64396745866996,
-    "lat": 12.950290534146736
-}
