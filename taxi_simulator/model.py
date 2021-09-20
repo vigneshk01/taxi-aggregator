@@ -1,4 +1,4 @@
-# Imports Database class from the project to provide basic functionality for database access
+# Imports APi class from the project to provide basic functionality for database
 import random
 import numpy as np
 import json
