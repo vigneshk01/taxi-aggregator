@@ -1,0 +1,1915 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "2021-09-20T18:35:58Z",
+    "title": "glcapstone-taxi-api"
+  },
+  "host": "fep34ikk65.execute-api.us-east-1.amazonaws.com",
+  "basePath": "/dev",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/alltaxis": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/AllTaxisResponseBody"
+            }
+          },
+          "400": {
+            "description": "400 response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "options": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Methods": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Headers": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/rides/confirmride": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "ConfirmRideRequestBody",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ConfirmRideRequestBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/ConfirmRideResponseBody"
+            }
+          },
+          "400": {
+            "description": "400 response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "options": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Methods": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Headers": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/rides/getaride": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "GetARideRequestBody",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GetARideRequestBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/GetARideResponseBody"
+            }
+          },
+          "400": {
+            "description": "400 response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "options": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Methods": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Headers": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/rides/getridedetails": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "GetRideDetailsRequestBody",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GetRideDetailsRequestBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/GetRideDetailsResponseBody"
+            }
+          },
+          "400": {
+            "description": "400 response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "options": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Methods": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Headers": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/rides/getridelocation": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "GetRideLocationRequestBody",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GetRideLocationRequestBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/GetRideLocationResponseBody"
+            }
+          },
+          "400": {
+            "description": "400 response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "options": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Methods": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Headers": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/rides/updateride": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "UpdateRideRequestBody",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateRideRequestBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/UpdateRideResponseBody"
+            }
+          },
+          "400": {
+            "description": "400 response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "options": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Methods": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Headers": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ridesearch/getboundary": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/GetBoundaryResponseBody"
+            }
+          },
+          "400": {
+            "description": "400 response",
+            "schema": {
+              "$ref": "#/definitions/GetBoundaryResponseBody"
+            }
+          }
+        }
+      },
+      "options": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Methods": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Headers": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ridesearch/getnearbyrides": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "GetNearbyRidesRequestBody",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GetNearbyRidesRequestBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/GetNearbyRidesResponseBody"
+            }
+          },
+          "400": {
+            "description": "400 response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "options": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Methods": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Headers": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/taxi": {
+      "options": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Methods": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Headers": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/taxi/getcurrenttaxidata": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "GetTaxiDataRequestBody",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GetTaxiDataRequestBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/GetTaxiDataResponseBody"
+            }
+          },
+          "400": {
+            "description": "400 response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "options": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Methods": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Headers": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users/getridehistory": {
+      "post": {
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          }
+        }
+      },
+      "options": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Methods": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Headers": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users/getuser": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "GetUserRequestBody",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GetUserRequestBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/GetUserResponseBody"
+            }
+          },
+          "400": {
+            "description": "400 response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "options": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Methods": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Headers": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users/login": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "LoginRequestBody",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LoginRequestBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/LoginResponseBody"
+            }
+          },
+          "400": {
+            "description": "400 response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "options": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Methods": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Headers": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users/newuser": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "NewUserRequestBody",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/NewUserRequestBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/NewUserResponseBody"
+            }
+          },
+          "400": {
+            "description": "400 response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "options": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Methods": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Headers": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users/removeuser": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "RemoveUserRequestBody",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RemoveUserRequestBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/RemoveUserResponseBody"
+            }
+          },
+          "400": {
+            "description": "400 response",
+            "schema": {
+              "$ref": "#/definitions/RemoveUserResponseBody"
+            }
+          }
+        }
+      },
+      "options": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Methods": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Headers": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users/updateuser": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "UpdateUserRequestBody",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateUserRequestBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/UpdateUserResponseBody"
+            }
+          },
+          "400": {
+            "description": "400 response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "options": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Methods": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Headers": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "TaxiStatusLocationRequestBody": {
+      "type": "object",
+      "required": [
+        "apiKey",
+        "lat",
+        "lng",
+        "status",
+        "update_type",
+        "user_type",
+        "vehicle_num"
+      ],
+      "properties": {
+        "apiKey": {
+          "type": "string"
+        },
+        "vehicle_num": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "ACTIVE",
+            "BOOKED",
+            "INACTIVE"
+          ]
+        },
+        "lat": {
+          "type": "number"
+        },
+        "lng": {
+          "type": "number"
+        },
+        "user_type": {
+          "type": "string",
+          "enum": [
+            "Taxi"
+          ]
+        },
+        "update_type": {
+          "type": "string",
+          "enum": [
+            "taxiLoc"
+          ]
+        }
+      },
+      "title": "Taxi Location And Status Request Body Schema"
+    },
+    "AllTaxisResponseBody": {
+      "title": "Get Taxi User Response Body Schema",
+      "type": "array"
+    },
+    "NewPassengerDetails": {
+      "type": "object",
+      "required": [
+        "firstname",
+        "lastname",
+        "password",
+        "user_type",
+        "username"
+      ],
+      "properties": {
+        "firstname": {
+          "type": "string"
+        },
+        "lastname": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "user_type": {
+          "type": "string",
+          "enum": [
+            "Passenger",
+            "Taxi"
+          ]
+        }
+      },
+      "title": "New Passenger Details Schema"
+    },
+    "GetRideLocationRequestBody": {
+      "type": "object",
+      "required": [
+        "otpHash",
+        "vehicle_num"
+      ],
+      "properties": {
+        "otpHash": {
+          "type": "string"
+        },
+        "vehicle_num": {
+          "type": "string"
+        }
+      },
+      "title": "Get Ride Location Request Body Schema"
+    },
+    "GetBoundaryResponseBody": {
+      "type": "object",
+      "required": [
+        "city",
+        "geometry"
+      ],
+      "properties": {
+        "city": {
+          "type": "string"
+        },
+        "geometry": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "Polygon"
+              ]
+            },
+            "coordinates": {
+              "type": "array"
+            }
+          }
+        }
+      },
+      "title": "Get Boundary Response Body Schema"
+    },
+    "GetRideLocationResponseBody": {
+      "type": "object",
+      "required": [
+        "current_vehicle_location",
+        "distance",
+        "duration",
+        "instruction"
+      ],
+      "properties": {
+        "current_vehicle_location": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "coordinates": {
+              "type": "array"
+            }
+          }
+        },
+        "instruction": {
+          "type": "string"
+        },
+        "distance": {
+          "type": "string"
+        },
+        "duration": {
+          "type": "string"
+        }
+      },
+      "title": "Get Ride Location Response Body Schema"
+    },
+    "Empty": {
+      "type": "object",
+      "title": "Empty Schema"
+    },
+    "GetPassengerUserResponseBody": {
+      "type": "object",
+      "required": [
+        "firstname",
+        "lastname"
+      ],
+      "properties": {
+        "firstname": {
+          "type": "string"
+        },
+        "lastname": {
+          "type": "string"
+        }
+      },
+      "title": "Get Passenger User Response Body Schema"
+    },
+    "NearbyRideDetails": {
+      "type": "object",
+      "required": [
+        "location",
+        "vehicle_num",
+        "vehicle_type"
+      ],
+      "properties": {
+        "vehicle_num": {
+          "type": "string"
+        },
+        "vehicle_type": {
+          "type": "string",
+          "enum": [
+            "UTILITY",
+            "DELUXE",
+            "LUXURY"
+          ]
+        },
+        "location": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "Point"
+              ]
+            },
+            "coordinates": {
+              "type": "array"
+            }
+          }
+        }
+      },
+      "title": "Get Nearby Ride Details Schema"
+    },
+    "GetRideDetailsResponseBody": {
+      "type": "object",
+      "required": [
+        "booked_time",
+        "cost",
+        "dest_address",
+        "dest_loc",
+        "end_time",
+        "est_time",
+        "passenger_comments",
+        "passenger_rating",
+        "start_address",
+        "start_loc",
+        "start_time",
+        "total_distance",
+        "vehicle_num",
+        "vehicle_type"
+      ],
+      "properties": {
+        "start_address": {
+          "type": "string"
+        },
+        "dest_address": {
+          "type": "string"
+        },
+        "start_loc": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "coordinates": {
+              "type": "array"
+            }
+          }
+        },
+        "dest_loc": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "coordinates": {
+              "type": "array"
+            }
+          }
+        },
+        "booked_time": {
+          "type": "string"
+        },
+        "start_time": {
+          "type": "string"
+        },
+        "end_time": {
+          "type": "string"
+        },
+        "vehicle_type": {
+          "type": "string",
+          "enum": [
+            "UTILITY",
+            "DELUXE",
+            "LUXURY"
+          ]
+        },
+        "vehicle_num": {
+          "type": "string"
+        },
+        "cost": {
+          "type": "string"
+        },
+        "passenger_rating": {
+          "type": "string"
+        },
+        "passenger_comments": {
+          "type": "string"
+        },
+        "est_time": {
+          "type": "string"
+        },
+        "total_distance": {
+          "type": "string"
+        }
+      },
+      "title": "Get Ride Details Response Body Schema"
+    },
+    "NewUserRequestBody": {
+      "title": "New User Request Body Schema"
+    },
+    "FeedbackUpdateRequestBody": {
+      "type": "object",
+      "required": [
+        "OTPHash",
+        "apiKey",
+        "passenger_comments",
+        "passenger_rating",
+        "update_type"
+      ],
+      "properties": {
+        "apiKey": {
+          "type": "string"
+        },
+        "OTPHash": {
+          "type": "string"
+        },
+        "update_type": {
+          "type": "string",
+          "enum": [
+            "feedback"
+          ]
+        },
+        "passenger_rating": {
+          "type": "string"
+        },
+        "passenger_comments": {
+          "type": "string"
+        }
+      },
+      "title": "Feedback Update Request Body Schema"
+    },
+    "NewTaxiDetails": {
+      "type": "object",
+      "required": [
+        "driving_license_num",
+        "firstname",
+        "lastname",
+        "lat",
+        "lng",
+        "password",
+        "status",
+        "user_type",
+        "username",
+        "vehicle_num",
+        "vehicle_type"
+      ],
+      "properties": {
+        "firstname": {
+          "type": "string"
+        },
+        "lastname": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "vehicle_num": {
+          "type": "string"
+        },
+        "vehicle_type": {
+          "type": "string",
+          "enum": [
+            "UTILITY",
+            "DELUXE",
+            "LUXURY"
+          ]
+        },
+        "driving_license_num": {
+          "type": "string"
+        },
+        "lat": {
+          "type": "number"
+        },
+        "lng": {
+          "type": "number"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "ACTIVE",
+            "BOOKED",
+            "INACTIVE"
+          ]
+        },
+        "user_type": {
+          "type": "string",
+          "enum": [
+            "Passenger",
+            "Taxi"
+          ]
+        }
+      },
+      "title": "New Taxi Details Schema"
+    },
+    "NewUserResponseBody": {
+      "type": "object",
+      "required": [
+        "message"
+      ],
+      "properties": {
+        "message": {
+          "type": "string",
+          "enum": [
+            "Create success!"
+          ]
+        }
+      },
+      "title": "New User Response Body Schema"
+    },
+    "EndTimeUpdateResponseBody": {
+      "type": "object",
+      "required": [
+        "end_time"
+      ],
+      "properties": {
+        "end_time": {
+          "type": "string"
+        }
+      },
+      "title": "End Time Update Response Body Schema"
+    },
+    "GetNearbyRidesRequestBody": {
+      "type": "object",
+      "required": [
+        "lat",
+        "lng"
+      ],
+      "properties": {
+        "lat": {
+          "type": "number"
+        },
+        "lng": {
+          "type": "number"
+        }
+      },
+      "title": "Get Nearby Rides Request Body Schema"
+    },
+    "GetRideDetailsRequestBody": {
+      "type": "object",
+      "required": [
+        "apiKey",
+        "booked_time"
+      ],
+      "properties": {
+        "apiKey": {
+          "type": "string"
+        },
+        "booked_time": {
+          "type": "string"
+        }
+      },
+      "title": "Get Ride Details Request Body Schema"
+    },
+    "GetTaxiDataRequestBody": {
+      "type": "object",
+      "required": [
+        "vehicle_num"
+      ],
+      "properties": {
+        "vehicle_num": {
+          "type": "string"
+        }
+      },
+      "title": "Get Nearby Rides Request Body Schema"
+    },
+    "LoginRequestBody": {
+      "type": "object",
+      "required": [
+        "password",
+        "username"
+      ],
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "user_type": {
+          "type": "string",
+          "enum": [
+            "Passenger",
+            "Taxi"
+          ]
+        }
+      },
+      "title": "Login Request Body Schema"
+    },
+    "GetARideResponseBody": {
+      "type": "object",
+      "required": [
+        "cost",
+        "firstname",
+        "lastname",
+        "location",
+        "vehicle_num",
+        "vehicle_type"
+      ],
+      "properties": {
+        "firstname": {
+          "type": "string"
+        },
+        "lastname": {
+          "type": "string"
+        },
+        "vehicle_num": {
+          "type": "string"
+        },
+        "vehicle_type": {
+          "type": "string",
+          "enum": [
+            "UTILITY",
+            "DELUXE",
+            "LUXURY"
+          ]
+        },
+        "location": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "coordinates": {
+              "type": "array"
+            }
+          }
+        },
+        "cost": {
+          "type": "string"
+        }
+      },
+      "title": "Get A Ride Response Body Schema"
+    },
+    "GetUserResponseBody": {
+      "title": "Get User Response Body Schema"
+    },
+    "Error": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      },
+      "title": "Error Schema"
+    },
+    "LoginResponseBody": {
+      "type": "object",
+      "required": [
+        "APIKey"
+      ],
+      "properties": {
+        "APIKey": {
+          "type": "string"
+        }
+      },
+      "title": "Login Response Body Schema"
+    },
+    "GetARideRequestBody": {
+      "type": "object",
+      "required": [
+        "dest_lat",
+        "dest_lng",
+        "start_lat",
+        "start_lng",
+        "vehicle_type"
+      ],
+      "properties": {
+        "start_lat": {
+          "type": "number"
+        },
+        "start_lng": {
+          "type": "number"
+        },
+        "dest_lat": {
+          "type": "number"
+        },
+        "dest_lng": {
+          "type": "number"
+        },
+        "vehicle_type": {
+          "type": "string",
+          "enum": [
+            "UTILITY",
+            "DELUXE",
+            "LUXURY"
+          ]
+        }
+      },
+      "title": "Get A Ride Request Body Schema"
+    },
+    "UpdateUserResponseBody": {
+      "type": "object",
+      "required": [
+        "message"
+      ],
+      "properties": {
+        "message": {
+          "type": "string",
+          "enum": [
+            "Successful update!"
+          ]
+        }
+      },
+      "title": "Update User Response Body Schema"
+    },
+    "ConfirmRideResponseBody": {
+      "type": "object",
+      "required": [
+        "OTP"
+      ],
+      "properties": {
+        "OTP": {
+          "type": "string"
+        }
+      },
+      "title": "Confirm Ride Response Body Schema"
+    },
+    "GetTaxiUserResponseBody": {
+      "type": "object",
+      "required": [
+        "driving_license_num",
+        "firstname",
+        "lastname",
+        "status",
+        "vehicle_num",
+        "vehicle_type"
+      ],
+      "properties": {
+        "firstname": {
+          "type": "string"
+        },
+        "lastname": {
+          "type": "string"
+        },
+        "vehicle_num": {
+          "type": "string"
+        },
+        "vehicle_type": {
+          "type": "string",
+          "enum": [
+            "UTILITY",
+            "DELUXE",
+            "LUXURY"
+          ]
+        },
+        "driving_license_num": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "ACTIVE",
+            "BOOKED",
+            "INACTIVE"
+          ]
+        }
+      },
+      "title": "Get Taxi User Response Body Schema"
+    },
+    "RemoveUserResponseBody": {
+      "type": "object",
+      "required": [
+        "message"
+      ],
+      "properties": {
+        "message": {
+          "type": "string",
+          "enum": [
+            "Successfully removed user!"
+          ]
+        }
+      },
+      "title": "Remve User Response Body Schema"
+    },
+    "StartTimeUpdateResponseBody": {
+      "type": "object",
+      "required": [
+        "start_time"
+      ],
+      "properties": {
+        "start_time": {
+          "type": "string"
+        }
+      },
+      "title": "Start Time Update Response Body Schema"
+    },
+    "ConfirmRideRequestBody": {
+      "type": "object",
+      "required": [
+        "apiKey",
+        "booked_time",
+        "dest_address",
+        "dest_lat",
+        "dest_lng",
+        "scheduled_time",
+        "start_address",
+        "start_lat",
+        "start_lng",
+        "vehicle_num"
+      ],
+      "properties": {
+        "apiKey": {
+          "type": "string"
+        },
+        "vehicle_num": {
+          "type": "string"
+        },
+        "booked_time": {
+          "type": "string"
+        },
+        "scheduled_time": {
+          "type": "string"
+        },
+        "start_address": {
+          "type": "string"
+        },
+        "start_lat": {
+          "type": "number"
+        },
+        "start_lng": {
+          "type": "number"
+        },
+        "dest_address": {
+          "type": "string"
+        },
+        "dest_lat": {
+          "type": "number"
+        },
+        "dest_lng": {
+          "type": "number"
+        }
+      },
+      "title": "Confirm Ride Request Body Schema"
+    },
+    "UpdateRideRequestBody": {
+      "title": "Update Ride Request Body Schema"
+    },
+    "UpdateRideResponseBody": {
+      "title": "Update Ride Response Body Schema"
+    },
+    "UpdateUserRequestBody": {
+      "title": "Update User Request Body Schema"
+    },
+    "FeedbackUpdateResponseBody": {
+      "type": "object",
+      "required": [
+        "passenger_comments",
+        "passenger_rating"
+      ],
+      "properties": {
+        "passenger_rating": {
+          "type": "string"
+        },
+        "passenger_comments": {
+          "type": "string"
+        }
+      },
+      "title": "Feedback Update Response Body Schema"
+    },
+    "RemoveUserRequestBody": {
+      "type": "object",
+      "required": [
+        "apiKey",
+        "password",
+        "user_type",
+        "username"
+      ],
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "apiKey": {
+          "type": "string"
+        },
+        "user_type": {
+          "type": "string",
+          "enum": [
+            "Passenger",
+            "Taxi"
+          ]
+        }
+      },
+      "title": "Remove User Request Body Schema"
+    },
+    "GetUserRequestBody": {
+      "type": "object",
+      "required": [
+        "apiKey",
+        "user_type"
+      ],
+      "properties": {
+        "apiKey": {
+          "type": "string"
+        },
+        "user_type": {
+          "type": "string",
+          "enum": [
+            "Passenger",
+            "Taxi"
+          ]
+        }
+      },
+      "title": "Get User Request Body Schema"
+    },
+    "TaxiDetails": {
+      "type": "object",
+      "required": [
+        "APIKey",
+        "driving_license_num",
+        "firstname",
+        "last_updated_timestamp",
+        "lastname",
+        "location",
+        "password",
+        "status",
+        "username",
+        "vehicle_num",
+        "vehicle_type"
+      ],
+      "properties": {
+        "firstname": {
+          "type": "string"
+        },
+        "lastname": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "vehicle_num": {
+          "type": "string"
+        },
+        "vehicle_type": {
+          "type": "string",
+          "enum": [
+            "UTILITY",
+            "DELUXE",
+            "LUXURY"
+          ]
+        },
+        "driving_license_num": {
+          "type": "string"
+        },
+        "location": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "coordinates": {
+              "type": "array"
+            }
+          }
+        },
+        "last_updated_timestamp": {
+          "type": "string"
+        },
+        "APIKey": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "ACTIVE",
+            "BOOKED",
+            "INACTIVE"
+          ]
+        }
+      },
+      "title": "Taxi Details Schema"
+    },
+    "GetTaxiDataResponseBody": {
+      "type": "object",
+      "required": [
+        "current_ride",
+        "location",
+        "status"
+      ],
+      "properties": {
+        "current_ride": {
+          "type": "array"
+        },
+        "location": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "Point"
+              ]
+            },
+            "coordinates": {
+              "type": "array"
+            }
+          }
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "ACTIVE",
+            "INACTIVE",
+            "BOOKED"
+          ]
+        }
+      },
+      "title": "Get Nearby Rides Request Body Schema"
+    },
+    "EndTimeUpdateRequestBody": {
+      "type": "object",
+      "required": [
+        "OTPHash",
+        "apiKey",
+        "end_time",
+        "update_type",
+        "vehicle_num"
+      ],
+      "properties": {
+        "apiKey": {
+          "type": "string"
+        },
+        "OTPHash": {
+          "type": "string"
+        },
+        "update_type": {
+          "type": "string",
+          "enum": [
+            "endTime"
+          ]
+        },
+        "end_time": {
+          "type": "string"
+        },
+        "vehicle_num": {
+          "type": "string"
+        }
+      },
+      "title": "End Time Update Request Body Schema"
+    },
+    "StartTimeUpdateRequestBody": {
+      "type": "object",
+      "required": [
+        "OTPHash",
+        "apiKey",
+        "dest_lat",
+        "dest_lng",
+        "start_lat",
+        "start_lng",
+        "start_time",
+        "update_type",
+        "vehicle_num"
+      ],
+      "properties": {
+        "apiKey": {
+          "type": "string"
+        },
+        "OTPHash": {
+          "type": "string"
+        },
+        "update_type": {
+          "type": "string",
+          "enum": [
+            "startTime"
+          ]
+        },
+        "start_time": {
+          "type": "string"
+        },
+        "start_lat": {
+          "type": "number"
+        },
+        "start_lng": {
+          "type": "number"
+        },
+        "dest_lat": {
+          "type": "number"
+        },
+        "dest_lng": {
+          "type": "number"
+        },
+        "vehicle_num": {
+          "type": "string"
+        }
+      },
+      "title": "Start Time Update Request Body Schema"
+    },
+    "GetNearbyRidesResponseBody": {
+      "title": "Get Nearby Rides Response Body Schema",
+      "type": "array"
+    }
+  }
+}
