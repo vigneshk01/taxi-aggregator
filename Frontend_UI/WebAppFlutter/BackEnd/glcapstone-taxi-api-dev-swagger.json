@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "2021-09-17T17:07:30Z",
+    "version": "2021-09-20T18:35:58Z",
     "title": "glcapstone-taxi-api"
   },
   "host": "fep34ikk65.execute-api.us-east-1.amazonaws.com",
@@ -530,6 +530,48 @@
             "description": "400 response",
             "schema": {
               "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "options": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Methods": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Headers": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users/getridehistory": {
+      "post": {
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
             }
           }
         }
@@ -1091,11 +1133,13 @@
         "dest_address",
         "dest_loc",
         "end_time",
+        "est_time",
         "passenger_comments",
         "passenger_rating",
         "start_address",
         "start_loc",
         "start_time",
+        "total_distance",
         "vehicle_num",
         "vehicle_type"
       ],
@@ -1155,6 +1199,12 @@
           "type": "string"
         },
         "passenger_comments": {
+          "type": "string"
+        },
+        "est_time": {
+          "type": "string"
+        },
+        "total_distance": {
           "type": "string"
         }
       },

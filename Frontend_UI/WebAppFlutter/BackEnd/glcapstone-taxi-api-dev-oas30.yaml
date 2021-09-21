@@ -1,7 +1,7 @@
 openapi: "3.0.1"
 info:
   title: "glcapstone-taxi-api"
-  version: "2021-09-17T17:07:30Z"
+  version: "2021-09-20T18:35:58Z"
 servers:
 - url: "https://fep34ikk65.execute-api.us-east-1.amazonaws.com/{basePath}"
   variables:
@@ -543,6 +543,33 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UpdateUserResponseBody"
+    options:
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: "string"
+            Access-Control-Allow-Methods:
+              schema:
+                type: "string"
+            Access-Control-Allow-Headers:
+              schema:
+                type: "string"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Empty"
+  /api/users/getridehistory:
+    post:
+      responses:
+        "200":
+          description: "200 response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Empty"
     options:
       responses:
         "200":
