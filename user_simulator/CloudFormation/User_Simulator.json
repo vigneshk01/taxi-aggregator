@@ -1,0 +1,129 @@
+{
+"AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "Create EC2, kinesis, Lambda and map Lambda with kinesis",
+    "Parameters" : {
+        "InstanceTypeParameter" : {
+          "Type" : "String",
+          "Default" : "t2.micro",
+          "AllowedValues" : ["t2.micro", "t1.micro", "t2.small"],
+          "Description" : "Enter any option from array above. Default is t2.micro."
+        },
+        "KeyName": {
+            "Description": "Name of an existing EC2 KeyPair to enable SSH access to the instance",
+            "Type": "AWS::EC2::KeyPair::KeyName",
+            "ConstraintDescription": "must be the name of an existing EC2 KeyPair."
+        },
+        "IAMRoleName":{
+            "Type": "String",
+            "Description": "Create correct role before running template or if you have role in place give correct name",
+            "Default": "Multirole-ec2",
+            "AllowedPattern" : ".+"
+        }
+       
+    },
+  "Resources": {
+    "EC2AccessSecurityGroup": {
+      "Type": "AWS::EC2::SecurityGroup",
+      "Properties": {
+        "GroupDescription": "Allow only SSH access to EC2 instance",
+        "SecurityGroupIngress": [
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 22,
+            "ToPort": 22,
+            "CidrIp": "0.0.0.0/0"
+          }
+        ]
+      }
+    },
+    "Ec2InstanceProfile": {
+      "Type": "AWS::IAM::InstanceProfile",
+      "Properties": {
+        "Path": "/",
+        "Roles": [ { "Ref": "IAMRoleName" } ]
+      }
+    },
+    "EC2ForUserSimulator1": {
+      "Type": "AWS::EC2::Instance",
+      "Properties": {
+        "IamInstanceProfile": { "Ref": "Ec2InstanceProfile" },
+        "ImageId": "ami-087c17d1fe0178315",
+        "InstanceType": { "Ref": "InstanceTypeParameter" },
+        "KeyName": { "Ref": "KeyName" },
+        "SecurityGroups": [ { "Ref": "EC2AccessSecurityGroup" } ],
+        "Tags": [
+          {
+            "Key": "Capstone",
+            "Value": "UserSimulator1"
+          }
+        ]
+      }
+    },
+    "EC2ForUserSimulator2": {
+      "Type": "AWS::EC2::Instance",
+      "Properties": {
+        "IamInstanceProfile": { "Ref": "Ec2InstanceProfile" },
+        "ImageId": "ami-087c17d1fe0178315",
+        "InstanceType": { "Ref": "InstanceTypeParameter" },
+        "KeyName": { "Ref": "KeyName" },
+        "SecurityGroups": [ { "Ref": "EC2AccessSecurityGroup" } ],
+        "Tags": [
+          {
+            "Key": "Capstone",
+            "Value": "UserSimulator2"
+          }
+        ]
+      }
+    },
+
+    "EC2ForUserSimulator3": {
+      "Type": "AWS::EC2::Instance",
+      "Properties": {
+        "IamInstanceProfile": { "Ref": "Ec2InstanceProfile" },
+        "ImageId": "ami-087c17d1fe0178315",
+        "InstanceType": { "Ref": "InstanceTypeParameter" },
+        "KeyName": { "Ref": "KeyName" },
+        "SecurityGroups": [ { "Ref": "EC2AccessSecurityGroup" } ],
+        "Tags": [
+          {
+            "Key": "Capstone",
+            "Value": "UserSimulator3"
+          }
+        ]
+      }
+    },
+    "EC2ForUserSimulator4": {
+      "Type": "AWS::EC2::Instance",
+      "Properties": {
+        "IamInstanceProfile": { "Ref": "Ec2InstanceProfile" },
+        "ImageId": "ami-087c17d1fe0178315",
+        "InstanceType": { "Ref": "InstanceTypeParameter" },
+        "KeyName": { "Ref": "KeyName" },
+        "SecurityGroups": [ { "Ref": "EC2AccessSecurityGroup" } ],
+        "Tags": [
+          {
+            "Key": "Capstone",
+            "Value": "UserSimulator4"
+          }
+        ]
+      }
+    },
+    "EC2ForUserSimulator5": {
+      "Type": "AWS::EC2::Instance",
+      "Properties": {
+        "IamInstanceProfile": { "Ref": "Ec2InstanceProfile" },
+        "ImageId": "ami-087c17d1fe0178315",
+        "InstanceType": { "Ref": "InstanceTypeParameter" },
+        "KeyName": { "Ref": "KeyName" },
+        "SecurityGroups": [ { "Ref": "EC2AccessSecurityGroup" } ],
+        "Tags": [
+          {
+            "Key": "Capstone",
+            "Value": "UserSimulator5"
+          }
+        ]
+      }
+    }
+  }
+    
+}
