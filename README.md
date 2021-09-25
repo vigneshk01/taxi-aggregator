@@ -1,7 +1,7 @@
 # Location based Taxi Selector and Aggregator
 
-1.The contents are categorized based on their functionalility in each of the sub directory.
-2.The steps have been provided for deployment and additional configurations under the root of the sub directories.
+1. The contents are categorized based on their functionalility in each of the sub directory.
+2. The steps have been provided for deployment and additional configurations under the root of the sub directories.
 
 Directories Overview:
 -------------
