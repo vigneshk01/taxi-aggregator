@@ -1,3 +1,5 @@
+Density Map Visualization:
+-------------------------
 DIR insights/generated_stub_data contains the generated stub data
 1. insights/generated_stub_data/location_stream.zip will first need to be extracted to get location_stream.json
 2. The json files just need to be imported into the mongo database. 
@@ -68,3 +70,11 @@ If needed to generate new data following are the steps:
 * insights/database.py insights/rides.py are not directly used but used by other files.
 * insights/location_stream_stub_data.py is used if you want to generate location_stream data based on ride collection separately 
 * insights/base_cluster_file_with_interactive_map.ipynb is the ipynb version of insights/rides_insights.py
+
+Feedback Analysis:
+-----------------
+Dir insights/feedback_sentiment_analysis contains the trained model to classifiy the user feedbacks either as Positive and Negative.
+
+Generic Insigts:
+---------------
+Dir insights/generic_insights contains the basic insights that are created over the arrgregated data in MongoDB, visualized in bar, pie and scatter plots
