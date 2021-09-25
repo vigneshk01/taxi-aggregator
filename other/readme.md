@@ -1,4 +1,5 @@
 This script deploys some of the lambda functions and its dependencies as provided under backend_lambda dir. also this will be the standard deployment for all the lambda function
+Place the required lambda functions inside the dir and place the serverless.yml at the root dir and modify the function paramaeters accordingly, additionally make sure aws session credentials are not espired prior to deployment.
 
 Pre-requisite:
 
