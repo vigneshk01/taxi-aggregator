@@ -1,0 +1,91 @@
+# serverless.yml
+
+service: taxi-servicecalls
+configValidationMode: warn
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: dev # Default stage to be used. Default is "dev"
+  region: us-east-1 # Default region to be used. Default is "us-east-1"
+  stackName: serverless-taxi-stack # Use a custom name for the CloudFormation stack
+  apiName: taxi-api-gateway # Use a custom name for the API Gateway API
+  lambdaHashingVersion: 20201221
+
+  iam:
+    role: ServerlessLambdaRole
+
+  deploymentBucket:
+    blockPublicAccess: true
+    serverSideEncryption: AES256
+    tags: # Tags that will be added to each of the deployment resources
+      app: taxi
+
+package:
+  patterns:
+    - '!node_modules/**'
+    - '!venv/**'
+
+functions:
+   alltaxis: # The lambda Function name
+    dependsOn: ServerlessLambdaRole
+    handler: alltaxis/index.handler
+    runtime: nodejs12.x
+    role: ServerlessLambdaRole # IAM role which will be used for this function
+    events: # The Events that trigger this Function
+      - http: GET /alltaxis
+   
+   informtaxi: # The lambda Function name
+    dependsOn: ServerlessLambdaRole
+    handler: informtaxi/index.handler
+    runtime: nodejs12.x
+    role: ServerlessLambdaRole # IAM role which will be used for this function
+    events: # The Events that trigger this Function
+      - http: GET /api/informtaxi
+
+   simulatetaximovement: # The lambda Function name
+    dependsOn: ServerlessLambdaRole
+    handler: simulatetaximovement/index.handler
+    runtime: nodejs12.x
+    role: ServerlessLambdaRole # IAM role which will be used for this function
+    events: # The Events that trigger this Function
+      - http: GET /api/simulatetaximovement
+      
+   getboundary: # The lambda Function name
+    dependsOn: ServerlessLambdaRole
+    handler: ridesearch/getboundary/index.handler
+    runtime: nodejs12.x
+    role: ServerlessLambdaRole # IAM role which will be used for this function
+    events: # The Events that trigger this Function
+      - http: GET /api/getboundary
+
+   getnearbyrides: # The lambda Function name
+    dependsOn: ServerlessLambdaRole
+    handler: ridesearch/getnearbyrides/index.handler
+    runtime: nodejs12.x
+    role: ServerlessLambdaRole # IAM role which will be used for this function
+    events: # The Events that trigger this Function
+      - http: POST /api/getnearbyrides
+
+resources:
+  Resources:
+    ServerlessLambdaRole:
+      Type: AWS::IAM::Role
+      Properties:
+        Path: /service-role/
+        RoleName: serverless-lambda-role
+        AssumeRolePolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Principal:
+                Service:
+                  - lambda.amazonaws.com
+                  - events.amazonaws.com
+                  - apigateway.amazonaws.com
+              Action: sts:AssumeRole
+        # AWS Managed Policies
+        ManagedPolicyArns:
+          - arn:aws:iam::aws:policy/CloudWatchFullAccess
+          - arn:aws:iam::aws:policy/AmazonKinesisFullAccess
+          - arn:aws:iam::aws:policy/AmazonSNSFullAccess
