@@ -30,6 +30,7 @@ class Taxi:
         taxi_list = self._api.get_request('taxi/6')
         self._Taxi = taxi_list
 
+    # Template for data to push 
     def taxi_template(self, api_key, vehicle_num, status, random_location):
         template_dict = {
             "user_type": 'Taxi',
@@ -70,6 +71,7 @@ class KinesisPublishAndMovement(Taxi):
     def get_taxi_data(self):
         return self._recent_locations
 
+    # function will calculate and generate new lat and long based on old lat long
     def calculate_movement(self, long, lat, distance=0.3):
         R = 6378.1  # Radius of the Earth
         brng = 1.57  # Bearing is 90 degrees converted to radians.
@@ -106,6 +108,7 @@ class KinesisPublishAndMovement(Taxi):
         # This is where boundary is in list of list structure
         boundary_list = [tuple(x) for x in boundary[0]]
         point = Point(long, lat)
+        # This will check point in boundary or not
         polygon = Polygon(boundary_list)
         return polygon.contains(point)
 

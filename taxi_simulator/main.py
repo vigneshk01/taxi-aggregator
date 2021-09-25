@@ -29,6 +29,7 @@ class GenerateAndMove:
             'boundary': self._boundary,
             'location_list': random_taxi.location_list
         }
+        # every is schedule method which will simulate movement at every min
         every(1).minutes.do(
             self.move_taxi, dict_to_used
         ).tag(f'taxi_movement_{self._taxi_details["vehicle_num"]}')

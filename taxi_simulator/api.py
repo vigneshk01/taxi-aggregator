@@ -4,12 +4,14 @@ import json
 
 class Api:
 
+    # Please change URL after you deploy backend_lambda in aws
     BASE_URL = 'https://fep34ikk65.execute-api.us-east-1.amazonaws.com/dev'
 
     def __init__(self):
         self._base_url = self.BASE_URL
         self._headers = {'Content-type': 'application/json'}
 
+    # Function used to get data from the api
     def get_request(self, path, headers=None):
         r = requests.get(f'{self._base_url}{path}')
         if r.status_code == 200:
