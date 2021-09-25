@@ -36,6 +36,12 @@
             "Description": "Please enter s3 key name. This is mandotary",
             "Default": "KinesisLambda.zip",
             "AllowedPattern" : ".+"
+        },
+        "BackendBASEURL":{
+            "Type": "String",
+            "Description": "Please enter BASE URL. This is mandotary",
+            "Default": "https://fep34ikk65.execute-api.us-east-1.amazonaws.com/dev",
+            "AllowedPattern" : ".+"
         }
     },
     "Resources": {
@@ -124,8 +130,7 @@
                 },
                 "Runtime": "python3.9",
                 "Environment":{
-                    "Variables" : {"BASE_URL" : "https://fep34ikk65.execute-api.us-east-1.amazonaws.com/dev", 
-                    "ROUTE":"/api/users/updateuser"} 
+                    "Variables" : {"BASE_URL" : { "Ref" : "BackendBASEURL" }, "ROUTE":"/api/users/updateuser"} 
                 },
                 "FunctionName" : "taxi-movement",
                 "Role": {
