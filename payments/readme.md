@@ -2,7 +2,7 @@
 
 This application will let you interact with PayU payment portal to completed the transaction for availing TravelCare facilites
 
-# Installation
+## Installation
 
 ```bash
 pip install Flask
