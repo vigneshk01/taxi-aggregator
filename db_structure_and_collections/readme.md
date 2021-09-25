@@ -6,3 +6,5 @@
 2. passengers.json - Users that are registered via our frontend app are stored in this collection. majorly used for login and booking rides
 3. rides.json - stored real time location data also acts as ride history post and additionally used for insights.
 4. taxis.json - Taxis that are registered via our frontend app are stored in this collection. used for selecting and confirming a taxi.
+
+Additionally provided MongoDB Dumps for reference.
