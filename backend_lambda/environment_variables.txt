@@ -7,6 +7,6 @@
 	USER_TYPE_TAXI: "Taxi",
 	REGION: "us-east-1",
 	SECRETKEY: "<SECRET-KEY>"
-	TOPIC_URN: ["arn:aws:sns:us-east-1:105001751931:inform_taxi",
-			"arn:aws:sns:us-east-1:105001751931:simulate_travel"]
+	TOPIC_URN: ["arn:aws:sns:us-east-1:<aws-id>:inform_taxi",
+			"arn:aws:sns:us-east-1:<aws-id>:simulate_travel"]
 }
