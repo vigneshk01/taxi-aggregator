@@ -1,0 +1,49 @@
+OpenRouteService has a free server which is accessed using an API key.
+https://openrouteservice.org/plans/
+
+They also allow users to setup and host local server/endpoints for making direction calls.
+
+Requirements:
+	Download: https://download.geofabrik.de/asia/india-latest.osm.pbf 
+	at least 8gb ram dedicated to the docker image. Do not run if less than 8gb it will throw errors and not start.
+	Java
+	Docker
+	WSL2 (Only for Windows)
+
+References:
+	https://giscience.github.io/openrouteservice/installation/Running-with-Docker.html
+	https://openrouteservice.org/dev/#/api-docs/v2/directions
+	https://ask.openrouteservice.org/t/specs-needed-for-running-openrouteservice-locally/1877/5
+	https://ask.openrouteservice.org/t/specs-needed-for-running-openrouteservice-locally/1877/8
+
+Starting location: C:/Users/Harshiv
+Run the following (For Windows):
+	mkdir Docker
+	cd Docker
+	mkdir conf
+	mkdir graphs
+	mkdir elevation_cache
+	docker run -dt --name ors-app -p 8080:8080 `
+	-v C:/Users/Harshiv/Docker/graphs:/ors-core/data/graphs `
+	-v C:/Users/Harshiv/Docker/elevation_cache:/ors-core/data/elevation_cache `
+	-v C:/Users/Harshiv/Docker/conf:/ors-conf `
+	-v C:/Users/Harshiv/Docker/india-latest.osm.pbf:/ors-core/data/osm_file.pbf `
+	-e "JAVA_OPTS=-Djava.awt.headless=true -server -XX:TargetSurvivorRatio=75 -XX:SurvivorRatio=64 -XX:MaxTenuringThreshold=3 -XX:+UseG1GC -XX:ParallelGCThreads=4 -Xms1g -Xmx8g" `
+	-e "CATALINA_OPTS=-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=9001 -Dcom.sun.management.jmxremote.rmi.port=9001 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=localhost" `
+	openrouteservice/openrouteservice:latest
+  
+	Note:
+	1.	Change starting location as per needs
+	2.	Use absolute paths in the command
+	3.	The parameter –Xmx in JAVA_OPTS can be changed as per needs. It is set at 8g in the command 
+
+	First launch it will take time to generate map data (About 3gb in graphs, 2.5gb in elevation_cache. Took 3 hours to generate)
+	Once this data is generated sub sequential starts will be much faster.
+
+Check status of the server:
+	On running the below link, status will change from not-ready to ready when all data is generated.
+	http://localhost:8080/ors/health
+	http://localhost:8080/ors/status
+	Direction takes co-ordinates in the form: long, lat
+	http://localhost:8080/ors/v2/directions/driving-car?start=77.6143,12.9997&end=77.63425394128964,13.069450427199595
+	
