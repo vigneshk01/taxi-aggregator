@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+  background-color: linen;
+}
+
+h1 {
+  color: maroon;
+  margin-left: 40px;
+}
+</style>
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+</head>
+<body>
+
+<!------ Include the above in your HEAD tag ---------->
+
+<div class="container">
+    <div class="row">
+        <div class="well col-xs-10 col-sm-10 col-md-6 col-xs-offset-1 col-sm-offset-1 col-md-offset-3">
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <address>
+                        <strong>TravelCare Cabs</strong>
+                        <br>
+                        Bengaluru, KA 560034
+                        <br>
+                        <abbr title="Email"></abbr> travelCarecabs@gmail.com
+                    </address>
+                </div>
+            </div>
+            <div class="row">
+                <div class="text-decoration">
+                    <h1>Receipt No: {{data.receiptNo}}</h1>
+                </div>
+                </span>
+                <table class="table table-hover">
+                    <tbody>
+                            <td class="text-center">
+                            <p>
+                                <strong>Total payable amount {{data.amount}}</strong>
+                            </p>
+                        </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <form action='	https://test.payu.in/_payment' method='post'>
+                    <input type="hidden" name="key" value={{data.key}} />
+                    <input type="hidden" name="txnid" value={{data.txnid}} />
+                    <input type="hidden" name="productinfo" value={{data.productinfo}} />
+                    <input type="hidden" name="amount" value={{data.amount}} />
+                    <input type="hidden" name="email" value={{data.email}} />
+                    <input type="hidden" name="firstname" value={{data.firstname}} />
+                    <input type="hidden" name="surl" value={{data.surl}} />
+                    <input type="hidden" name="furl" value={{data.furl}} />
+                    <input type="hidden" name="phone" value={{data.phone}} />
+                    <input type="hidden" name="hash" value="{{data.hash}}" />
+                    <input type="hidden" name="notifyUrl" value="http://192.168.29.186:8080/success">
+                    <input type="hidden" name="continueUrl" value="http://192.168.29.186:8080/success">
+                    <input type="submit" value="Pay Now">
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
