@@ -22,6 +22,10 @@ sudo apt-get install libapache2-mod-wsgi-py3
 ```
 Please refer [link](https://github.com/vigneshk01/taxi-aggregator/blob/final/screenshots/PaymentScreens_screenshots.docx) for further setup
 
+### Url to access via EC2
+'your EC2 endpoint/?cost=costamount'
+Example:
+http://ec2-3-142-40-237.us-east-2.compute.amazonaws.com/?cost=34.58
 
 ## Note
 - Use your own merchantKey and merchant salt
