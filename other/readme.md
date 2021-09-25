@@ -1,3 +1,5 @@
+This script deploys some of the lambda functions and its dependencies as provided under backend_lambda dir. also this will be the standard deployment for all the lambda function
+
 Pre-requisite:
 
 	# install serverless
