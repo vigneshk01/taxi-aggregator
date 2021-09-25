@@ -11,26 +11,28 @@ from flask import Flask, request
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
 
-
+#creates object Transacation calass
 t = transcation()
 li = []
 
+#generates Receipt No
 t.genrateReceiptNo()
+
+#generates the refernce number
 t.random_string(7,5)
 li.append(t.getTXNid())
 
+#Loads the HTML form for interqacting with PayU
 @app.route('/', methods=['GET'])
 def home():
     cost = request.args.get('cost')
 
-    #t.random_string(7,5)
-    #li.append(t.getTXNid())
     if(cost==None):
        print("hi")
        return render_template("error.html")
     print("Txn")
     print(li[len(li)-1])
-    #vals =t.getTXNid()
+
     value = {
         'key': t.getmerchantKey(),
         'txnid': li[len(li)-1],
@@ -57,7 +59,7 @@ def home():
 
     return render_template("index.html",data = value)
 
-
+#Makes a POST call to check the status of payment
 @app.route('/checkstatus', methods=['POST'])
 def checkstatuslf():
     return render_template("status.html")
