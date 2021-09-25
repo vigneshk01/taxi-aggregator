@@ -28,12 +28,18 @@ sudo pip3 install -r requirements.txt
 python3 main.py
 ```
 
+
 ## Note
-use python > 3 version in order to run the simulator
+1.use python > 3 version in order to run the simulator
 
-To Simulate Rush hour- SSH to EC2 instance from 5 different AWS CLI and invoke main.py and login with 5 different users and book a taxi from 5 diferent locations(different Origin)
+2.To Simulate Rush hour- SSH to EC2 instance from 5 different AWS CLI and invoke main.py and login with 5 different users and book a taxi from 5 diferent locations(different Origin)
 
-To Simulate Special events- SSH to EC2 instance from 5 different AWS and invoke main.py and login with 5 different users and book a taxi from same location(same Origin eg: Kanteerava Stadium, bengaluru)
+3.To Simulate Special events- SSH to EC2 instance from 5 different AWS and invoke main.py and login with 5 different users and book a taxi from same location(same Origin eg: Kanteerava Stadium, bengaluru)
+
+4. if google API's doesnt work please try changing the API key
+5. Once backend Lambda is loaded, please make a note of the URL found in the root directory and replace base_url in user_simulator.py
+
+
 
 
 Note: This taxi aggregator works only for Bangalore city
