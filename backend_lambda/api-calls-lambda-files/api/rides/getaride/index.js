@@ -59,6 +59,13 @@ exports.handler = async (event) => {
             vehicle_type: body.vehicle_type,
             status: "ACTIVE"
         };
+        
+        // Update data for taxi status            
+            let updStatusData = {
+                $set: {
+                    status: "BOOKED"
+                }
+            };
                     
         // Structure of data to returnfrom database                    
         let projection = { 
@@ -69,21 +76,22 @@ exports.handler = async (event) => {
                 vehicle_num: 1, 
                 vehicle_type: 1, 
                 location: 1
-            }
+            },
+            returnOriginal: false
         };
         
         // Get ride details from database                 
-        let ride = await db.collection(col).findOne(query, projection);
+        let ride = await db.collection(col).findOneAndUpdate(query, updStatusData, projection);
         
         console.log(JSON.stringify(ride));
         
         // If success then return ride else return failure response
-        if (ride) {
+        if (ride["value"]) {
             
             // Add calculated cost to ride data
-            ride["cost"] = cost;
+            ride["value"]["cost"] = cost;
             
-            response = getARideResponse(200, ride);
+            response = getARideResponse(200, ride["value"]);
         }
         else {
             response= getARideResponse(400, {message: "Failed to get ride!"});

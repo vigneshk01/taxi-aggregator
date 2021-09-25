@@ -59,14 +59,8 @@ exports.handler = async (event) => {
                                   
             // Filter data to get particular taxi                     
             let queryTaxiLoc = {
-                vehicle_num: body.vehicle_num
-            };
-                    
-            // Update data for taxi status            
-            let updStatusData = {
-                $set: {
-                    status: "BOOKED"
-                }
+                vehicle_num: body.vehicle_num,
+                status: "BOOKED"
             };
             
             // datapoints to return on update
@@ -79,13 +73,13 @@ exports.handler = async (event) => {
           
             // Update taxi status as BOOKED in database
             const resptaxiLoc = await db.collection(process.env.COL_TAXI)
-                                .findOneAndUpdate(queryTaxiLoc, updStatusData, projectionTaxiLoc, {session});
+                                .findOne(queryTaxiLoc, projectionTaxiLoc);
                                 
             console.log(JSON.stringify(resptaxiLoc));
             
             // If no taxi found then abort transaction
             if(resptaxiLoc) {                    
-                taxiLoc = resptaxiLoc.value.location.coordinates;
+                taxiLoc = resptaxiLoc.location.coordinates;
                 console.log(JSON.stringify(taxiLoc));
             }
             else {
