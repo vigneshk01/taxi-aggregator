@@ -42,11 +42,10 @@ If needed to generate new data following are the steps:
             HIGH_LAT_LONG_DEST = [(12.9976, 77.6129), (12.9212, 77.6203), (12.9619, 77.5990)]
             SPECIAL_LAT_LONG = (12.9564, 77.7005)
             SPECIAL_DAY = 7
-            SPECIAL_HOUR_1 = 0  # Start Time  
-            SPECIAL_HOUR_2 = 11 # End Time
+            SPECIAL_HOUR_1 = 0 
+            SPECIAL_HOUR_2 = 11
             SPECIAL_BOOKING_COUNT = 20
             BANGALORE_BOUNDARY_JSON = 'db_structure_and_data/map_data/bengaluru_simple_polygon.geojson.json'
-
     3. If GENERATE_LOCATION_DATA is set to 1, then make sure that the openrouteservice local server is running.
        Steps for setting up openrouteservice local server is found at insights/other/openrouteservice_local_installation
 
