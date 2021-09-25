@@ -74,6 +74,7 @@ If needed to generate new data following are the steps:
 Feedback Analysis:
 -----------------
 Dir insights/feedback_sentiment_analysis contains the trained model to classifiy the user feedbacks either as Positive and Negative.
+Additional notes are provided under the folder.
 
 Generic Insigts:
 ---------------
