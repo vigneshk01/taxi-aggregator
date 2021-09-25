@@ -24,5 +24,5 @@ python main.py
 
 - In cloudFormation template you will find CF Template. You can use that to spin up infrastructure for taxi simulator in AWS.(Please add valid parameters in CF template and also Create valid Roles EC2 instance before spinning up CF template)
 - Pre-requisite for CF template is S3 bucket where EC2 code zip and KinesisLambda Zip require. Please add this before creating infrastructure for taxi simulator.
-- You will find KinesisLambda code in **'Kinesis_Lambda_Insert_Stream_code'** folder.
+- You will find KinesisLambda code in **'Kinesis_Lambda_Insert_Stream_code'** folder. Please create Deployment package and put that in zip then upload to S3 bucket or you can just ZIP **'Kinesis_Lambda_Insert_Stream_code'** folder content and add that in S3 bucket both ways will work.
 - For EC2 zip just exclude **CloudFormationTemplate and 'Kinesis_Lambda_Insert_Stream_code'** folder for the root folder and make zip for remaining folder and upload that to S3 so you can download that from S3 after EC2 instance started.
