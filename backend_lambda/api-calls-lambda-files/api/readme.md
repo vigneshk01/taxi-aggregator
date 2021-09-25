@@ -1,4 +1,4 @@
-# API call paths
+# API call paths /api/*
 
 ### File structure
 1. rides - > contains all resources and methods related to booking rides
