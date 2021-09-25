@@ -6,9 +6,9 @@ This Application provides Taxi Service in real-time within a given boundary, bas
 For this implementation, We have fixed Bangalore as our base location for the Taxi Service. The Solution is full and full designed to run on AWS cloud.
 Some of the AWS services that it utilizes are Lambda, EC2, API Gateway, Kinesis stream, SageMaker etc 
 
-Note:
+Notes:
 -----
-1. The contents are categorized based on their functionalility in each of the sub directory.
+1. The source code contents are categorized based on their functionalility in each of the sub directory.
 2. Further instructions have been provided for deployment and additional configurations, under the root of each sub directory.
 
 Directories Overview:
