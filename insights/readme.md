@@ -1,4 +1,4 @@
-insights/generated_stub_data contains the generated stub data
+DIR insights/generated_stub_data contains the generated stub data
 1. insights/generated_stub_data/location_stream.zip will first need to be extracted to get location_stream.json
 2. The json files just need to be imported into the mongo database. 
 
@@ -9,7 +9,8 @@ DATABASE:
 If needed to generate new data following are the steps:
 1. run: python booking_stub_data_generator.py
 2. This will generate stub data with the following parameters (Code has explanation for each parameter):
-            RIDE_COLLECTION = 'rides'
+
+        ` RIDE_COLLECTION = 'rides'
             BOOKING_COLLECTION = 'booking'
             LOCATION_STREAM_COLLECTION = 'location_stream'
             GENERATE_LOCATION_DATA = 0
@@ -45,27 +46,25 @@ If needed to generate new data following are the steps:
             SPECIAL_HOUR_1 = 0 
             SPECIAL_HOUR_2 = 11
             SPECIAL_BOOKING_COUNT = 20
-            BANGALORE_BOUNDARY_JSON = 'db_structure_and_data/map_data/bengaluru_simple_polygon.geojson.json'
+            BANGALORE_BOUNDARY_JSON = 'db_structure_and_data/map_data/bengaluru_simple_polygon.geojson.json' `
+
 3. If GENERATE_LOCATION_DATA is set to 1, then make sure that the openrouteservice local server is running.
        Steps for setting up openrouteservice local server is found at insights/other/openrouteservice_local_installation
 
-insights/rides_insights.py is used to get location based insights from booking and ride collections. It will generate 3 maps in separate html files: 
-1. all booking data
-2. failed booking data
-3. all rides data
+* insights/rides_insights.py is used to get location based insights from booking and ride collections. It will generate 3 maps in separate html files: 
+            1. all booking data
+            2. failed booking data
+            3. all rides data
 
-insights/rides_insights.py has the following parameters:
-    RIDE_COLLECTION = 'rides'
+* insights/rides_insights.py has the following parameters:
+   ``` RIDE_COLLECTION = 'rides'
     BOOKING_COLLECTION = 'booking'
     LOCATION_STREAM_COLLECTION = 'location_stream'
     USE_LOCATION = 1
     FROM_DATE = '2021-08-01T00:00:00.000'
-    TO_DATE = '2021-08-31T23:59:59.000'
+    TO_DATE = '2021-08-31T23:59:59.000' ```
 
-generated outputs are saved at insights/generated_output
-
-insights/database.py insights/rides.py are not directly used but used by other files.
-
-insights/location_stream_stub_data.py is used of you want to generate location_stream data based on ride collection separately 
-
-insights/base_cluster_file_with_interactive_map.ipynb is the ipynb version of insights/rides_insights.py
+* generated outputs are saved at insights/generated_output
+* insights/database.py insights/rides.py are not directly used but used by other files.
+* insights/location_stream_stub_data.py is used if you want to generate location_stream data based on ride collection separately 
+* insights/base_cluster_file_with_interactive_map.ipynb is the ipynb version of insights/rides_insights.py
