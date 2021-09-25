@@ -1,14 +1,14 @@
-insights/generated_stub_data contains the generated stub data.
-    insights/generated_stub_data/location_stream.zip will first need to be extracted to get location_stream.json
-    The json files just need to be imported into the mongo database. 
+insights/generated_stub_data contains the generated stub data
+1. insights/generated_stub_data/location_stream.zip will first need to be extracted to get location_stream.json
+2. The json files just need to be imported into the mongo database. 
 
 DATABASE:
-0. Update (HOST, PORT) or CONNECTION_STRING and also the DB_NAME in insights/database.py as needed. Please make sure that Database DB_NAME exists at the end point.
-1. Use either line 16 or 17 at insights/database.py (Comment the other)
+1. Update (HOST, PORT) or CONNECTION_STRING and also the DB_NAME in insights/database.py as needed. Please make sure that Database DB_NAME exists at the end point.
+2. Use either line 16 or 17 at insights/database.py (Comment the other).
 
 If needed to generate new data following are the steps:
-    1. run: python booking_stub_data_generator.py
-    2. This will generate stub data with the following parameters (Code has explanation for each parameter):
+1. run: python booking_stub_data_generator.py
+2. This will generate stub data with the following parameters (Code has explanation for each parameter):
             RIDE_COLLECTION = 'rides'
             BOOKING_COLLECTION = 'booking'
             LOCATION_STREAM_COLLECTION = 'location_stream'
@@ -46,13 +46,14 @@ If needed to generate new data following are the steps:
             SPECIAL_HOUR_2 = 11
             SPECIAL_BOOKING_COUNT = 20
             BANGALORE_BOUNDARY_JSON = 'db_structure_and_data/map_data/bengaluru_simple_polygon.geojson.json'
-    3. If GENERATE_LOCATION_DATA is set to 1, then make sure that the openrouteservice local server is running.
+3. If GENERATE_LOCATION_DATA is set to 1, then make sure that the openrouteservice local server is running.
        Steps for setting up openrouteservice local server is found at insights/other/openrouteservice_local_installation
 
 insights/rides_insights.py is used to get location based insights from booking and ride collections. It will generate 3 maps in separate html files: 
-    all booking data
-    failed booking data
-    all rides data
+1. all booking data
+2. failed booking data
+3. all rides data
+
 insights/rides_insights.py has the following parameters:
     RIDE_COLLECTION = 'rides'
     BOOKING_COLLECTION = 'booking'
@@ -64,6 +65,7 @@ insights/rides_insights.py has the following parameters:
 generated outputs are saved at insights/generated_output
 
 insights/database.py insights/rides.py are not directly used but used by other files.
+
 insights/location_stream_stub_data.py is used of you want to generate location_stream data based on ride collection separately 
 
 insights/base_cluster_file_with_interactive_map.ipynb is the ipynb version of insights/rides_insights.py
