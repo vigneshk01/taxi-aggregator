@@ -1,4 +1,4 @@
-# MyTravelCare/taxi Backedn API AWS Lambdas
+# MyTravelCare/taxi Backend API AWS Lambdas
 
 ### File structure:
 1. alltaxis - > lambda returns details of all taxis. It is used by taxi simulator to simulate the fee movement of taxi when not 'Boooked'.
