@@ -1,0 +1,67 @@
+# Requires the PyMongo package.
+# https://api.mongodb.com/python/current
+
+client = MongoClient('mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false')
+result = client['test']['rides'].aggregate([
+    {
+        '$group': {
+            '_id': {
+                'vehicle_num': '$vehicle_num', 
+                'date': {
+                    '$dateToString': {
+                        'format': '%Y-%m-%d', 
+                        'date': {
+                            '$toDate': '$booked_time'
+                        }
+                    }
+                }
+            }, 
+            'total_rides': {
+                '$sum': 1
+            }, 
+            'income': {
+                '$sum': '$cost'
+            }, 
+            'total_ridetime_in_mins': {
+                '$sum': {
+                    '$divide': [
+                        {
+                            '$subtract': [
+                                {
+                                    '$toDate': '$end_time'
+                                }, {
+                                    '$toDate': '$booked_time'
+                                }
+                            ]
+                        }, 60000
+                    ]
+                }
+            }, 
+            'total_distance_covered_kms': {
+                '$sum': {
+                    '$add': {
+                        '$toInt': {
+                            '$arrayElemAt': [
+                                '$total_distance_kms', 0
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+    }, {
+        '$project': {
+            '_id': 0, 
+            'vehicle_num': '$_id.vehicle_num', 
+            'date': '$_id.date', 
+            'total_rides': '$total_rides', 
+            'income': '$income', 
+            'total_ridetime_in_mins': '$total_ridetime_in_mins', 
+            'total_distance_covered_kms': '$total_distance_covered_kms'
+        }
+    }, {
+        '$merge': {
+            'into': 'Dagg_vehicle_stats'
+        }
+    }
+])

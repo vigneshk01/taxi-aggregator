@@ -1,10 +1,8 @@
 import datetime
 import random
-import string
-import time
 import json
-import geojson
 import haversine
+import openrouteservice
 
 from bson import ObjectId
 from shapely.geometry import Point, Polygon
@@ -13,43 +11,91 @@ from rides_stub_data_generator import MyRide
 
 RIDE_COLLECTION = 'rides'
 BOOKING_COLLECTION = 'booking'
+LOCATION_STREAM_COLLECTION = 'location_stream'
 
+# Set to 1 to generate location data
+GENERATE_LOCATION_DATA = 1
+
+# DAILY_PASSENGER_COUNT is used twice a day to generate rush hour,
+# i.e atleast 20 ride requests will be made during rush hour
 DAILY_PASSENGER_COUNT = 20
+# RANDOM_PASSENGER_COUNT is used for the amount of users availabe to make ride requests above the DAILY_PASSENGER_COUNT
+# The generator works on randomness, a random value will be seleted from 1 to RANDOM_PASSENGER_COUNT/2 every hour 
+# to get the hourly ride count
 RANDOM_PASSENGER_COUNT = 50
+# TAXI_COUNT is the total number of available taxis
 TAXI_COUNT = 50
 
-RUSH_HOUR_1 = 9
-RUSH_HOUR_2 = 14
+# The generator will generate rides and bookings from SHIFT_START till SHIFT_END
 SHIFT_START = 6
 SHIFT_END = 18
+# RUSH_HOUR_1 is used to indicate the 1st rush hour of the day
+# It will happen RUSH_HOUR_1 hours after SHIFT_START, i.e 6 + 3 = 9
+RUSH_HOUR_1 = 3
+# RUSH_HOUR_2 is used to indicate the 2nd rush hour of the day
+# It will happen RUSH_HOUR_2 hours after SHIFT_START, i.e 6 + 8 = 14
+RUSH_HOUR_2 = 8
 
+# The amount of bookings that fail because no taxis were avalaible.
+# This value is read as 1 in FAILED_BOOKING_PROB will be a failed booking
+# The generator works on randomness so with more bookings the probability will be seen
 FAILED_BOOKING_PROB = 10
+# The amount of spam bookings the user tries to make every 10 seconds after a failed booking
+# The reties has no chance of becoming a successful booking
+# This value is read as 1 in SPAM_BOOKING_PROB of a failed booking will be a spam booking
+# The generator works on randomness so with more bookings the probability will be seen
 SPAM_BOOKING_PROB = 10
+# The max amount of reties the user tries to make a spam booking 
+# The generator works on randomness so with more bookings the probability will be seen
 MAX_SPAM_COUNT = 5
 
+# Starting date of the data. In the format: dd-mm-yyyy
 START_DATE = "01-08-2021"
+# Number of days of data to be generated
 DAYS_TO_RUN = 31
+# Format used in storing datetime in the database
 TIME_FORMAT = '%Y-%m-%dT%H:%M:%S'
 
-LOW_LAT_LONG = [(12.9035, 77.4914), (12.8546, 77.5676)]
-MID_LAT_LONG = [(12.9872, 77.5197), (13.1002, 77.5995), (13.0276, 77.6339)]
-HIGH_LAT_LONG = [(12.9976, 77.6129), (12.9212, 77.6203), (12.9619, 77.5990)]
+# The probabilities of a booking a ride from it's corresponding LAT_LONG
+# a number is randomly generated from 1 to HIGH_PROB + MID_PROB + LOW_PROB + RANDOM_PROB
+# LOW_PROB is selected if the number is less than LOW_PROB
+# MID_PROB is selected if the number is less than LOW_PROB + MID_PROB
+# HIGH_PROB is selected if the number is less than LOW_PROB + MID_PROB + HIGH_PROB
+# A random location within BANGALORE_POLYGON is selected if the number is greater than LOW_PROB + MID_PROB + HIGH_PROB
+# The LAT_LONG from the corressponding list(HIGH, MID, LOW) is selected in random
+HIGH_PROB_SRC = 9
+MID_PROB_SRC = 2
+LOW_PROB_SRC = 1
+RANDOM_PROB_SRC = 8
+LOW_LAT_LONG_SRC = [(12.9035, 77.4914), (12.8546, 77.5676)]
+MID_LAT_LONG_SRC = [(12.9872, 77.5197), (13.1002, 77.5995), (13.0276, 77.6339)]
+HIGH_LAT_LONG_SRC = [(12.9976, 77.6129), (12.9212, 77.6203), (12.9619, 77.5990)]
+HIGH_PROB_DEST = 9
+MID_PROB_DEST = 2
+LOW_PROB_DEST = 1
+RANDOM_PROB_DEST = 8
+LOW_LAT_LONG_DEST = [(12.9035, 77.4914), (12.8546, 77.5676)]
+MID_LAT_LONG_DEST = [(12.9872, 77.5197), (13.1002, 77.5995), (13.0276, 77.6339)]
+HIGH_LAT_LONG_DEST = [(12.9976, 77.6129), (12.9212, 77.6203), (12.9619, 77.5990)]
 
+# On day START_DATE + SPECIAL_DAY, 
+# at SHIFT_START + SPECIAL_HOUR_1, SPECIAL_BOOKING_COUNT bookings at this hour will have there destination location SPECIAL_LAT_LONG
+# at SHIFT_START + SPECIAL_HOUR_2, SPECIAL_BOOKING_COUNT bookings at this hour will have there source location SPECIAL_LAT_LONG
 SPECIAL_LAT_LONG = (12.9564, 77.7005)
 SPECIAL_DAY = 7
-SPECIAL_HOUR_1 = 6  # Start Time  
-SPECIAL_HOUR_2 = 17 # End Time
+SPECIAL_HOUR_1 = 0  # Start Time  
+SPECIAL_HOUR_2 = 11 # End Time
 SPECIAL_BOOKING_COUNT = 20
-
-passenger_rating_lst = ["1:Poor Ride", "2:Below Average Ride", "3:Decent Ride", "4:Good Ride", "5:Awesome Ride"]
-taxi_types = ["UTILITY", "DELUXE", "LUXURY"]
-types_cost = [10, 15, 25]
 
 BANGALORE_BOUNDARY_JSON = 'db_structure_and_data/map_data/bengaluru_simple_polygon.geojson.json'
 with open(BANGALORE_BOUNDARY_JSON) as f:
     data = json.load(f)
 BANGALORE_POLYGON_DATA = data['features'][0]['geometry']
 BANGALORE_POLYGON = Polygon([tuple(l) for l in BANGALORE_POLYGON_DATA['coordinates'][0]])
+
+passenger_rating_lst = ["1:Poor Ride", "2:Below Average Ride", "3:Decent Ride", "4:Good Ride", "5:Awesome Ride"]
+taxi_types = ["UTILITY", "DELUXE", "LUXURY"]
+types_cost = [10, 15, 25]
 
 class Bookings(MyRide):
     def __init__(self):
@@ -75,22 +121,22 @@ class Bookings(MyRide):
         self.ride_collection = list(c['passenger_id']['start_loc']['dest_loc']['booked_time']['vehicle_type'] for c in coll_data)
 
     def get_location_details(self):
-        x = random.randint(1, 20)
-        y = random.randint(1, 20)
-        if x < 9:
-            s = random.choice(HIGH_LAT_LONG)
-        elif x < 11:
-            s = random.choice(MID_LAT_LONG)
-        elif x < 12:
-            s = random.choice(LOW_LAT_LONG)
+        x = random.randint(1, HIGH_PROB_SRC + MID_PROB_SRC + LOW_PROB_SRC + RANDOM_PROB_SRC)
+        y = random.randint(1, HIGH_PROB_DEST + MID_PROB_DEST + LOW_PROB_DEST + RANDOM_PROB_DEST)
+        if x < HIGH_PROB_SRC:
+            s = random.choice(HIGH_LAT_LONG_SRC)
+        elif x < HIGH_PROB_SRC + MID_PROB_SRC:
+            s = random.choice(MID_LAT_LONG_SRC)
+        elif x < HIGH_PROB_SRC + MID_PROB_SRC + LOW_PROB_SRC:
+            s = random.choice(LOW_LAT_LONG_SRC)
         else:
             s = generate_random()
-        if y < 9:
-            d = random.choice(HIGH_LAT_LONG)
-        elif y < 11:
-            d = random.choice(MID_LAT_LONG)
-        elif y < 12:
-            d = random.choice(LOW_LAT_LONG)
+        if y < HIGH_PROB_DEST:
+            d = random.choice(HIGH_LAT_LONG_DEST)
+        elif y < HIGH_PROB_DEST + MID_PROB_DEST:
+            d = random.choice(MID_LAT_LONG_DEST)
+        elif y < HIGH_PROB_DEST + MID_PROB_DEST + LOW_PROB_DEST:
+            d = random.choice(LOW_LAT_LONG_DEST)
         else:
             d = generate_random()
         source = (s[0] + (random.randrange(10, 99) / 10000),  s[1] + (random.randrange(10, 99) / 10000))
@@ -150,14 +196,17 @@ if __name__ == "__main__":
     book = Bookings()
     start = datetime.datetime.strptime(START_DATE, "%d-%m-%Y")  # default "01-08-2021"
 
+    if GENERATE_LOCATION_DATA:
+        client = openrouteservice.Client(base_url='http://localhost:8080/ors')
+
     for day in range(DAYS_TO_RUN):
         date = start + datetime.timedelta(days = day)
         hourly_ride_count = list(random.randint(0, RANDOM_PASSENGER_COUNT / 2) for i in range(SHIFT_END - SHIFT_START))
         rearrange(hourly_ride_count)
 
         if day == SPECIAL_DAY:
-            hourly_ride_count[SPECIAL_HOUR_1 - SHIFT_START] = hourly_ride_count[SPECIAL_HOUR_1 - SHIFT_START] + SPECIAL_BOOKING_COUNT
-            hourly_ride_count[SPECIAL_HOUR_2 - SHIFT_START] = hourly_ride_count[SPECIAL_HOUR_2 - SHIFT_START] + SPECIAL_BOOKING_COUNT
+            hourly_ride_count[SPECIAL_HOUR_1] = hourly_ride_count[SPECIAL_HOUR_1] + SPECIAL_BOOKING_COUNT
+            hourly_ride_count[SPECIAL_HOUR_2] = hourly_ride_count[SPECIAL_HOUR_2] + SPECIAL_BOOKING_COUNT
 
         for hour in range(SHIFT_START, SHIFT_END):
             # at start of hour decrement each hour of used taxi
@@ -173,7 +222,7 @@ if __name__ == "__main__":
             else:
                 user_list = random.sample(book.random_passenger_list_odd, hourly_ride_count[hour - SHIFT_START])
 
-            if hour == RUSH_HOUR_1 or hour == RUSH_HOUR_2:
+            if hour == SHIFT_START + RUSH_HOUR_1 or hour == SHIFT_START + RUSH_HOUR_2:
                 user_list.extend(book.daily_passenger_list)
 
             special_trip_start_count = 0
@@ -200,7 +249,7 @@ if __name__ == "__main__":
                     'start_loc': {'type': "Point", "coordinates": lat_long[0]},
                     'dest_loc': {"type": "Point", "coordinates": lat_long[1]},
                     'vehicle_type': vehicle_type,
-                    'timestamp' : datetime.datetime.strftime(timestamp, TIME_FORMAT+'.%f')[:-3]
+                    'booked_time' : datetime.datetime.strftime(timestamp, TIME_FORMAT+'.%f')[:-3]
                 }
 
                 # spam booking 1/10 of a failed booking
@@ -216,7 +265,7 @@ if __name__ == "__main__":
                             book.insert_data_to_db(BOOKING_COLLECTION, book_query)
                             timestamp = timestamp + datetime.timedelta(seconds = 10)
                             del book_query['_id']
-                            book_query['timestamp'] = datetime.datetime.strftime(timestamp, TIME_FORMAT+'.%f')[:-3]
+                            book_query['booked_time'] = datetime.datetime.strftime(timestamp, TIME_FORMAT+'.%f')[:-3]
 
                 elif len(useable_vehicle) == 0:
                     book_query['server_message'] = 'no cabs available' 
@@ -254,8 +303,25 @@ if __name__ == "__main__":
                         'passenger_comments': comment,
                         'total_distance': dist
                     }
-                    #print(ride_query)
+                    # print(ride_query)
                     book.insert_data_to_db(RIDE_COLLECTION, ride_query)
 
-                #print(book_query)
+                    if GENERATE_LOCATION_DATA:
+                        src_x, src_y = lat_long[0][1], lat_long[0][0]
+                        dest_x, dest_y  = lat_long[1][1], lat_long[1][0]
+                        coords = ((src_x, src_y), (dest_x, dest_y))
+                        route = client.directions(coords)['routes'][0]['geometry']
+                        decoded = openrouteservice.convert.decode_polyline(route)
+                        location_query = {
+                            'ride_id': str(ride_query['_id']),
+                            'start_loc': ride_query['start_loc'],
+                            'dest_loc': ride_query['dest_loc'],
+                            'current_loc': decoded,
+                            'start_time': ride_query['start_time'], 
+                            'vehicle_num': ride_query['vehicle_num']
+                        }
+                        # print(location_query)
+                        book.insert_data_to_db(LOCATION_STREAM_COLLECTION, location_query)
+    
+                # print(book_query)
                 book.insert_data_to_db(BOOKING_COLLECTION, book_query)

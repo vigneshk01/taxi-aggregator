@@ -1,4 +1,6 @@
-
+###########################################################################################################
+#This function captures all server actions for Passenger Simulation
+###########################################################################################################
 import hashlib
 import json
 from datetime import datetime
@@ -15,11 +17,9 @@ class User:
 
     def __init__(self):
         self._latest_error = ''
-        #self._UserApikey = Userkey
         self._base_url = 'https://fep34ikk65.execute-api.us-east-1.amazonaws.com/dev'
         self._headers = {'Content-Type': 'application/json'}
         self._otp = ''
-        #self.GApiKey= 'AIzaSyDyRi7MuGjrLBWt32v_T1U4DEeTAjdjnr8'
         self.GApiKey= 'AIzaSyBL7zpEUMf0oScoY9oBdH2KcRbpJMPzVgk'
     @property
     def latest_error(self):
@@ -51,7 +51,7 @@ class User:
 
         if res.status_code==200:
 
-            return Concat_username,Concat_password
+            return {"UserName":Concat_username,"Password":Concat_password}
         else:
             return "SignUp Failed"
 
@@ -80,9 +80,6 @@ class User:
 
     def get_lat_long(self, location):
 
-        #geolocator = Nominatim(user_agent="Taxi_Aggregator")
-        #location = geolocator.geocode((location))
-       # print(location)
        location = location.replace(" ", "+")
        url = "https://maps.googleapis.com/maps/api/geocode/json?address="+location+"&key="+self.GApiKey
        response = requests.get(
@@ -90,8 +87,6 @@ class User:
        #print(response.json())
        if response !="None":
             resp_json_payload = response.json()
-            resp_json_payload
-
             resp_json_payload = resp_json_payload['results']
             resp_json_payload = resp_json_payload[0]
             latitude  = resp_json_payload['geometry']['location']['lat']
@@ -101,10 +96,7 @@ class User:
             return{'latitude':latitude, 'longitude': longitude}
 
     def get_location(self, concat_lat_lng):
-        #geolocator = Nominatim(user_agent="Taxi_Aggregator")
-        #location = geolocator.reverse((concat_lat_lng))
 
-       # concat_lat_lng = ','.join([str(latitude) ,str(longitude)])
         url = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+concat_lat_lng+"&sensor=false&key="+self.GApiKey
         response = requests.get(
             url)
@@ -139,9 +131,6 @@ class User:
 
             meters = R * c  # output distance in meters
             distance = meters / 1000.0  # output distance in kilometers
-          #  self.miles = self.meters * 0.000621371  # output distance in miles
-           # self.feet = self.miles * 5280
-            #distance = geodesic((frm_lat_lng['latitude'],frm_lat_lng['longitude']),(to_lat_lng['latitude'],to_lat_lng['longitude']) ).km
 
             return distance
 
@@ -154,11 +143,9 @@ class User:
 
 
             }
-            #(data)
+
             r = requests.post(f'{self._base_url}{path}', json.dumps(data), headers=self._headers)
-            #print(r.status_code)
-           # print(r.json())
-            #print(r)
+
             if r.status_code == 200:
                 return r.json()
             else:
@@ -167,32 +154,24 @@ class User:
         except TypeError:
             return None
 
-    def book_taxi(self, user_id, Origin, Destination, taxi_type):
+    def book_taxi(self, user_id, Origin, Destination, taxi_type):#this will block the taxi temporarily so that other users cannot book the taxi before current user confirms or denies the taxi
         try:
             path = "/api/rides/getaride"
-            #print(Origin,Destination)
             origin_lat_lon = self.get_lat_long(Origin)
             destination_lat_lon = self.get_lat_long(Destination)
-            #print(origin_lat_lon, destination_lat_lon)
+
             data = {
-                #"timestamp": datetime.now().strftime("%Y-%m-%dT%H:%M:%S"),
+
                 "dest_lat": destination_lat_lon['latitude'],
                 "dest_lng": destination_lat_lon['longitude'],
-                #"dest_lat": 12.9763654,
-                #"dest_lng": 77.5907208,
                 "start_lat": origin_lat_lon['latitude'],
                 "start_lng": origin_lat_lon['longitude'],
-                #"start_lat": 12.978418,
-                #"start_lng": 77.663612,
                 "vehicle_type": taxi_type
 
             }
-            #print(data)
+
             r = requests.post(f'{self._base_url}{path}', json.dumps(data), headers=self._headers)
-            
-            #print(r)
-            #print(r.json())
-            #print(r.status_code)
+
             if r.status_code == 200:
                 return r.json()
             else:
@@ -200,7 +179,7 @@ class User:
                 return None
         except TypeError:
             return None
-    def book_taxi_confirm(self,  user_id, taxi_num, Origin, Destination, taxi_type, apiKey):
+    def book_taxi_confirm(self,  user_id, taxi_num, Origin, Destination, taxi_type, apiKey):#this will confirm the taxi and taxi starts moving towards the passenger
         path = "/api/rides/confirmride"
         origin_lat_lon = self.get_lat_long(Origin)
         destination_lat_lon = self.get_lat_long(Destination)
@@ -211,23 +190,17 @@ class User:
             "dest_address": Destination,
             "dest_lat": destination_lat_lon['latitude'],
             "dest_lng": destination_lat_lon['longitude'],
-            #"dest_lat": 12.9763654,
-            #"dest_lng": 77.5907208,
             "start_address": Origin,
             "start_lat": origin_lat_lon['latitude'],
             "start_lng": origin_lat_lon['longitude'],
-            #"start_lat": 12.978418,
-            #"start_lng": 77.663612,
             "vehicle_num": taxi_num,
             "scheduled_time": datetime.now().strftime("%Y-%m-%dT%H:%M:%S"),
             "vehicle_type": taxi_type
 
         }
-        #print(f'data:{data}')
         res = requests.post(f'{self._base_url}{path}', json.dumps(data), headers=self._headers)
-        #print(res)
+        #print(res.json())
         if res.status_code == 200:
-            #print(f'response - {res.text}')
 
             return res.text,booked_time
         else:
@@ -243,21 +216,16 @@ class User:
         }
         res = requests.post(f'{self._base_url}{path}', json.dumps(data), headers=self._headers)
         if res.status_code == 200:
-            #print(f'response -{res.json()}')
-
             resp_json_payload = res.json()
 
             lat_lng = resp_json_payload['current_vehicle_location']['coordinates']
             concat_lat_lng = ','.join([str(lat_lng[0]), str(lat_lng[1])])
             driver_address = self.get_location(concat_lat_lng)
-
-            #print(to_loc_lat_lon )
             lat_lng= {'latitude':lat_lng[0], 'longitude': lat_lng[1]}
             distance = self.get_distance(to_loc_lat_lon,lat_lng)
-            #distance = self.get_distance({'latitude':12.978418, 'longitude': 77.5907208}, lat_lng)
+
             
             return driver_address,distance
-            #return to_loc_lat_lon,lat_lng
         else:
             return None
 
@@ -271,12 +239,8 @@ class User:
             "apiKey": apiKey,
             "dest_lat": destination_lat_lon['latitude'],
             "dest_lng": destination_lat_lon['longitude'],
-            #"dest_lat": 12.978418,
-            #"dest_lng": 77.663612,
             "start_lat": origin_lat_lon['latitude'],
             "start_lng": origin_lat_lon['longitude'],
-            #"start_lat": 12.9763654,
-            #"start_lng": 77.5907208,
             "start_time": datetime.now().strftime("%Y-%m-%dT%H:%M:%S"),
             "update_type": "startTime",
             "vehicle_num": taxi_num

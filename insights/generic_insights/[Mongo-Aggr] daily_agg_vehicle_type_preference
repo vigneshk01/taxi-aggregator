@@ -1,0 +1,83 @@
+# Requires the PyMongo package.
+# https://api.mongodb.com/python/current
+
+client = MongoClient('mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false')
+result = client['test']['rides'].aggregate([
+    {
+        '$group': {
+            '_id': {
+                'date': {
+                    '$dateFromParts': {
+                        'year': {
+                            '$year': {
+                                '$toDate': '$booked_time'
+                            }
+                        }, 
+                        'month': {
+                            '$month': {
+                                '$toDate': '$booked_time'
+                            }
+                        }, 
+                        'day': {
+                            '$dayOfMonth': {
+                                '$toDate': '$booked_time'
+                            }
+                        }
+                    }
+                }, 
+                'vehicle_type': '$vehicle_type'
+            }, 
+            'total_rides': {
+                '$sum': 1
+            }
+        }
+    }, {
+        '$project': {
+            '_id': 0, 
+            'date': '$_id.date', 
+            'rides_summary': {
+                'vehicle_type': '$_id.vehicle_type', 
+                'total_rides': '$total_rides'
+            }
+        }
+    }, {
+        '$group': {
+            '_id': '$date', 
+            'rides_summary': {
+                '$push': '$rides_summary'
+            }
+        }
+    }, {
+        '$project': {
+            '_id': 0, 
+            'date': '$_id', 
+            'rides_summary': {
+                '$arrayToObject': {
+                    '$map': {
+                        'input': '$rides_summary', 
+                        'as': 'v_r', 
+                        'in': {
+                            'k': '$$v_r.vehicle_type', 
+                            'v': '$$v_r.total_rides'
+                        }
+                    }
+                }
+            }
+        }
+    }, {
+        '$project': {
+            'date': '$date', 
+            'UTILITY': '$rides_summary.UTILITY', 
+            'DELUXE': '$rides_summary.DELUXE', 
+            'LUXURY': '$rides_summary.LUXURY'
+        }
+    }, {
+        '$sort': {
+            'date': 1
+        }
+    }, {
+        '$merge': {
+            'into': 'Dagg_vehicle_type_preference'
+        }
+    }
+])

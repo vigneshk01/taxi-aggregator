@@ -1,0 +1,12 @@
+{
+	COL_PSNG: "passengers",
+	COL_TAXI: "taxis",
+	MONGODB_URI: "<MONGO-URL>",
+	MONGODB_DB:	"<DB-NAME>",
+	USER_TYPE_PSNG:	"Passenger",
+	USER_TYPE_TAXI: "Taxi",
+	REGION: "us-east-1",
+	SECRETKEY: "<SECRET-KEY>"
+	TOPIC_URN: ["arn:aws:sns:us-east-1:<aws-id>:inform_taxi",
+			"arn:aws:sns:us-east-1:<aws-id>:simulate_travel"]
+}

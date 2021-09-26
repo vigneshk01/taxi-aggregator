@@ -1,0 +1,652 @@
+[{
+  "_id": {
+    "$oid": "612e745c6278bf3435f02287"
+  },
+  "firstname": "Aravind",
+  "lastname": "Prabhakaran",
+  "username": "e7547d055612020c6edf23b7f79b69ffae6daf9313f0c989128ec4a55cf04697",
+  "password": "a037499e8463c7488b13221d926bd9dbb72018125264e9895b58aa737869128e",
+  "vehicle_num": "KA09M1010",
+  "vehicle_type": "DELUXE",
+  "driving_license_num": "KA1320120123456",
+  "location": {
+    "type": "Point",
+    "coordinates": [
+      12.981728023198258,
+      77.59735583275847
+    ]
+  },
+  "last_updated_timestamp": "2021-09-20T17:40:31.037Z",
+  "APIKey": "f0b54d210c760dc85b14b9041a76ce8974dc9c66c39d9b16f97efae7a06644d9",
+  "status": "ACTIVE"
+},{
+  "_id": {
+    "$oid": "612e74b06278bf3435f02288"
+  },
+  "firstname": "Salim",
+  "lastname": "Khan",
+  "username": "2f94a1734faff4ffbb35590e6ea7353323d79d05cef349e28026adda0c763d0e",
+  "password": "4d0abf162965cbe07f6342f8f4068176092826f0a7e740af1837e2fcdaac9cde",
+  "vehicle_num": "AP10L4747",
+  "vehicle_type": "LUXURY",
+  "driving_license_num": "AP8881114366456",
+  "location": {
+    "type": "Point",
+    "coordinates": [
+      12.982679392334294,
+      77.59987711981944
+    ]
+  },
+  "last_updated_timestamp": "2021-09-20T17:40:31.032Z",
+  "APIKey": "4d6c042dd32c495edde88a8ddec2346767191da12b14f2602b0fb63f55ccf149",
+  "status": "ACTIVE"
+},{
+  "_id": {
+    "$oid": "61350b1da43da2eabca28f0a"
+  },
+  "firstname": "Venkat",
+  "lastname": "Rao",
+  "username": "92f1a5e5011a37f5d1fd9cf6e5e6c16f826023e94d76ae3436d6d15265f5bde0",
+  "password": "20e50916fdc1ac62453d064a940975701e19230bcc015c6a50281f36ff6a0b7f",
+  "vehicle_num": "KA09T1661",
+  "vehicle_type": "UTILITY",
+  "driving_license_num": "KA1388927723456",
+  "location": {
+    "type": "Point",
+    "coordinates": [
+      12.979762545757708,
+      77.59530660320164
+    ]
+  },
+  "last_updated_timestamp": "2021-09-20T17:40:32.035Z",
+  "APIKey": "f98b8c80b97de88f451b641cd4aa2671773e12411f9e508109fb67633df2f0a4",
+  "status": "ACTIVE"
+},{
+  "_id": {
+    "$oid": "6135b41417b38e98538cfd01"
+  },
+  "firstname": "Ashton",
+  "lastname": "Hurst",
+  "username": "0eb64d886e5b97eed5715672be9aa969389eafd44c69b52a077fcda909878874",
+  "password": "15dc2956fcc55bc41c01f49ac4d89ca9490db29caa70bdbf8c890bd3b2a80dd0",
+  "vehicle_num": "KA42C7748",
+  "vehicle_type": "UTILITY",
+  "driving_license_num": "KA8179254563393",
+  "location": {
+    "type": "Point",
+    "coordinates": [
+      12.979009805600855,
+      77.60561700628024
+    ]
+  },
+  "last_updated_timestamp": "2021-09-20T17:40:32.536Z",
+  "APIKey": "452ff720d8a42b73e438a1ff681e51ff304e0e6c2e9e697027de79bc709891da",
+  "status": "ACTIVE"
+},{
+  "_id": {
+    "$oid": "6135b601b9cbcd211e137ff4"
+  },
+  "firstname": "Macaulay",
+  "lastname": "Dale",
+  "username": "eda53883888ce8dfefbd843b84a5d53973c1fa6da125a375531307447ca21c57",
+  "password": "0a5776ff20ddacb3794090f34b805f923906d12a54142fa3ef4b0082e62311cd",
+  "vehicle_num": "KA53N1744",
+  "vehicle_type": "UTILITY",
+  "driving_license_num": "KA3626642425836",
+  "location": {
+    "type": "Point",
+    "coordinates": [
+      12.973264859472268,
+      77.60409344766163
+    ]
+  },
+  "last_updated_timestamp": "2021-09-20T17:40:31.809Z",
+  "APIKey": "6756bfd770c1ae76780be734bf4fd1188e9f09dc86b6eaba3b01d2613d82e2f3",
+  "status": "ACTIVE"
+},{
+  "_id": {
+    "$oid": "6135b64eb9cbcd211e137ff5"
+  },
+  "firstname": "Rooney",
+  "lastname": "Curry",
+  "username": "890750845ae2e12653faf59aea7b1082bc67caee5548dcfd5a41ef34f7c90c7d",
+  "password": "e5754b1911c13b62c311bf1413e1afec5b92f5aabd0a2528cfe57ae885d53364",
+  "vehicle_num": "KA49D4429",
+  "vehicle_type": "UTILITY",
+  "driving_license_num": "KA9864193657966",
+  "location": {
+    "type": "Point",
+    "coordinates": [
+      12.973625556082355,
+      77.59802093046287
+    ]
+  },
+  "last_updated_timestamp": "2021-09-20T17:40:31.874Z",
+  "APIKey": "c9be4edabdb7219acdc01fa531325fbe1b521b514a0ad953bb8f6e1d8b192e13",
+  "status": "ACTIVE"
+},{
+  "_id": {
+    "$oid": "6135b68cb9cbcd211e137ff6"
+  },
+  "firstname": "Salvador",
+  "lastname": "Weber",
+  "username": "8e29ee7be7255f04f95006f1348aeb23c1b418a1bf3c741ca778a81dbc8af0bc",
+  "password": "443b7ff99b6dd015fce7eb38ad9807c9c1df42aabe40ed3c95e0b83de435f256",
+  "vehicle_num": "KA87V6975",
+  "vehicle_type": "DELUXE",
+  "driving_license_num": "KA1172988559546",
+  "location": {
+    "type": "Point",
+    "coordinates": [
+      12.976322922842384,
+      77.60159366286923
+    ]
+  },
+  "last_updated_timestamp": "2021-09-20T17:40:32.873Z",
+  "APIKey": "f8adbd027c95a61c93223e67187a702b2f4958cbf2b4338de4b20f59fd924448",
+  "status": "ACTIVE"
+},{
+  "_id": {
+    "$oid": "6135b6d3b9cbcd211e137ff7"
+  },
+  "firstname": "Nathaniel",
+  "lastname": "Wood",
+  "username": "d17920273b748ebffc7a85f017d65a71494a5906ba64b55771ab4b1d54d3c316",
+  "password": "8f8da5e49b11a23f674fcac567db61c91b982a6ce3e085c286d29677df7ddf1b",
+  "vehicle_num": "KA03Y9903",
+  "vehicle_type": "DELUXE",
+  "driving_license_num": "KA4916332166643",
+  "location": {
+    "type": "Point",
+    "coordinates": [
+      12.977838871937498,
+      77.60943645889125
+    ]
+  },
+  "last_updated_timestamp": "2021-09-20T17:40:32.974Z",
+  "APIKey": "69953c34ac25c4b6bbfd15b06b1fa231182b9d8faaa07f6963c39132f2faa5d9",
+  "status": "ACTIVE"
+},{
+  "_id": {
+    "$oid": "6135b719b9cbcd211e137ff8"
+  },
+  "firstname": "Phelan",
+  "lastname": "Perry",
+  "username": "30368bd70dcfc42437aea544e00aa4eea175390f65d86881e05cd43ef329627f",
+  "password": "2caa9e49ea1cedb4a11460cbe28ca92cdd1bad7ad3f6725e2b7e044374c9293b",
+  "vehicle_num": "KA94R9027",
+  "vehicle_type": "DELUXE",
+  "driving_license_num": "KA7116886347649",
+  "location": {
+    "type": "Point",
+    "coordinates": [
+      12.975496988066412,
+      77.60899655056404
+    ]
+  },
+  "last_updated_timestamp": "2021-09-20T17:40:32.023Z",
+  "APIKey": "e215d8fe79e3189400cd899595f1e82b0db014b711a58817b127cb3b0980d70b",
+  "status": "ACTIVE"
+},{
+  "_id": {
+    "$oid": "6135b759b9cbcd211e137ff9"
+  },
+  "firstname": "Chase",
+  "lastname": "Conrad",
+  "username": "698904c1752787606a49596a0952abed5b85363bf975f29b5f1f77f8d012f23d",
+  "password": "2daa31a0fcb68c680e7c80f68d9f5ac64af88b5dd1062812c7013fa38f7c030b",
+  "vehicle_num": "KA79K7713",
+  "vehicle_type": "LUXURY",
+  "driving_license_num": "KA8973113646722",
+  "location": {
+    "type": "Point",
+    "coordinates": [
+      12.976573839193009,
+      77.60458701092074
+    ]
+  },
+  "last_updated_timestamp": "2021-09-20T17:40:32.013Z",
+  "APIKey": "80151bdb9f1b09d73f012a3ebf5281433d5ff345b78eae8c1df6a4351ca25ab7",
+  "status": "ACTIVE"
+},{
+  "_id": {
+    "$oid": "6135b795b9cbcd211e137ffa"
+  },
+  "firstname": "Craig",
+  "lastname": "Nieves",
+  "username": "4f2ada928c986da59b0c6162a06d20616a01f25b481342fd42713bac99aa7bd8",
+  "password": "1480a931bb4c74b4e735b81070d0063158b37d5573a2d3fd1f071f3b7a9ef3ef",
+  "vehicle_num": "KA22A1610",
+  "vehicle_type": "LUXURY",
+  "driving_license_num": "KA3514619981715",
+  "location": {
+    "type": "Point",
+    "coordinates": [
+      12.969516720261252,
+      77.59370789268388
+    ]
+  },
+  "last_updated_timestamp": "2021-09-20T17:40:32.214Z",
+  "APIKey": "dfccadc7dfcca87d34e4dc9a3ed7118c4eb238897acb4b75ddc579ab886217c2",
+  "status": "ACTIVE"
+},{
+  "_id": {
+    "$oid": "6135b7e4b9cbcd211e137ffb"
+  },
+  "firstname": "Ulysses",
+  "lastname": "Duran",
+  "username": "2f8cb7da47ce9a07590240b249ab6d040fa80f76692a821eb9e581c4a0662446",
+  "password": "c566375058c859a491fa2b66a62b8c456e450787c2d3e3165815a377947fab19",
+  "vehicle_num": "KA36O1532",
+  "vehicle_type": "LUXURY",
+  "driving_license_num": "KA6855259426752",
+  "location": {
+    "type": "Point",
+    "coordinates": [
+      12.976124280551893,
+      77.61765472824099
+    ]
+  },
+  "last_updated_timestamp": "2021-09-20T17:40:32.512Z",
+  "APIKey": "e17ece96a1f9ff058aa92b12caa2839cc1065e43ab4b2b72a3bde60433202f00",
+  "status": "ACTIVE"
+},{
+  "_id": {
+    "$oid": "6135b83ab9cbcd211e137ffc"
+  },
+  "firstname": "Tad",
+  "lastname": "Ross",
+  "username": "e33d156570f80b8c55cf963daaa51de795c9a98a2b340424fcf818096c1df970",
+  "password": "ffba18bdf8825ad222db4e2b7257fa47caff670f43fa3413e25721d4b4350fb3",
+  "vehicle_num": "KA46G8606",
+  "vehicle_type": "UTILITY",
+  "driving_license_num": "KA7452652254944",
+  "location": {
+    "type": "Point",
+    "coordinates": [
+      12.97302962227082,
+      77.58392323325387
+    ]
+  },
+  "last_updated_timestamp": "2021-09-20T17:40:33.602Z",
+  "APIKey": "5fc7a54fcb849f0295a36b9f70b82bafc80e2d359d66f851da4a0f66f4945419",
+  "status": "ACTIVE"
+},{
+  "_id": {
+    "$oid": "6135b872b9cbcd211e137ffd"
+  },
+  "firstname": "Byron",
+  "lastname": "Collier",
+  "username": "a93898a5790f2f33cb59812bfa95977d091ae73d113966f29e433347db94a229",
+  "password": "7dc9b041e5c7e76a794bc8bb89fb88aa08c63d8382fd3b2d693a009b4cf3bf66",
+  "vehicle_num": "KA53M7786",
+  "vehicle_type": "UTILITY",
+  "driving_license_num": "KA1171329686789",
+  "location": {
+    "type": "Point",
+    "coordinates": [
+      12.981895297156386,
+      77.60711907543406
+    ]
+  },
+  "last_updated_timestamp": "2021-09-20T17:40:33.135Z",
+  "APIKey": "ba1c29419f3d58f6fb063ec3910c1cf8fc2497cc1a1d63aad10e9cde3fac3d96",
+  "status": "ACTIVE"
+},{
+  "_id": {
+    "$oid": "6135b8bfb9cbcd211e137ffe"
+  },
+  "firstname": "Leonard",
+  "lastname": "Donovan",
+  "username": "e04a1d88e0c98d28285204627cf09a0b6fc50aeab3b16b03f2ecf1dc804266fc",
+  "password": "3f3f4baec750dc5bb4695a1aa60024e688a9f14ba698e2ae1cf06d4e3ac0d251",
+  "vehicle_num": "KA88L7301",
+  "vehicle_type": "UTILITY",
+  "driving_license_num": "KA3695697222283",
+  "location": {
+    "type": "Point",
+    "coordinates": [
+      12.965250986848368,
+      77.59963016277794
+    ]
+  },
+  "last_updated_timestamp": "2021-09-20T17:40:33.195Z",
+  "APIKey": "ac91b58fc1dba0dfc9b3798d8e83af09e6d7d228c1b82b5aa717fc997ce7b77f",
+  "status": "ACTIVE"
+},{
+  "_id": {
+    "$oid": "6135b915b9cbcd211e137fff"
+  },
+  "firstname": "Ian",
+  "lastname": "Obrien",
+  "username": "d28548bba02ef014f09195a0b3e6dae2ace964d52ed2452f6cdb3defdaa3797a",
+  "password": "34100ad556cb681fc4444b363b5cae302e4de11f10d1b8c7cb64621260507106",
+  "vehicle_num": "KA16Q1932",
+  "vehicle_type": "DELUXE",
+  "driving_license_num": "KA4219547295999",
+  "location": {
+    "type": "Point",
+    "coordinates": [
+      12.970771333816902,
+      77.60752664747604
+    ]
+  },
+  "last_updated_timestamp": "2021-09-20T17:40:34.256Z",
+  "APIKey": "660b8a15ef76ab99f42754ab5a13d325e646621a3512b9dd5f0dcd853da6fcee",
+  "status": "ACTIVE"
+},{
+  "_id": {
+    "$oid": "6135b9bcb9cbcd211e138000"
+  },
+  "firstname": "Quentin",
+  "lastname": "Carroll",
+  "username": "5901041c55b7eb483a007a0f291e27e978d84db9fd96882296fab76b208b414d",
+  "password": "4744080db83cc4933697c1897de4a14fdadae803303811645adf03012b5e6264",
+  "vehicle_num": "KA65J6083",
+  "vehicle_type": "DELUXE",
+  "driving_license_num": "KA3142657575787",
+  "location": {
+    "type": "Point",
+    "coordinates": [
+      12.966003768646825,
+      77.60958653100667
+    ]
+  },
+  "last_updated_timestamp": "2021-09-20T17:40:33.692Z",
+  "APIKey": "e396fe0bfce4fecc182aca9094e79d1b98293bd72a3af57043ea655e95e9bd87",
+  "status": "ACTIVE"
+},{
+  "_id": {
+    "$oid": "6135ba27b9cbcd211e138001"
+  },
+  "firstname": "Tarik",
+  "lastname": "Mercer",
+  "username": "6ec0387c76aa9e0bfd463041fc736a0dade0ef99b9eb9a2415333732e5511b80",
+  "password": "57b39bde9ab424ece18b4c78cd67f4297be52e34b33d572d4030140f58128f27",
+  "vehicle_num": "KA34R7961",
+  "vehicle_type": "DELUXE",
+  "driving_license_num": "KA8143472629521",
+  "location": {
+    "type": "Point",
+    "coordinates": [
+      12.970687693110039,
+      77.62220369427565
+    ]
+  },
+  "last_updated_timestamp": "2021-09-20T17:40:34.832Z",
+  "APIKey": "61982ba3070216dfd9ce0aa63187e0bba88b2925da91dd5637cee04c4562d7fb",
+  "status": "ACTIVE"
+},{
+  "_id": {
+    "$oid": "6135ba71b9cbcd211e138002"
+  },
+  "firstname": "Dominic",
+  "lastname": "Jordan",
+  "username": "94104ed4aa594f0d0d6fda067515eaf057a6862c9512aa677546f239c3751791",
+  "password": "1e32a3baee4c5a8a900d6f4d9bf98b235c42a2dda51d4f8d1f913f4d6b575b0c",
+  "vehicle_num": "KA81Y0364",
+  "vehicle_type": "LUXURY",
+  "driving_license_num": "KA5799198427438",
+  "location": {
+    "type": "Point",
+    "coordinates": [
+      12.962323480431492,
+      77.59233452172995
+    ]
+  },
+  "last_updated_timestamp": "2021-09-20T17:40:32.973Z",
+  "APIKey": "d7618a85eaccee94f64acebbb532571eb5912577d3657a64676a27c7d3ed8a04",
+  "status": "ACTIVE"
+},{
+  "_id": {
+    "$oid": "6135bab3b9cbcd211e138003"
+  },
+  "firstname": "Vladimir",
+  "lastname": "Hobbs",
+  "username": "f4e434db6ef723509f78f37a236dbf52b1a4fddbc91ce89bdfff52351d925c9d",
+  "password": "9543d886da6376469e2f4cf237333c5b55d02406f91cf52f84054e9b033f6e7d",
+  "vehicle_num": "KA94I9611",
+  "vehicle_type": "LUXURY",
+  "driving_license_num": "KA6466249357697",
+  "location": {
+    "type": "Point",
+    "coordinates": [
+      12.957221172671519,
+      77.59551020053097
+    ]
+  },
+  "last_updated_timestamp": "2021-09-20T17:40:34.314Z",
+  "APIKey": "26e32d6d8605766564005e357397244ccff2836ecbffaa9010922da314d989b7",
+  "status": "ACTIVE"
+},{
+  "_id": {
+    "$oid": "6135bb00b9cbcd211e138004"
+  },
+  "firstname": "Barry",
+  "lastname": "Fulton",
+  "username": "f917d7efabf82862fd1d040a14f0d8cd7ecaff0f94a6f2c3d909e8acc32384fa",
+  "password": "162fa311f10656c40dae6fa5cfa213a07bc47bbd529c76e57393f10eeab78dc9",
+  "vehicle_num": "KA06P7038",
+  "vehicle_type": "LUXURY",
+  "driving_license_num": "KA5728764847166",
+  "location": {
+    "type": "Point",
+    "coordinates": [
+      12.986307107154419,
+      77.58259300530499
+    ]
+  },
+  "last_updated_timestamp": "2021-09-20T17:40:33.613Z",
+  "APIKey": "ea0842fed08d9dc3dd6cc732568face6942d793c6f78b91b47fa9b76e7cc70d7",
+  "status": "ACTIVE"
+},{
+  "_id": {
+    "$oid": "6135bb37b9cbcd211e138005"
+  },
+  "firstname": "Vincent",
+  "lastname": "Sharpe",
+  "username": "defe8478fbb167327c69c2795fcfa692ca37b13da0f0a5461a376d3647240c62",
+  "password": "038b0bee86d69ac6915c15caf4ac6ebb18cb1a45b54bbadb5226b8d84dc76af0",
+  "vehicle_num": "KA19M4750",
+  "vehicle_type": "UTILITY",
+  "driving_license_num": "KA9963583547842",
+  "location": {
+    "type": "Point",
+    "coordinates": [
+      12.982522573496624,
+      77.57883787056146
+    ]
+  },
+  "last_updated_timestamp": "2021-09-20T17:40:32.843Z",
+  "APIKey": "65f8f9edef3b839bcdf3f9d6261dc8c15c300ca5ac34fbfc4a30772446cbd186",
+  "status": "ACTIVE"
+},{
+  "_id": {
+    "$oid": "6135bbbbb9cbcd211e138006"
+  },
+  "firstname": "Vladimir",
+  "lastname": "Brennan",
+  "username": "07f35e219d604a3ded5762d100b1903e8dc71bba8a554ed5595784dfc46a3926",
+  "password": "191cf02d3a6e64c39fe2da764bd8bac712370cb2a737b03eace55384e204ae00",
+  "vehicle_num": "KA39I0725",
+  "vehicle_type": "UTILITY",
+  "driving_license_num": "KA5425422141272",
+  "location": {
+    "type": "Point",
+    "coordinates": [
+      12.987749814753819,
+      77.60134702679825
+    ]
+  },
+  "last_updated_timestamp": "2021-09-20T17:40:33.875Z",
+  "APIKey": "a187bcd77d4b1548d10dc8fcacd604d2c17dc9bd8a51507cb4d80135305c3234",
+  "status": "ACTIVE"
+},{
+  "_id": {
+    "$oid": "6135bbf6b9cbcd211e138007"
+  },
+  "firstname": "Solomon",
+  "lastname": "Moore",
+  "username": "7c5c796041fbe82eaad84b4814ee26d8a9aee764cab048bf10aa67c38cb9da13",
+  "password": "a4b227cef1c2aaaaf3a771118706fa46e37133237d067afeb3b500a77804d320",
+  "vehicle_num": "KA06B2676",
+  "vehicle_type": "UTILITY",
+  "driving_license_num": "KA1752318339274",
+  "location": {
+    "type": "Point",
+    "coordinates": [
+      12.960483315917852,
+      77.62246107294327
+    ]
+  },
+  "last_updated_timestamp": "2021-09-20T17:40:34.452Z",
+  "APIKey": "6fb21b9b7be09a1cf723c3a841a6ae2517efd9ddbe67bdf8e330650c0f7888f3",
+  "status": "ACTIVE"
+},{
+  "_id": {
+    "$oid": "6135bc44b9cbcd211e138008"
+  },
+  "firstname": "Abbot",
+  "lastname": "Pitts",
+  "username": "213e3f058e69debeb1ea4fb9ce8d933d1f9c40bda403a7602ba6eb6c2706bcb1",
+  "password": "e09b0744d91ae1d9224fa6a008874cd7a3d76a08540f7378d0cb57164acb0821",
+  "vehicle_num": "KA48U9863",
+  "vehicle_type": "DELUXE",
+  "driving_license_num": "KA4951476747963",
+  "location": {
+    "type": "Point",
+    "coordinates": [
+      12.950278520448938,
+      77.62829744645421
+    ]
+  },
+  "last_updated_timestamp": "2021-09-20T17:40:33.594Z",
+  "APIKey": "e46873b70bc886ed1ff63d769d0331e7c6b81c1221476d4e3a82f2163014102f",
+  "status": "BOOKED"
+},{
+  "_id": {
+    "$oid": "6135bc88b9cbcd211e138009"
+  },
+  "firstname": "Paul",
+  "lastname": "Howell",
+  "username": "c4c386a57793bf3bc2bbb976e8abb276b61f905c4c822826332acccec5bc110e",
+  "password": "b1b1d07c74e8731be66d7d97d25f70781b7c753a7967c1e9da470d01a7e40199",
+  "vehicle_num": "KA22R8823",
+  "vehicle_type": "DELUXE",
+  "driving_license_num": "KA9219595135994",
+  "location": {
+    "type": "Point",
+    "coordinates": [
+      12.963578130255065,
+      77.56332376296429
+    ]
+  },
+  "last_updated_timestamp": "2021-09-20T17:40:34.935Z",
+  "APIKey": "46695d697b3a3adcb3345c3dbe96e88a67bec4fcf3838763e0f6fbdc3eff9e89",
+  "status": "ACTIVE"
+},{
+  "_id": {
+    "$oid": "6135bcbdb9cbcd211e13800a"
+  },
+  "firstname": "Bradley",
+  "lastname": "Herrera",
+  "username": "8ff8f56f5f6da37f22babf62b6fa7575bcce3ccbdf4188346b5014dc1126f39b",
+  "password": "cea12a259c6ffd6cc0f5851bfe7bac065ff8a499a50d4e710fb1089a528b9db9",
+  "vehicle_num": "KA42X4450",
+  "vehicle_type": "DELUXE",
+  "driving_license_num": "KA5366999278627",
+  "location": {
+    "type": "Point",
+    "coordinates": [
+      13.003096359403386,
+      77.58667015003654
+    ]
+  },
+  "last_updated_timestamp": "2021-09-21T10:00:49.629Z",
+  "APIKey": "931b50f23576e5777c1af5e728230176abfab6a2b543e469f61a858a0806eddb",
+  "status": "BOOKED"
+},{
+  "_id": {
+    "$oid": "6135bd0ab9cbcd211e13800b"
+  },
+  "firstname": "Jermaine",
+  "lastname": "Melendez",
+  "username": "7f6fac9825f70bacd611526a357b2c2214fa38aa0b00e9fd8fbff68f50cf8a49",
+  "password": "60216d3233c0616edd3918a6c4b497165b6a9d1538cd04fb707f5aef1abdcff7",
+  "vehicle_num": "KA15J4512",
+  "vehicle_type": "LUXURY",
+  "driving_license_num": "KA8969821855621",
+  "location": {
+    "type": "Point",
+    "coordinates": [
+      12.999876590806911,
+      77.59782810365054
+    ]
+  },
+  "last_updated_timestamp": "2021-09-20T17:40:35.334Z",
+  "APIKey": "761323c5e979ac99a7061d8a25bdde37707c3a0f1f2f092d7cd6e967d6c96f94",
+  "status": "ACTIVE"
+},{
+  "_id": {
+    "$oid": "6135bd4cb9cbcd211e13800c"
+  },
+  "firstname": "Quamar",
+  "lastname": "Oneal",
+  "username": "3efef5a81483600b8bcf1bd767309e897c8910697e056d99df62c18a16fabdec",
+  "password": "4846f3a8bf14a62ab22c46a77a5a63bded69a6b50a14fa4309264b4539236f16",
+  "vehicle_num": "KA79F6192",
+  "vehicle_type": "LUXURY",
+  "driving_license_num": "KA2786856442437",
+  "location": {
+    "type": "Point",
+    "coordinates": [
+      12.986819373855507,
+      77.59163741980585
+    ]
+  },
+  "last_updated_timestamp": "2021-09-20T17:40:35.454Z",
+  "APIKey": "53de1ef3d85a2a0f7639b7e9fcdd56ee456dd6e80c73879062868482a974a94f",
+  "status": "ACTIVE"
+},{
+  "_id": {
+    "$oid": "6135bd90b9cbcd211e13800d"
+  },
+  "firstname": "Warren",
+  "lastname": "Guthrie",
+  "username": "2367a8f35f6732539df6414d4101d9248b391fd750c3f33ca528336a77dd5369",
+  "password": "2d9fc6271531f93ce431311f0176443c3b1c70ce277aa284e8ca8b2179d8be67",
+  "vehicle_num": "KA15M5187",
+  "vehicle_type": "LUXURY",
+  "driving_license_num": "KA8425298592182",
+  "location": {
+    "type": "Point",
+    "coordinates": [
+      12.974535136515227,
+      77.57353773668999
+    ]
+  },
+  "last_updated_timestamp": "2021-09-20T17:40:33.715Z",
+  "APIKey": "40fd2bd80218f0bb5d6f76fbdaf85129fef7ca6a48664f8a9ca5cf6da6aee226",
+  "status": "ACTIVE"
+},{
+  "_id": {
+    "$oid": "613c78bc8dfa4422ace90bb9"
+  },
+  "firstname": "Antony",
+  "lastname": "Wu",
+  "username": "6fe5058ce541074aeb2793a8052ef28424a52714fcea60eccacb1755fcb8aa42",
+  "password": "9e8210bbff508aa749da8cd311f02a9c1c013353518db0f719ce9462d865efee",
+  "vehicle_num": "KA11G7161",
+  "vehicle_type": "UTILITY",
+  "driving_license_num": "KA1776527723456",
+  "location": {
+    "type": "Point",
+    "coordinates": [
+      12.968199369218246,
+      77.58098347847393
+    ]
+  },
+  "last_updated_timestamp": "2021-09-20T17:40:34.222Z",
+  "APIKey": "a8eb0d012dfc0ae4a517a78cea6441db9e22c13c1b47e0b79a740c05221c830b",
+  "status": "ACTIVE"
+}]
